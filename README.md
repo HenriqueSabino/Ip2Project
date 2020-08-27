@@ -4,7 +4,12 @@
 PokéIT
 
 ## **Integrantes**
-Henrique Sabino da Costa, Silas Augusto Ramos dos Santos, Hyan Hugo Noá Batista, Nelson Lins de Barros Neto.
+<ul>
+    <li>Henrique Sabino da Costa</li> 
+    <li>Silas Augusto Ramos dos Santos</li> 
+    <li>Hyan Hugo Noá Batista</li> 
+    <li>Nelson Lins de Barros Neto.</li>
+</ul>
 
 ## **Turma** 
 BC3 - 2020.3
