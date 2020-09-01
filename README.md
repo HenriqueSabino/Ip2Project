@@ -25,11 +25,11 @@ Centro Pokémon
 
 ## **Requisitos do projeto**
 <ol>
-    <li align="justify">O sistema deve controlar o acesso através de login e senha dos recepcionistas, enfermeiras Joy e proprietários</li>
+    <li align="justify">O sistema deve controlar o acesso através de login e senha dos recepcionistas, enfermeiras Joy, proprietários e treinadores.</li>
     <li align="justify">O sistema deve permitir a venda de itens medicinais, gerando o histórico de vendas por cliente, e o serviço de cura gratuito que gera um histórico de consultas de cada cliente.</li>
-    <li align="justify">O sistema deve permitir a criação, leitura, atualização e deleção (CRUD) de treinadores pokémons, que poderá ser realizado por funcionários do Centro Pokémon (recepcionistas e enfermeiras), e produtos da loja que poderá ser efetuada apenas por recepcionistas.</li>
+    <li align="justify">O sistema deve permitir a criação, leitura, atualização e deleção (CRUD) de treinadores pokémons, que poderá ser realizado por funcionários do Centro Pokémon (recepcionistas, enfermeiras e proprietários), e produtos da loja que poderá ser efetuada apenas por recepcionistas.</li>
     <li align="justify">O sistema deve permitir o CRUD de recepcionistas e enfermeiras, essas operações só poderão ser efetuadas por proprietários.</li>
-    <li align="justify">O serviço de vendas de itens deve gerar um recibo, que mostrará quem foi o recepcionista e seu código de cadastro, quem foi o comprador e seu código de cadastro, os itens comprados com seus respectivos valores, o valor total da compra.</li>
+    <li align="justify">O serviço de vendas de itens deve gerar um recibo, que mostrará quem foi o recepcionista, se houver, e seu código de cadastro, quem foi o comprador e seu código de cadastro, os itens comprados com seus respectivos valores, o valor total da compra. Essa operação pode ser feita apenas por: proprietários, recepcionistas e treinadores.</li>
     <li align="justify">O serviço de cura gera um relatório contendo o treinador e seu código de registro, o tipo de debilitação (envenenado, queimado, etc.) de cada pokémon juntamente com sua descrição (espécie, tipo e vida).</li>
     <li align="justify">As vendas dos itens deve ser feita num modelo de carrinho de compras, onde o treinador pode adicionar vários itens em uma só compra.</li>
     <li align="justify">A cada consulta que o usuário fizer, ele deve informar para cada pokémon registrado a vida atual do pokémon e a debilitação dele, se houver alguma.</li>
