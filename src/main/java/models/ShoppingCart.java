@@ -20,7 +20,6 @@ public class ShoppingCart {
     int summation = 0;
 
     for (CartItem item : cartItemList) {
-
       summation += item.calculateTotalCost();
     }
 
