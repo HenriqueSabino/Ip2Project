@@ -9,6 +9,7 @@ public abstract class Person {
     public Person() {}
 
     public Person(String name, String birthCity, String gender) {
+
         this.name = name;
         this.birthCity = birthCity;
         this.gender = gender;

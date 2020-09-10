@@ -7,6 +7,7 @@ public class Nurse extends User {
     public Nurse() {}
 
     public Nurse(String name, String birthCity, String gender, String username, String password, String email, int registerID) {
+
         super(name, birthCity, gender, username, password, email);
         this.registerID = registerID;
     }
