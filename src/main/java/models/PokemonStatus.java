@@ -6,5 +6,5 @@ public enum PokemonStatus {
   PARALYZED,
   FROZEN,
   POISONED,
-  NONE,
+  NONE
 }
