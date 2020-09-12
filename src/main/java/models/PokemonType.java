@@ -18,5 +18,5 @@ public enum PokemonType {
   PSYCHIC,
   ROCK,
   STEEL,
-  WATER,
+  WATER
 }
