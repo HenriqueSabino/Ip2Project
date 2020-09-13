@@ -38,7 +38,7 @@ public class ShoppingCart {
     cartItemList.clear();
   }
 
-  public List getItems() {
+  public List<CartItem> getItems() {
     return cartItemList;
   }
 }

@@ -11,7 +11,13 @@ public class Pokemon {
 
   public Pokemon() {}
 
-  public Pokemon(String species, int life, int maxLife, PokemonType pokemonType, PokemonStatus pokemonStatus, Trainer trainer){
+  public Pokemon(
+      String species,
+      int life,
+      int maxLife,
+      PokemonType pokemonType,
+      PokemonStatus pokemonStatus,
+      Trainer trainer) {
 
     this.species = species;
     this.life = life;
