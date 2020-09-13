@@ -14,6 +14,7 @@ public class CureReport {
 
   // NOTE: previousPokemons must be a deep copy of client's pokemon list
   private CureReport(int ID, Nurse nurse, Trainer client, List<Pokemon> previousPokemons) {
+    
     this.ID = ID;
     this.nurse = nurse;
     this.client = client;
@@ -22,6 +23,7 @@ public class CureReport {
   }
 
   public String generateReport() {
+    
     StringBuilder report = new StringBuilder();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -34,6 +36,7 @@ public class CureReport {
     report.append("Client's pokemons before cure service:").append("\n\n");
 
     for (Pokemon pokemon : previousPokemons) {
+      
       report.append("Pokemon species: ").append(pokemon.getSpecies()).append("\n");
       report.append("Pokemon type: ").append(pokemon.getType()).append("\n");
       report.append("Pokemon status: ").append(pokemon.getStatus()).append("\n");
@@ -43,6 +46,7 @@ public class CureReport {
     report.append("Client's pokemons after cure service:").append("\n\n");
 
     for (Pokemon pokemon : client.getPokemons()) {
+      
       report.append("Pokemon species: ").append(pokemon.getSpecies()).append("\n");
       report.append("Pokemon type: ").append(pokemon.getType()).append("\n");
       report.append("Pokemon status: ").append(pokemon.getStatus()).append("\n");
