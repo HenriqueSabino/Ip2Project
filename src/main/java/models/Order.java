@@ -1,21 +1,32 @@
 package main.java.models;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class Order {
 
   private int id;
-  private Date orderDate;
+  private LocalDateTime orderDate;
   ShoppingCart shoppingCart;
   SalesClerk salesClerk;
   Trainer client;
 
+  public Order(int id, ShoppingCart shoppingCart, Trainer client) {
+
+    this.id = id;
+    this.orderDate = LocalDateTime.now(ZoneId.of("America/Recife"));
+    this.shoppingCart = shoppingCart;
+    this.client = client;
+  }
+
   public Order(int id, ShoppingCart shoppingCart, SalesClerk salesClerk, Trainer client) {
 
     this.id = id;
-    this.orderDate = new Date();
+    this.orderDate = LocalDateTime.now(ZoneId.of("America/Recife"));
     this.shoppingCart = shoppingCart;
     this.salesClerk = salesClerk;
     this.client = client;
@@ -37,7 +48,7 @@ public class Order {
     return salesClerk;
   }
 
-  public Date getOrderDate() {
+  public LocalDateTime getOrderDate() {
     return orderDate;
   }
 
@@ -45,13 +56,15 @@ public class Order {
 
     List<CartItem> receiptItemList = shoppingCart.getItems();
     StringBuilder receipt = new StringBuilder();
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     // Generating receipt header
     receipt.append("Order number: ").append(id).append("\n\n");
     receipt.append("Responsible sales clerk name: ").append(salesClerk.getName()).append("\n");
     receipt.append("Client's name: ").append(client.getName()).append("\n");
-    receipt.append("Data: ").append(sdf.format(orderDate)).append("\n\n");
+    receipt
+        .append("Data: ")
+        .append(orderDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
+        .append("\n\n");
 
     receipt.append("Client's items:").append("\n\n");
 
