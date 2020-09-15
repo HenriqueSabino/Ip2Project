@@ -2,40 +2,41 @@ package main.java.models;
 
 public abstract class Person {
 
-    private String name;
-    private String birthCity;
-    private String gender;
+  private String name;
+  private String birthCity;
+  private String gender;
 
-    public Person() {}
+  public Person() {
+  }
 
-    public Person(String name, String birthCity, String gender) {
+  public Person(String name, String birthCity, String gender) {
 
-        this.name = name;
-        this.birthCity = birthCity;
-        this.gender = gender;
-    }
+    this.name = name;
+    this.birthCity = birthCity;
+    this.gender = gender;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getBirthCity() {
-        return birthCity;
-    }
+  public String getBirthCity() {
+    return birthCity;
+  }
 
-    public void setBirthCity(String birthCity) {
-        this.birthCity = birthCity;
-    }
+  public void setBirthCity(String birthCity) {
+    this.birthCity = birthCity;
+  }
 
-    public String getGender() {
-        return gender;
-    }
+  public String getGender() {
+    return gender;
+  }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
 }
