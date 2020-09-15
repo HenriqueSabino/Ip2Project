@@ -1,10 +1,14 @@
 package main.java.models;
 
-public class Nurse extends User {
+import java.util.ArrayList;
+import java.util.List;
 
+public class Trainer extends User {
+
+  private List<Pokemon> pokemons;
   private int registerID;
 
-  public Nurse(
+  public Trainer(
       String name,
       String birthCity,
       String gender,
@@ -15,6 +19,11 @@ public class Nurse extends User {
 
     super(name, birthCity, gender, username, password, email);
     this.registerID = registerID;
+    pokemons = new ArrayList<>();
+  }
+
+  public List<Pokemon> getPokemons() {
+    return pokemons;
   }
 
   public int getRegisterID() {

@@ -6,8 +6,7 @@ public abstract class Person {
   private String birthCity;
   private String gender;
 
-  public Person() {
-  }
+  public Person() {}
 
   public Person(String name, String birthCity, String gender) {
 

@@ -1,10 +1,10 @@
 package main.java.models;
 
-public class Nurse extends User {
+public class SalesClerk extends User {
 
   private int registerID;
 
-  public Nurse(
+  public SalesClerk(
       String name,
       String birthCity,
       String gender,
