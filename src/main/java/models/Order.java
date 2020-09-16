@@ -65,7 +65,7 @@ public class Order {
         .append("Data: ")
         .append(orderDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))
         .append("\n\n");
-
+  
     receipt.append("Client's items:").append("\n\n");
 
     // Generating items information

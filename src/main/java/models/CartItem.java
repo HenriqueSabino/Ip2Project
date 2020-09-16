@@ -2,13 +2,15 @@ package main.java.models;
 
 public class CartItem {
 
+  private ShoppingCart shoppingCart;
   private Product product;
   private int quantity;
 
   public CartItem() {}
 
-  public CartItem(Product product, int quantity) {
+  public CartItem(Product product, int quantity, ShoppingCart shoppingCart) {
 
+    this.shoppingCart = shoppingCart;
     this.product = product;
     this.quantity = quantity;
   }
@@ -31,5 +33,9 @@ public class CartItem {
 
   public int calculateTotalCost() {
     return product.getPrice() * quantity;
+  }
+
+  public ShoppingCart getShoppingCart() {
+    return shoppingCart;
   }
 }
