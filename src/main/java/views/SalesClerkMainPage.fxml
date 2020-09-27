@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.SalesClerkMainPageViewController">
+  <children>
+    <VBox layoutY="87.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Button fx:id="backBt" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
+        <HBox spacing="50.0">
+          <children>
+            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo {name} de {city}">
+              <font>
+                <Font size="18.0" />
+              </font>
+            </Text>
+            <Hyperlink fx:id="editOwnRegisterHl" onAction="#onEditOwnRegisterHl" text="Editar cadastro" underline="true" />
+          </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+        </HBox>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+          <children>
+            <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Selecione um treinador" />
+            <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" text="Iniciar Compras" />
+            <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" text="Histórico de compras" />
+            <Hyperlink fx:id="managerTrainersHl" onAction="#onManagerTrainersHl" text="Gerenciar treinadores" underline="true" />
+            <Hyperlink fx:id="manageProductsHl" onAction="#onManageProductsHl" text="Gerenciar produtos" underline="true" />
+          </children>
+        </VBox>
+      </children>
+      <padding>
+        <Insets left="25.0" top="25.0" />
+      </padding>
+    </VBox>
+  </children>
+</AnchorPane>

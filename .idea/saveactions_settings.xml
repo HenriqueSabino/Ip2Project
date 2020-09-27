@@ -5,6 +5,9 @@
       <set>
         <option value="activate" />
         <option value="activateOnShortcut" />
+        <option value="organizeImports" />
+        <option value="reformat" />
+        <option value="rearrange" />
       </set>
     </option>
     <option name="configurationPath" value="" />

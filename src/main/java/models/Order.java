@@ -1,19 +1,17 @@
 package main.java.models;
 
-import java.text.SimpleDateFormat;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Order {
 
-  private int id;
-  private LocalDateTime orderDate;
   ShoppingCart shoppingCart;
   SalesClerk salesClerk;
   Trainer client;
+  private int id;
+  private LocalDateTime orderDate;
 
   public Order(int id, ShoppingCart shoppingCart, Trainer client) {
 
@@ -59,7 +57,11 @@ public class Order {
 
     // Generating receipt header
     receipt.append("Order number: ").append(id).append("\n\n");
-    receipt.append("Responsible sales clerk name: ").append(salesClerk.getName()).append("\n");
+
+    if (salesClerk != null) {
+      receipt.append("Responsible sales clerk name: ").append(salesClerk.getName()).append("\n");
+    }
+
     receipt.append("Client's name: ").append(client.getName()).append("\n");
     receipt
         .append("Data: ")
