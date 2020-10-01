@@ -11,10 +11,10 @@ public class Administrator extends User {
       String username,
       String password,
       String email,
-      int registerID) {
+      int registerId) {
 
     super(name, birthCity, gender, username, password, email);
-    this.registerId = registerID;
+    this.registerId = registerId;
   }
 
   public int getRegisterId() {

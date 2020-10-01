@@ -42,4 +42,8 @@ public class CureReport {
 
     return report.toString();
   }
+
+  public List<Cure> getCures() {
+    return cures;
+  }
 }
