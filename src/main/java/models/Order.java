@@ -1,11 +1,9 @@
 package main.java.models;
 
-import java.text.SimpleDateFormat;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Order {
 
