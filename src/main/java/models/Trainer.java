@@ -6,7 +6,7 @@ import java.util.List;
 public class Trainer extends User {
 
   private List<Pokemon> pokemons;
-  private int registerID;
+  private int registerId;
 
   public Trainer(
       String name,
@@ -18,7 +18,7 @@ public class Trainer extends User {
       int registerID) {
 
     super(name, birthCity, gender, username, password, email);
-    this.registerID = registerID;
+    this.registerId = registerID;
     pokemons = new ArrayList<>();
   }
 
@@ -26,7 +26,7 @@ public class Trainer extends User {
     return pokemons;
   }
 
-  public int getRegisterID() {
-    return registerID;
+  public int getRegisterId() {
+    return registerId;
   }
 }

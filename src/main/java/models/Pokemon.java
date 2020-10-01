@@ -5,8 +5,8 @@ public class Pokemon {
   private String species;
   private int life;
   private int maxLife;
-  private PokemonType pokemonType;
-  private PokemonStatus pokemonStatus;
+  private PokemonType type;
+  private PokemonStatus status;
   private Trainer trainer;
 
   public Pokemon() {}
@@ -22,8 +22,8 @@ public class Pokemon {
     this.species = species;
     this.life = life;
     this.maxLife = maxLife;
-    this.pokemonType = pokemonType;
-    this.pokemonStatus = pokemonStatus;
+    this.type = pokemonType;
+    this.status = pokemonStatus;
     this.trainer = trainer;
   }
 
@@ -31,31 +31,31 @@ public class Pokemon {
     return species;
   }
 
-  public int getLife() {
-    return life;
-  }
-
-  public int getMaxLife() {
-    return maxLife;
-  }
-
   public PokemonType getType() {
-    return pokemonType;
+    return type;
   }
 
   public PokemonStatus getStatus() {
-    return pokemonStatus;
+    return status;
   }
 
-  public Trainer getTrainer() {
-    return trainer;
+  public void setStatus(PokemonStatus status) {
+    this.status = status;
+  }
+
+  public int getLife() {
+    return life;
   }
 
   public void setLife(int life) {
     this.life = life;
   }
 
-  public void setPokemonStatus(PokemonStatus pokemonStatus) {
-    this.pokemonStatus = pokemonStatus;
+  public int getMaxLife() {
+    return maxLife;
+  }
+
+  public Trainer getTrainer() {
+    return trainer;
   }
 }

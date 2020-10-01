@@ -2,7 +2,7 @@ package main.java.models;
 
 public class Nurse extends User {
 
-  private int registerID;
+  private int registerId;
 
   public Nurse(
       String name,
@@ -14,10 +14,10 @@ public class Nurse extends User {
       int registerID) {
 
     super(name, birthCity, gender, username, password, email);
-    this.registerID = registerID;
+    this.registerId = registerID;
   }
 
-  public int getRegisterID() {
-    return registerID;
+  public int getRegisterId() {
+    return registerId;
   }
 }
