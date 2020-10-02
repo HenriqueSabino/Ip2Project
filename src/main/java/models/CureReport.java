@@ -6,20 +6,11 @@ import java.util.List;
 
 public class CureReport {
 
-  private int ID;
-  private Nurse nurse;
-  private Trainer client;
-  private Date cureReportDate;
-  private List<Pokemon> previousPokemons;
+  private List<Cure> cures;
 
-  // NOTE: previousPokemons must be a deep copy of client's pokemon list
-  private CureReport(int ID, Nurse nurse, Trainer client, List<Pokemon> previousPokemons) {
-    
-    this.ID = ID;
-    this.nurse = nurse;
-    this.client = client;
-    this.previousPokemons = previousPokemons;
-    this.cureReportDate = new Date();
+
+  public CureReport(List<Cure> cures) {
+    this.cures = cures;
   }
 
   public String generateReport() {
@@ -27,48 +18,32 @@ public class CureReport {
     StringBuilder report = new StringBuilder();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    // Generating report header
-    report.append("Cure report number: ").append(ID).append("\n\n");
-    report.append("Responsible nurse's name: ").append(nurse.getName()).append("\n");
-    report.append("Client's name: ").append(client.getName()).append("\n");
-    report.append("Date: ").append(sdf.format(cureReportDate)).append("\n\n");
+    report.append("Trainer's cure history:").append("\n\n");
 
-    report.append("Client's pokemons before cure service:").append("\n\n");
+    for (Cure cure : cures)
+    {
+      report.append("Cure id: ").append(cure.getId()).append("\n");
+      report.append("Responsible employee's name: ").append(cure.getEmployee().getName()).append("\n");
+      report.append("Client's name: ").append(cure.getClient().getName()).append("\n");
+      report.append("Cure date: ").append(sdf.format(cure.getCureDate())).append("\n\n");
 
-    for (Pokemon pokemon : previousPokemons) {
-      
-      report.append("Pokemon species: ").append(pokemon.getSpecies()).append("\n");
-      report.append("Pokemon type: ").append(pokemon.getType()).append("\n");
-      report.append("Pokemon status: ").append(pokemon.getStatus()).append("\n");
-      report.append("Pokemon life: ").append(pokemon.getLife()).append("\n\n");
-    }
+      report.append("Pokemon data:").append("\n");
+      report.append("Pokemon species: ").append(cure.getPokemon().getSpecies()).append("\n");
+      report.append("Pokemon type: ").append(cure.getPokemon().getType()).append("\n\n");
 
-    report.append("Client's pokemons after cure service:").append("\n\n");
+      report.append("Pokemon's status before cure:").append("\n");
+      report.append("Pokemon status: ").append(cure.getPreviousPokemonStatus()).append("\n");
+      report.append("Pokemon life: ").append(cure.getPreviousPokemonLife()).append("\n\n");
 
-    for (Pokemon pokemon : client.getPokemons()) {
-      
-      report.append("Pokemon species: ").append(pokemon.getSpecies()).append("\n");
-      report.append("Pokemon type: ").append(pokemon.getType()).append("\n");
-      report.append("Pokemon status: ").append(pokemon.getStatus()).append("\n");
-      report.append("Pokemon life: ").append(pokemon.getLife()).append("\n\n");
+      report.append("Pokemon's status after cure:").append("\n");
+      report.append("Pokemon status: ").append(cure.getPokemon().getStatus()).append("\n");
+      report.append("Pokemon life: ").append(cure.getPokemon().getLife()).append("\n\n");
     }
 
     return report.toString();
   }
 
-  public int getID() {
-    return ID;
-  }
-
-  public Nurse getNurse() {
-    return nurse;
-  }
-
-  public Trainer getClient() {
-    return client;
-  }
-
-  public Date getCureReportDate() {
-    return cureReportDate;
+  public List<Cure> getCures() {
+    return cures;
   }
 }

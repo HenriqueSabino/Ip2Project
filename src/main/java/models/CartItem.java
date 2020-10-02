@@ -15,6 +15,10 @@ public class CartItem {
     this.quantity = quantity;
   }
 
+  public int calculateTotalCost() {
+    return product.getPrice() * quantity;
+  }
+
   public int getQuantity() {
     return quantity;
   }
@@ -29,10 +33,6 @@ public class CartItem {
 
   public void setProduct(Product product) {
     this.product = product;
-  }
-
-  public int calculateTotalCost() {
-    return product.getPrice() * quantity;
   }
 
   public ShoppingCart getShoppingCart() {
