@@ -1,6 +1,8 @@
 package main.java.models;
 
-public abstract class User extends Person {
+import java.io.Serializable;
+
+public abstract class User extends Person implements Serializable {
 
   private String username;
   private String password;
