@@ -1,6 +1,8 @@
 package main.java.models;
 
-public class Pokemon {
+import java.io.Serializable;
+
+public class Pokemon implements Serializable {
 
   private String species;
   private int life;
