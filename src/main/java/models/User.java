@@ -1,8 +1,6 @@
 package main.java.models;
 
-import java.io.Serializable;
-
-public abstract class User extends Person implements Serializable {
+public abstract class User extends Person {
 
   private int registerId;
   private String username;

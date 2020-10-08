@@ -38,7 +38,7 @@ public class UserDaoFiles implements UserDao {
 
       users = new ArrayList<>();
 
-      users.add(
+      insert(
           new Administrator(
               "Proprietario",
               "None",
@@ -56,82 +56,97 @@ public class UserDaoFiles implements UserDao {
     // Please, backup and delete localStorage\\users.ser before testing
     UserDao dao = DaoFactory.createUserDao();
 
-    Trainer ash = new Trainer("Ash", "Pallet", "male", "ash", "password", "email");
-    Nurse joy = new Nurse("Joy", "Cerulean", "female", "joy", "password", "email1");
+    if (dao.findAll().size() == 1) {
 
-    System.out.println("Testing inserts:");
+      Trainer ash = new Trainer("Ash", "Pallet", "male", "ash", "password", "email");
+      Nurse joy = new Nurse("Joy", "Cerulean", "female", "joy", "password", "email1");
 
-    ash.getPokemons()
-        .add(new Pokemon("Pikachu", 60, 60, PokemonType.ELECTRIC, PokemonStatus.NONE, ash));
+      System.out.println("Testing inserts:");
 
-    dao.insert(ash);
+      ash.getPokemons()
+          .add(new Pokemon("Pikachu", 60, 60, PokemonType.ELECTRIC, PokemonStatus.NONE, ash));
 
-    try {
       dao.insert(ash);
-    } catch (UsernameOrEmailInUseException e) {
-      System.out.println(e.getMessage());
-    }
 
-    dao.insert(joy);
+      try {
+        dao.insert(ash);
+      } catch (UsernameOrEmailInUseException e) {
+        System.out.println(e.getMessage());
+      }
 
-    for (User t : dao.findAll()) {
+      dao.insert(joy);
 
-      System.out.println(t.getName());
-    }
+      for (User t : dao.findAll()) {
 
-    System.out.println("------------------");
-    System.out.println("Testing deletes:");
+        System.out.println(t.getName());
+      }
 
-    dao.deleteById(joy.getRegisterId());
+      System.out.println("------------------");
+      System.out.println("Testing deletes:");
 
-    try {
       dao.deleteById(joy.getRegisterId());
-    } catch (UserNotFoundException e) {
-      System.out.println(e.getMessage());
-    }
 
-    for (User t : dao.findAll()) {
+      try {
+        dao.deleteById(joy.getRegisterId());
+      } catch (UserNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
 
-      System.out.println(t.getName());
-    }
+      for (User t : dao.findAll()) {
 
-    try {
-      dao.findById(joy.getRegisterId());
-    } catch (UserNotFoundException e) {
-      System.out.println(e.getMessage());
-    }
+        System.out.println(t.getName());
+      }
 
-    System.out.println("------------------");
-    System.out.println("Testing update:");
-    User a = dao.findById(ash.getRegisterId());
+      try {
+        dao.findById(joy.getRegisterId());
+      } catch (UserNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
 
-    a.setName("Ashe");
+      System.out.println("------------------");
+      System.out.println("Testing update:");
+      User a = dao.findById(ash.getRegisterId());
 
-    dao.update(a);
+      a.setName("Ashe");
 
-    try {
-      dao.update(joy);
-    } catch (UserNotFoundException e) {
-      System.out.println(e.getMessage());
-    }
+      dao.update(a);
 
-    System.out.println("------------------");
-    System.out.println("Testing inheritances");
+      try {
+        dao.update(joy);
+      } catch (UserNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
 
-    for (User u : dao.findAll()) {
+      System.out.println("------------------");
+      System.out.println("Testing inheritances");
 
-      System.out.println(u.getName());
+      for (User u : dao.findAll()) {
 
-      System.out.println("Is " + u.getName() + " an admin? " + (u instanceof Administrator));
-      System.out.println("Is " + u.getName() + " a nurse? " + (u instanceof Nurse));
-      System.out.println("Is " + u.getName() + " a sales clerk? " + (u instanceof SalesClerk));
-      System.out.println("Is " + u.getName() + " a trainer? " + (u instanceof Trainer));
+        System.out.println(u.getName());
 
-      if (a instanceof Trainer) {
+        System.out.println("Is " + u.getName() + " an admin? " + (u instanceof Administrator));
+        System.out.println("Is " + u.getName() + " a nurse? " + (u instanceof Nurse));
+        System.out.println("Is " + u.getName() + " a sales clerk? " + (u instanceof SalesClerk));
+        System.out.println("Is " + u.getName() + " a trainer? " + (u instanceof Trainer));
+
+        if (u instanceof Trainer) {
+          System.out.println(
+              u.getName()
+                  + "'s first pokemon is a "
+                  + ((Trainer) u).getPokemons().get(0).getSpecies());
+        }
+      }
+    } else {
+
+      for (User user : dao.findAll()) {
+
         System.out.println(
-            u.getName()
-                + "'s first pokemon is a "
-                + ((Trainer) u).getPokemons().get(0).getSpecies());
+            "Id: "
+                + user.getRegisterId()
+                + " Name: "
+                + user.getName()
+                + " Birth city: "
+                + user.getBirthCity());
       }
     }
   }
@@ -204,7 +219,7 @@ public class UserDaoFiles implements UserDao {
 
     if (index < 0) {
       throw new UserNotFoundException(
-          "User of Id " + id + " was not found. Delete action could be completed");
+          "User of Id " + id + " was not found. Delete action could not complete");
     }
 
     users.remove(index);
@@ -222,7 +237,7 @@ public class UserDaoFiles implements UserDao {
     }
 
     throw new UserNotFoundException(
-        "User of Id " + id + " was not found. Find action could be completed");
+        "User of Id " + id + " was not found. Find action could not complete");
   }
 
   @Override
