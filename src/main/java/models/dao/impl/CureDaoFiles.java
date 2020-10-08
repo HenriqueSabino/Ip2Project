@@ -18,7 +18,6 @@ import main.java.models.dao.CureDao;
 import main.java.models.dao.DaoFactory;
 import main.java.models.dao.impl.exception.CureNotFoundException;
 import main.java.models.dao.impl.exception.LocalDBIOException;
-import main.java.models.dao.impl.exception.UserNotFoundException;
 
 public class CureDaoFiles implements CureDao {
 
@@ -168,9 +167,12 @@ public class CureDaoFiles implements CureDao {
     }
 
     if (index < 0) {
-      throw new UserNotFoundException(
+      throw new CureNotFoundException(
           "Cure of Id " + id + " was not found. Delete action could not complete");
     }
+
+    cures.remove(index);
+    saveFile();
   }
 
   @Override
@@ -183,7 +185,7 @@ public class CureDaoFiles implements CureDao {
       }
     }
 
-    throw new UserNotFoundException(
+    throw new CureNotFoundException(
         "Cure of Id " + id + " was not found. Find action could not complete");
   }
 
