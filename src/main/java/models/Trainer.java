@@ -6,7 +6,19 @@ import java.util.List;
 public class Trainer extends User {
 
   private List<Pokemon> pokemons;
-  private int registerId;
+
+  public Trainer(
+      int registerId,
+      String name,
+      String birthCity,
+      String gender,
+      String username,
+      String password,
+      String email) {
+
+    super(registerId, name, birthCity, gender, username, password, email);
+    pokemons = new ArrayList<>();
+  }
 
   public Trainer(
       String name,
@@ -14,19 +26,13 @@ public class Trainer extends User {
       String gender,
       String username,
       String password,
-      String email,
-      int registerId) {
+      String email) {
 
     super(name, birthCity, gender, username, password, email);
-    this.registerId = registerId;
     pokemons = new ArrayList<>();
   }
 
   public List<Pokemon> getPokemons() {
     return pokemons;
-  }
-
-  public int getRegisterId() {
-    return registerId;
   }
 }

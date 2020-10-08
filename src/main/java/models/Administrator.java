@@ -2,7 +2,17 @@ package main.java.models;
 
 public class Administrator extends User {
 
-  private int registerId;
+  public Administrator(
+      int registerId,
+      String name,
+      String birthCity,
+      String gender,
+      String username,
+      String password,
+      String email) {
+
+    super(registerId, name, birthCity, gender, username, password, email);
+  }
 
   public Administrator(
       String name,
@@ -10,14 +20,8 @@ public class Administrator extends User {
       String gender,
       String username,
       String password,
-      String email,
-      int registerId) {
+      String email) {
 
     super(name, birthCity, gender, username, password, email);
-    this.registerId = registerId;
-  }
-
-  public int getRegisterId() {
-    return registerId;
   }
 }

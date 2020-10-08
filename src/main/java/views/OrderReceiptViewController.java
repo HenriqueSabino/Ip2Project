@@ -31,7 +31,7 @@ public class OrderReceiptViewController implements Initializable {
         new CartItem(new Product(0, "Super Potion", "A potion that heals 50HP", 100), 2, cart));
     cart.addItem(new CartItem(new Product(0, "Potion", "A potion that heals 200HP", 100), 4, cart));
 
-    Trainer trainer = new Trainer("Ash", "Pallet", "Male", "ash", "123", "ash@pallet.com", 0);
+    Trainer trainer = new Trainer("Ash", "Pallet", "Male", "ash", "123", "ash@pallet.com");
 
     Order order = new Order(0, cart, trainer);
 

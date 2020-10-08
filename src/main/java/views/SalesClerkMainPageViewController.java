@@ -41,12 +41,12 @@ public class SalesClerkMainPageViewController implements Initializable {
     // MOCKING CODE
     salesClerk =
         new SalesClerk(
-            "May", "Pallet", "Female", "maypallet", "123456", "maypallet@pokecenter.com", 0);
+            "May", "Pallet", "Female", "maypallet", "123456", "maypallet@pokecenter.com");
 
     List<Trainer> trainers = new ArrayList<>();
 
     trainers.add(
-        new Trainer("Ash", "Pallet", "Male", "ashpallet", "123456", "ashtrainner@pokemail.com", 0));
+        new Trainer("Ash", "Pallet", "Male", "ashpallet", "123456", "ashtrainner@pokemail.com"));
 
     trainers.add(
         new Trainer(
@@ -55,12 +55,10 @@ public class SalesClerkMainPageViewController implements Initializable {
             "Female",
             "mistycerulean",
             "123456",
-            "mistycerulean@pokemail.com",
-            1));
+            "mistycerulean@pokemail.com"));
 
     trainers.add(
-        new Trainer(
-            "Brock", "Kanto", "Male", "brockkanto", "123456", "brockkanto@pokemail.com", 2));
+        new Trainer("Brock", "Kanto", "Male", "brockkanto", "123456", "brockkanto@pokemail.com"));
 
     initializeWelcomeTxt();
     initializeTrainersListCb(trainers);
