@@ -32,21 +32,6 @@ public class CureDaoFiles implements CureDao {
 
     if (file.exists()) {
       readFile();
-    } else {
-
-      cures = new ArrayList<>();
-
-      Trainer ash = new Trainer("Ash", "Pallet", "male", "ash", "password", "email");
-      Nurse joy = new Nurse("Joy", "Cerulean", "female", "joy", "password", "email1");
-
-      LocalDateTime time = LocalDateTime.now();
-
-      ash.getPokemons()
-          .add(new Pokemon("Pikachu", 60, 60, PokemonType.ELECTRIC, PokemonStatus.NONE, ash));
-
-      insert(new Cure(time, ash.getPokemons().get(0), 60, PokemonStatus.NONE, joy, ash));
-
-      saveFile();
     }
   }
 
@@ -55,10 +40,10 @@ public class CureDaoFiles implements CureDao {
     // Please, backup and delete localStorage\\cures.ser before testing
     CureDao dao = DaoFactory.createCureDao();
 
-    if (dao.findAll().size() == 1) {
+    if (dao.findAll().size() == 0) {
 
       Trainer misty = new Trainer("Misty", "Cerulean", "female", "misty", "password", "email");
-      Nurse joy2 = new Nurse("Joy", "Cerulean", "female", "joy2", "password", "email1");
+      Nurse joy = new Nurse("Joy", "Cerulean", "female", "joy", "password", "email1");
 
       LocalDateTime time = LocalDateTime.now();
 
@@ -70,8 +55,8 @@ public class CureDaoFiles implements CureDao {
           .getPokemons()
           .add(new Pokemon("Starmie", 85, 85, PokemonType.WATER, PokemonStatus.NONE, misty));
 
-      Cure cure1 = new Cure(time, misty.getPokemons().get(0), 70, PokemonStatus.NONE, joy2, misty);
-      Cure cure2 = new Cure(time, misty.getPokemons().get(1), 85, PokemonStatus.NONE, joy2, misty);
+      Cure cure1 = new Cure(time, misty.getPokemons().get(0), 70, PokemonStatus.NONE, joy, misty);
+      Cure cure2 = new Cure(time, misty.getPokemons().get(1), 85, PokemonStatus.NONE, joy, misty);
 
       System.out.println("Testing inserts:");
 
@@ -108,6 +93,7 @@ public class CureDaoFiles implements CureDao {
 
       System.out.println("------------------");
       System.out.println("Testing update:");
+
       Cure a = dao.findById(cure1.getId());
 
       a.setCureDate(time);

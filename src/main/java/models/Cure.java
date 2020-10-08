@@ -20,6 +20,7 @@ public class Cure implements Serializable {
       int previousPokemonLife,
       PokemonStatus previousPokemonStatus,
       Trainer client) {
+
     this.id = id;
     this.cureDate = cureDate;
     this.pokemon = pokemon;
@@ -36,6 +37,7 @@ public class Cure implements Serializable {
       PokemonStatus previousPokemonStatus,
       User employee,
       Trainer client) {
+
     this.id = id;
     this.cureDate = cureDate;
     this.pokemon = pokemon;
@@ -52,6 +54,7 @@ public class Cure implements Serializable {
       PokemonStatus previousPokemonStatus,
       User employee,
       Trainer client) {
+
     this.cureDate = cureDate;
     this.pokemon = pokemon;
     this.previousPokemonLife = previousPokemonLife;
@@ -66,6 +69,7 @@ public class Cure implements Serializable {
       int previousPokemonLife,
       PokemonStatus previousPokemonStatus,
       Trainer client) {
+
     this.cureDate = cureDate;
     this.pokemon = pokemon;
     this.previousPokemonLife = previousPokemonLife;
