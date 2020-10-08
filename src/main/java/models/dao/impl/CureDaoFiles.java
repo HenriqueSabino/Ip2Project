@@ -32,6 +32,11 @@ public class CureDaoFiles implements CureDao {
 
     if (file.exists()) {
       readFile();
+    } else {
+
+      cures = new ArrayList<>();
+
+      saveFile();
     }
   }
 
