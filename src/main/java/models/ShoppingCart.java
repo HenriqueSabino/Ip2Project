@@ -1,9 +1,10 @@
 package main.java.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
 
   private List<CartItem> cartItemList;
 
@@ -40,5 +41,13 @@ public class ShoppingCart {
 
   public List<CartItem> getItems() {
     return cartItemList;
+  }
+
+  @Override
+  public String toString() {
+
+    return "ShoppingCart{" +
+            "cartItemList=" + cartItemList +
+            '}';
   }
 }

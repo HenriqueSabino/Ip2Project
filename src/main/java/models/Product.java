@@ -1,6 +1,8 @@
 package main.java.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
 
   private int id;
   private String name;
@@ -8,6 +10,13 @@ public class Product {
   private int price;
 
   public Product() {}
+
+  public Product(String name, String description, int price) {
+
+    this.name = name;
+    this.description = description;
+    this.price = price;
+  }
 
   public Product(int id, String name, String description, int price) {
 
