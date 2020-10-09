@@ -144,7 +144,6 @@ public class CureReport {
 
     List<Cure> allCures = getAllCures();
     List<Cure> cures = new ArrayList<>();
-    Set<Cure> cureSet = new HashSet<>();
 
     if (employee != null) {
 
@@ -152,45 +151,41 @@ public class CureReport {
 
         if (employee.getUsername().equals(c.getEmployee().getUsername())) {
 
-          cureSet.add(c);
+          cures.add(c);
         }
       }
     }
 
     if (client != null) {
 
-      for (Cure c : allCures) {
+      for (Cure c : cures) {
 
         if (client.getUsername().equals(c.getClient().getUsername())) {
 
-          cureSet.add(c);
+          cures.add(c);
         }
       }
     }
 
     if (startDate != null) {
 
-      for (Cure c : allCures) {
+      for (Cure c : cures) {
 
         if (c.getCureDate().isAfter(startDate)) {
 
-          cureSet.add(c);
+          cures.add(c);
         }
       }
     }
 
     if (endDate != null) {
 
-      for (Cure c : cureSet) {
+      for (Cure c : cures) {
 
-        if (c.getCureDate().isAfter(endDate)) {
-          cureSet.remove(c);
+        if (c.getCureDate().isBefore(endDate)) {
+          cures.add(c);
         }
       }
-    }
-
-    for (Cure c : cureSet) {
-      cures.add(c);
     }
 
     System.out.println("Number of cures: " + cures.size());
