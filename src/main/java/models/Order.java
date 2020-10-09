@@ -1,5 +1,7 @@
 package main.java.models;
 
+import javafx.beans.binding.StringBinding;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -110,12 +112,12 @@ public class Order implements Serializable {
   @Override
   public String toString() {
 
-    return "Order{" +
-            "id=" + id +
-            ", orderDate=" + orderDate +
-            ", shoppingCart=" + shoppingCart +
-            ", employee=" + employee +
-            ", client=" + client +
-            '}';
+    return "Order {" +
+            "\n id: " + id + "\n" +
+            " orderDate: " + orderDate + "\n" +
+            " shoppingCart: " + shoppingCart + "\n" +
+            " employee: " + employee.getName() + "\n" +
+            " client: " + client.getName() + "\n" +
+            "}\n";
   }
 }

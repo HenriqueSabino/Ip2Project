@@ -26,25 +26,22 @@ public class OrderDaoFiles implements OrderDao {
 
       orders = new ArrayList<>();
 
-      orders.add(new Order(null, null, null));
-
       saveFile();
     }
   }
 
   public static void main(String[] args) {
 
-    // Please, backup and delete localStorage\\users.ser before testin
     OrderDao dao = DaoFactory.createOrderDao();
 
-    if (dao.findAll().size() == 1) {
+    if (dao.findAll().size() == 0) {
 
       Trainer ash = new Trainer("Ash", "Pallet", "male", "ash", "password", "email");
 
       ash.getPokemons()
           .add(new Pokemon("Pikachu", 60, 60, PokemonType.ELECTRIC, PokemonStatus.NONE, ash));
 
-      Nurse joy = new Nurse(
+      SalesClerk joy = new SalesClerk(
               "Joy",
               "Ribeirão",
               "Female",
@@ -137,6 +134,7 @@ public class OrderDaoFiles implements OrderDao {
 
       System.out.println("------------------");
       System.out.println("Testing updates...");
+      System.out.println();
 
       dao.insert(order);
 
@@ -170,17 +168,7 @@ public class OrderDaoFiles implements OrderDao {
 
       for (Order order : dao.findAll()) {
 
-        System.out.println(
-            "Id: "
-                + order.getId()
-                + " Order data: "
-                + order.getOrderDate()
-                + " Shopping cart: "
-                + order.getShoppingCart()
-                + " User: "
-                + order.getEmployee()
-                + " Client: "
-                + order.getClient());
+        System.out.println(order);
       }
     }
   }

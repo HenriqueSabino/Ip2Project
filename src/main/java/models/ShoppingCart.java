@@ -46,8 +46,18 @@ public class ShoppingCart implements Serializable {
   @Override
   public String toString() {
 
-    return "ShoppingCart{" +
-            "cartItemList=" + cartItemList +
-            '}';
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[");
+    for (int i = 0; i < cartItemList.size(); i++) {
+      if (i == cartItemList.size() - 1) {
+        sb.append(cartItemList.get(i).getProduct().getName());
+        break;
+      }
+      sb.append(cartItemList.get(i).getProduct().getName() + ", ");
+    }
+    sb.append("]");
+
+    return sb.toString();
   }
 }

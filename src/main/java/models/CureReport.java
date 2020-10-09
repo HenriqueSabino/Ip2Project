@@ -2,14 +2,10 @@ package main.java.models;
 
 import main.java.models.dao.CureDao;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.OrderDao;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class CureReport {
 
@@ -18,25 +14,7 @@ public class CureReport {
   private Trainer client;
   private User employee;
 
-  public CureReport(LocalDateTime startDate, LocalDateTime endDate, Trainer client, User employee) {
-
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.client = client;
-    this.employee = employee;
-  }
-
-  public CureReport(LocalDateTime startDate, LocalDateTime endDate, Trainer client) {
-
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.client = client;
-  }
-
-  public CureReport(LocalDateTime startDate, LocalDateTime endDate) {
-
-    this.startDate = startDate;
-    this.endDate = endDate;
+  public CureReport() {
   }
 
   public static void main(String[] args) {
@@ -99,20 +77,45 @@ public class CureReport {
     System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, Trainer client, User employee' filter...");
     System.out.println("------------------------");
 
-    CureReport cureReport1 = new CureReport(dateC2, dateC1.plusDays(10), ash, joy);
+    CureReport cureReport1 = new CureReport();
+    cureReport1.setStartDate(dateC1);
+    cureReport1.setEndDate(dateC1.plusDays(10));
+    cureReport1.setClient(ash);
+    cureReport1.setEmployee(joy);
     System.out.println(cureReport1.getReport());
 
     System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, Trainer client' filter...");
     System.out.println("------------------------");
 
-    CureReport cureReport2 = new CureReport(dateC1, dateC1.plusDays(10), ash);
+    CureReport cureReport2 = new CureReport();
+    cureReport2.setStartDate(dateC1);
+    cureReport2.setEndDate(dateC1.plusDays(10));
+    cureReport2.setClient(ash);
     System.out.println(cureReport2.getReport());
+
+    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, User employee' filter...");
+    System.out.println("------------------------");
+
+    CureReport cureReport3 = new CureReport();
+    cureReport3.setStartDate(dateC1);
+    cureReport3.setEndDate(dateC1.plusDays(10));
+    cureReport3.setEmployee(joy);
+    System.out.println(cureReport3.getReport());
 
     System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate' filter...");
     System.out.println("------------------------");
 
-    CureReport cureReport3 = new CureReport(dateC2, dateC1.plusDays(10));
-    System.out.println(cureReport3.getReport());
+    CureReport cureReport4 = new CureReport();
+    cureReport4.setStartDate(dateC1);
+    cureReport4.setEndDate(dateC1.plusDays(10));
+    System.out.println(cureReport4.getReport());
+
+    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate' filter...");
+    System.out.println("------------------------");
+
+    CureReport cureReport5 = new CureReport();
+    cureReport5.setStartDate(dateC1);
+    System.out.println(cureReport5.getReport());
   }
 
   public List<Cure> getAllCures() {
@@ -121,41 +124,73 @@ public class CureReport {
     return cureDao.findAll();
   }
 
+  public void setStartDate(LocalDateTime startDate) {
+    this.startDate = startDate;
+  }
+
+  public void setEndDate(LocalDateTime endDate) {
+    this.endDate = endDate;
+  }
+
+  public void setClient(Trainer client) {
+    this.client = client;
+  }
+
+  public void setEmployee(User employee) {
+    this.employee = employee;
+  }
+
   public String getReport() {
 
     List<Cure> allCures = getAllCures();
     List<Cure> cures = new ArrayList<>();
+    Set<Cure> cureSet = new HashSet<>();
 
-    if (employee == null && client == null) {
+    if (employee != null) {
 
-        for (Cure c : allCures) {
-
-          if (c.getCureDate().isAfter(startDate) && c.getCureDate().isBefore(endDate)) {
-            cures.add(c);
-          }
-        }
-    } else if (employee == null && client != null) {
       for (Cure c : allCures) {
 
-        if (c.getCureDate().isAfter(startDate) && c.getCureDate().isBefore(endDate)) {
-          if (c.getClient().getUsername().equals(client.getUsername())) {
+        if (employee.getUsername().equals(c.getEmployee().getUsername())) {
 
-            cures.add(c);
-          }
+          cureSet.add(c);
         }
-
       }
-    } else {
+    }
+
+    if (client != null) {
+
       for (Cure c : allCures) {
 
-        if (c.getCureDate().isAfter(startDate) && c.getCureDate().isBefore(endDate)) {
-          if (c.getClient().getUsername().equals(client.getUsername()) && c.getEmployee().getUsername().equals(employee.getUsername())) {
+        if (client.getUsername().equals(c.getClient().getUsername())) {
 
-            cures.add(c);
-          }
+          cureSet.add(c);
         }
       }
+    }
 
+    if (startDate != null) {
+
+      for (Cure c : allCures) {
+
+        if (c.getCureDate().isAfter(startDate)) {
+
+          cureSet.add(c);
+        }
+      }
+    }
+
+    if (endDate != null) {
+
+      for (Cure c : cureSet) {
+
+        if (c.getCureDate().isAfter(endDate)) {
+          cureSet.remove(c);
+        }
+      }
+    }
+
+    for (Cure c : cureSet) {
+      cures.add(c);
     }
 
     System.out.println("Number of cures: " + cures.size());
