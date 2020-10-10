@@ -30,6 +30,14 @@ public class CureReport {
             "12345",
             "emaildajoyzinha");
 
+    User anotherJoy = new Nurse(
+            "Joy2",
+            "Palete",
+            "Female",
+            "joyzinha2",
+            "1234",
+            "emaildajoyzinha2");
+
     Trainer ash = new Trainer(
             "Ash",
             "Palete",
@@ -70,51 +78,77 @@ public class CureReport {
             joy,
             ash);
 
+    Cure cure3 = new Cure(
+            dateC1,
+            eevee,
+            eevee.getLife(),
+            eevee.getStatus(),
+            anotherJoy,
+            ash);
+
+    Cure cure4 = new Cure(
+            dateC2,
+            pikachu,
+            pikachu.getLife(),
+            pikachu.getStatus(),
+            anotherJoy,
+            ash);
+
     CureDao cureDao = DaoFactory.createCureDao();
     cureDao.insert(cure1);
     cureDao.insert(cure2);
-
-    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, Trainer client, User employee' filter...");
-    System.out.println("------------------------");
+    cureDao.insert(cure3);
+    cureDao.insert(cure4);
 
     CureReport cureReport1 = new CureReport();
     cureReport1.setStartDate(dateC1);
     cureReport1.setEndDate(dateC1.plusDays(10));
     cureReport1.setClient(ash);
     cureReport1.setEmployee(joy);
-    System.out.println(cureReport1.getReport());
-
-    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, Trainer client' filter...");
+    System.out.println(
+            "Testing 'start date: " + cureReport1.startDate +
+                    ", end date: " + cureReport1.endDate +
+                    ", trainer: " + cureReport1.client +
+                    ", employee: " + cureReport1.employee + "' filter...");
     System.out.println("------------------------");
+    System.out.println(cureReport1.getReport());
 
     CureReport cureReport2 = new CureReport();
     cureReport2.setStartDate(dateC1);
     cureReport2.setEndDate(dateC1.plusDays(10));
     cureReport2.setClient(ash);
-    System.out.println(cureReport2.getReport());
-
-    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate, User employee' filter...");
+    System.out.println(
+            "Testing 'start date: " + cureReport2.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
+                    ", end date: " + cureReport2.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
+                    ", trainer: " + cureReport2.client.getName() + "' filter...");
     System.out.println("------------------------");
+    System.out.println(cureReport2.getReport());
 
     CureReport cureReport3 = new CureReport();
     cureReport3.setStartDate(dateC1);
     cureReport3.setEndDate(dateC1.plusDays(10));
     cureReport3.setEmployee(joy);
-    System.out.println(cureReport3.getReport());
-
-    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate' filter...");
+    System.out.println(
+            "Testing 'start date: " + cureReport3.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
+                    ", end date: " + cureReport3.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
+                    ", employee: " + cureReport3.employee.getName() + "' filter...");
     System.out.println("------------------------");
+    System.out.println(cureReport3.getReport());
 
     CureReport cureReport4 = new CureReport();
     cureReport4.setStartDate(dateC1);
     cureReport4.setEndDate(dateC1.plusDays(10));
-    System.out.println(cureReport4.getReport());
-
-    System.out.println("Testing 'LocalDateTime startDate, LocalDateTime endDate' filter...");
+    System.out.println(
+            "Testing 'start date: " + cureReport4.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
+                    ", end date: " + cureReport4.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) + "' filter...");
     System.out.println("------------------------");
+    System.out.println(cureReport4.getReport());
 
     CureReport cureReport5 = new CureReport();
     cureReport5.setStartDate(dateC1);
+    System.out.println(
+            "Testing 'start date: " + cureReport5.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) + "' filter...");
+    System.out.println("------------------------");
     System.out.println(cureReport5.getReport());
   }
 
@@ -149,7 +183,7 @@ public class CureReport {
 
       for (Cure c : allCures) {
 
-        if (employee.getUsername().equals(c.getEmployee().getUsername())) {
+        if (!employee.getUsername().equals(c.getEmployee().getUsername())) {
 
           cures.add(c);
         }
@@ -158,9 +192,9 @@ public class CureReport {
 
     if (client != null) {
 
-      for (Cure c : cures) {
+      for (Cure c : allCures) {
 
-        if (client.getUsername().equals(c.getClient().getUsername())) {
+        if (!client.getUsername().equals(c.getClient().getUsername())) {
 
           cures.add(c);
         }
@@ -169,9 +203,9 @@ public class CureReport {
 
     if (startDate != null) {
 
-      for (Cure c : cures) {
+      for (Cure c : allCures) {
 
-        if (c.getCureDate().isAfter(startDate)) {
+        if (!c.getCureDate().isAfter(startDate)) {
 
           cures.add(c);
         }
@@ -180,16 +214,18 @@ public class CureReport {
 
     if (endDate != null) {
 
-      for (Cure c : cures) {
+      for (Cure c : allCures) {
 
-        if (c.getCureDate().isBefore(endDate)) {
+        if (!c.getCureDate().isBefore(endDate)) {
           cures.add(c);
         }
       }
     }
 
-    System.out.println("Number of cures: " + cures.size());
-    return generateReport(cures);
+    allCures.removeAll(cures);
+
+    System.out.println("Number of cures: " + allCures.size());
+    return generateReport(allCures);
   }
 
   public String generateReport(List<Cure> cures) {
