@@ -12,7 +12,7 @@ import main.java.models.Product;
 import main.java.models.dao.DaoFactory;
 import main.java.models.dao.ProductDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
-import main.java.models.dao.impl.exception.NameOrDescriptionInProductException;
+import main.java.models.dao.impl.exception.NameOrDescriptionInUserException;
 import main.java.models.dao.impl.exception.ProductNotFoundException;
 
 public class ProductDaoFiles implements ProductDao {
@@ -57,7 +57,7 @@ public class ProductDaoFiles implements ProductDao {
 
       try {
         dao.insert(burnHeal);
-      } catch (NameOrDescriptionInProductException e) {
+      } catch (NameOrDescriptionInUserException e) {
         System.out.println(e.getMessage());
       }
 
@@ -118,13 +118,13 @@ public class ProductDaoFiles implements ProductDao {
 
       if (u.getName().equals(product.getName())
           || u.getDescription().equals(product.getDescription())) {
-        throw new NameOrDescriptionInProductException(
+        throw new NameOrDescriptionInUserException(
             "Name and description must be unique. Insert action was canceled");
       }
     }
 
     // Using LocalDateTime.now().hashCode() to provide uniqueIds to all products
-    product.setRegisterId(LocalDateTime.now().hashCode());
+    product.setId(LocalDateTime.now().hashCode());
     products.add(product);
 
     saveFile();
@@ -146,7 +146,7 @@ public class ProductDaoFiles implements ProductDao {
         index = i;
       } else if (products.get(i).getName().equals(product.getName())
           || products.get(i).getDescription().equals(product.getDescription())) {
-        throw new NameOrDescriptionInProductException(
+        throw new NameOrDescriptionInUserException(
             "Name and description must be unique. Update action was canceled");
       }
     }

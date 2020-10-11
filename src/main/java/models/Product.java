@@ -30,7 +30,7 @@ public class Product implements Serializable {
     return id;
   }
 
-  public void setRegisterId(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 
