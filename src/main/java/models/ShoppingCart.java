@@ -1,9 +1,10 @@
 package main.java.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
 
   private List<CartItem> cartItemList;
 
@@ -40,5 +41,23 @@ public class ShoppingCart {
 
   public List<CartItem> getItems() {
     return cartItemList;
+  }
+
+  @Override
+  public String toString() {
+
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[");
+    for (int i = 0; i < cartItemList.size(); i++) {
+      if (i == cartItemList.size() - 1) {
+        sb.append(cartItemList.get(i).getProduct().getName());
+        break;
+      }
+      sb.append(cartItemList.get(i).getProduct().getName() + ", ");
+    }
+    sb.append("]");
+
+    return sb.toString();
   }
 }
