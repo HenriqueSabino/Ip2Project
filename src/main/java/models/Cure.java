@@ -85,12 +85,20 @@ public class Cure implements Serializable {
     this.id = id;
   }
 
+  public Trainer getClient() {
+    return client;
+  }
+
   public LocalDateTime getCureDate() {
     return cureDate;
   }
 
   public void setCureDate(LocalDateTime cureDate) {
     this.cureDate = cureDate;
+  }
+
+  public User getEmployee() {
+    return employee;
   }
 
   public Pokemon getPokemon() {
@@ -103,13 +111,5 @@ public class Cure implements Serializable {
 
   public PokemonStatus getPreviousPokemonStatus() {
     return previousPokemonStatus;
-  }
-
-  public User getEmployee() {
-    return employee;
-  }
-
-  public Trainer getClient() {
-    return client;
   }
 }

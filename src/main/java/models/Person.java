@@ -25,19 +25,19 @@ public abstract class Person implements Serializable {
     this.name = name;
   }
 
-  public String getBirthCity() {
-    return birthCity;
-  }
-
-  public void setBirthCity(String birthCity) {
-    this.birthCity = birthCity;
-  }
-
   public String getGender() {
     return gender;
   }
 
   public void setGender(String gender) {
     this.gender = gender;
+  }
+
+  public String getBirthCity() {
+    return birthCity;
+  }
+
+  public void setBirthCity(String birthCity) {
+    this.birthCity = birthCity;
   }
 }
