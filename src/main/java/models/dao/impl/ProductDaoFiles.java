@@ -12,7 +12,7 @@ import main.java.models.Product;
 import main.java.models.dao.DaoFactory;
 import main.java.models.dao.ProductDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
-import main.java.models.dao.impl.exception.NameOrDescriptionInUserException;
+import main.java.models.dao.impl.exception.NameOrDescriptionInUseException;
 import main.java.models.dao.impl.exception.ProductNotFoundException;
 
 public class ProductDaoFiles implements ProductDao {
@@ -57,7 +57,7 @@ public class ProductDaoFiles implements ProductDao {
 
       try {
         dao.insert(burnHeal);
-      } catch (NameOrDescriptionInUserException e) {
+      } catch (NameOrDescriptionInUseException e) {
         System.out.println(e.getMessage());
       }
 
@@ -118,7 +118,7 @@ public class ProductDaoFiles implements ProductDao {
 
       if (u.getName().equals(product.getName())
           || u.getDescription().equals(product.getDescription())) {
-        throw new NameOrDescriptionInUserException(
+        throw new NameOrDescriptionInUseException(
             "Name and description must be unique. Insert action was canceled");
       }
     }
@@ -146,7 +146,7 @@ public class ProductDaoFiles implements ProductDao {
         index = i;
       } else if (products.get(i).getName().equals(product.getName())
           || products.get(i).getDescription().equals(product.getDescription())) {
-        throw new NameOrDescriptionInUserException(
+        throw new NameOrDescriptionInUseException(
             "Name and description must be unique. Update action was canceled");
       }
     }
