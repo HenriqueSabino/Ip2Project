@@ -112,15 +112,15 @@ public class SalesClerkMainPageViewController implements Initializable {
     }
   }
 
-  public void onEditOwnRegisterHl(ActionEvent event) {
+  public void onEditOwnRegisterHlAction(ActionEvent event) {
     System.out.println("Editing own register");
   }
 
-  public void onManagerTrainersHl(ActionEvent event) {
+  public void onManagerTrainersHlAction(ActionEvent event) {
     System.out.println("Going to Trainers CRUD");
   }
 
-  public void onManageProductsHl(ActionEvent event) {
+  public void onManageProductsHlAction(ActionEvent event) {
     System.out.println("Going to Products CRUD");
   }
 
@@ -157,7 +157,7 @@ public class SalesClerkMainPageViewController implements Initializable {
         if (empty) {
           setText("");
         } else {
-          setText(trainer.getName() + " de " + trainer.getBirthCity());
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
         }
       }
     };
