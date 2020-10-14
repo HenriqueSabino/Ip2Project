@@ -9,6 +9,7 @@ import main.java.models.dao.UserDao;
 public class UserController {
 
   private static UserController instance;
+
   private UserDao userDao;
   private User loggedUser;
 
@@ -44,6 +45,11 @@ public class UserController {
     }
 
     return false;
+  }
+
+  public void Logout() {
+
+    loggedUser = null;
   }
 
   public User getLoggedUser() {

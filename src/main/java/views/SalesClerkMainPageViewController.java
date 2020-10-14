@@ -17,8 +17,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import main.java.models.SalesClerk;
+import main.java.controllers.UserController;
 import main.java.models.Trainer;
+import main.java.models.User;
 
 public class SalesClerkMainPageViewController implements Initializable {
 
@@ -31,17 +32,14 @@ public class SalesClerkMainPageViewController implements Initializable {
   @FXML private Hyperlink manageProductsHl;
   @FXML private Text welcomeTxt;
 
-  private SalesClerk salesClerk;
+  private User employee;
   private Trainer selectedTrainer;
   private ObservableList<Trainer> trainersObsList;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    // MOCKING CODE
-    salesClerk =
-        new SalesClerk(
-            "May", "Pallet", "Female", "maypallet", "123456", "maypallet@pokecenter.com");
+    employee = UserController.getInstance().getLoggedUser();
 
     List<Trainer> trainers = new ArrayList<>();
 
@@ -71,7 +69,7 @@ public class SalesClerkMainPageViewController implements Initializable {
 
   public void onBackBtAction(ActionEvent event) {
 
-    System.out.println("Logging out");
+    UserController.getInstance().Logout();
 
     try {
 
@@ -130,8 +128,8 @@ public class SalesClerkMainPageViewController implements Initializable {
 
     String newText = welcomeTxt.getText();
 
-    newText = newText.replace("{name}", salesClerk.getName());
-    newText = newText.replace("{city}", salesClerk.getBirthCity());
+    newText = newText.replace("{name}", employee.getName());
+    newText = newText.replace("{city}", employee.getBirthCity());
 
     welcomeTxt.setText(newText);
   }
