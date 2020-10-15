@@ -1,7 +1,6 @@
 package main.java.views;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -11,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import main.java.controllers.UserController;
 import main.java.models.Trainer;
 import main.java.models.User;
+import main.java.services.SalesService;
+import main.java.views.util.Alerts;
 
 public class SalesClerkMainPageViewController implements Initializable {
 
@@ -41,22 +43,7 @@ public class SalesClerkMainPageViewController implements Initializable {
 
     employee = UserController.getInstance().getLoggedUser();
 
-    List<Trainer> trainers = new ArrayList<>();
-
-    trainers.add(
-        new Trainer("Ash", "Pallet", "Male", "ashpallet", "123456", "ashtrainner@pokemail.com"));
-
-    trainers.add(
-        new Trainer(
-            "Misty",
-            "Cerulean",
-            "Female",
-            "mistycerulean",
-            "123456",
-            "mistycerulean@pokemail.com"));
-
-    trainers.add(
-        new Trainer("Brock", "Kanto", "Male", "brockkanto", "123456", "brockkanto@pokemail.com"));
+    List<Trainer> trainers = UserController.getInstance().getAllTrainers();
 
     initializeWelcomeTxt();
     initializeTrainersListCb(trainers);
@@ -83,9 +70,10 @@ public class SalesClerkMainPageViewController implements Initializable {
   public void onStartShoppingBtAction(ActionEvent event) {
 
     if (selectedTrainer == null) {
-      System.out.println("Error, trainer is null");
+      Alerts.showAlert(
+          "Error", null, "A trainer must be selected to begin shopping!", AlertType.ERROR);
     } else {
-      System.out.println("Start shopping with " + selectedTrainer.getName());
+      SalesService.getInstance().startOrder(employee, selectedTrainer);
     }
   }
 

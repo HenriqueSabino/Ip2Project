@@ -5,6 +5,8 @@ import main.java.models.Order;
 import main.java.models.ShoppingCart;
 import main.java.models.Trainer;
 import main.java.models.User;
+import main.java.services.exception.CartItemNotFoundException;
+import main.java.services.exception.OrderWasNullException;
 
 // Singleton
 public class SalesService {
@@ -17,6 +19,11 @@ public class SalesService {
   private SalesService() {}
 
   public static SalesService getInstance() {
+
+    if (instance == null) {
+      instance = new SalesService();
+    }
+
     return instance;
   }
 
@@ -34,49 +41,48 @@ public class SalesService {
 
   public void addToCart(CartItem item) {
 
-    boolean alreadyInCart = false;
-
     for (CartItem i : shoppingCart.getItems()) {
 
       if (i.getProduct().equals(item.getProduct())) {
 
-        i.setQuantity(i.getQuantity() + item.getQuantity());
-        alreadyInCart = true;
+        shoppingCart.removeItem(i);
         break;
       }
     }
 
-    if (!alreadyInCart) {
-      shoppingCart.addItem(item);
+    shoppingCart.addItem(item);
+  }
+
+  public void removeFromCart(CartItem item) throws CartItemNotFoundException {
+
+    boolean success = false;
+
+    for (CartItem i : shoppingCart.getItems()) {
+
+      if (i.equals(item)) {
+
+        shoppingCart.removeItem(i);
+        success = true;
+        break;
+      }
+    }
+
+    if (!success) {
+
+      throw new CartItemNotFoundException("This item is not in your shopping cart");
     }
   }
 
-  public void removeFromCart(CartItem item) {
+  public String generateReceipt() throws OrderWasNullException {
 
-    boolean alreadyInCart = false;
+    String receipt = "";
 
-    for (CartItem i : shoppingCart.getItems()) {
-
-      if (i.getProduct().equals(item.getProduct())) {
-
-        if (i.getQuantity() > item.getQuantity()) {
-          i.setQuantity(i.getQuantity() - item.getQuantity());
-          break;
-        } else if (i.getQuantity() == item.getQuantity()) {
-          shoppingCart.removeItem(i);
-          break;
-        } else {
-          // exception, net quantity cannot be negative
-        }
-
-        alreadyInCart = true;
-        break;
-      }
+    if (order != null) {
+      receipt = order.generateReceipt();
+    } else {
+      throw new OrderWasNullException("No order was started.");
     }
 
-    if (!alreadyInCart && item.getQuantity() != 0) {
-
-      // exception, item quantity cannot be negative
-    }
+    return receipt;
   }
 }
