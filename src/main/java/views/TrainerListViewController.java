@@ -80,23 +80,23 @@ public class TrainerListViewController implements Initializable {
   }
 
   @FXML
-  public void onButtonNewTrainer(ActionEvent event) {
+  public void onButtonNewTrainerAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
     createDialogForm("/main/java/views/TrainerFormView.fxml", parentStage);
   }
 
   @FXML
-  public void onButtonUpdate() {
+  public void onButtonUpdateAction() {
     System.out.println("onButtonUpdate");
   }
 
   @FXML
-  public void onButtonDelete() {
+  public void onButtonDeleteAction() {
     System.out.println("onButtonDelete");
   }
 
   @FXML
-  public void onButtonBack() {
+  public void onButtonBackAction() {
     System.out.println("onButtonBack");
   }
 

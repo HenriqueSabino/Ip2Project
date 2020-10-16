@@ -21,10 +21,10 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainer" text="New Trainer" />
-            <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onButtonUpdate" text="Update" />
-            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDelete" text="Delete" />
-            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBack" text="Go back" />
+          <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainerAction" text="New Trainer" />
+            <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onButtonUpdateAction" text="Update" />
+            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteAction" text="Delete" />
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="Go back" />
         </items>
       </ToolBar>
        <TableView fx:id="tableViewTrainer" prefHeight="600.0" prefWidth="806.0">
