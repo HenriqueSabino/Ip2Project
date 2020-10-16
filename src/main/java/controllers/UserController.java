@@ -151,10 +151,10 @@ public class UserController {
   }
 
   public void saveOrUpdate(Trainer trainer) {
-
     if (trainer.getRegisterId() == 0) {
       userDao.insert(trainer);
     } else {
+      System.out.println("name: " + trainer.getName());
       userDao.update(trainer);
     }
   }

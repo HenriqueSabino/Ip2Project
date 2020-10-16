@@ -94,6 +94,8 @@ public class TrainerFormViewController implements Initializable {
 
     ValidationException exception = new ValidationException("Validation error");
 
+    trainer.setRegisterId(Utils.tryParseToInt(textFieldRegisterId.getText()));
+
     if (textFieldName.getText() == null || textFieldName.getText().trim().equals("")) {
       exception.addError("name", "Field can't be empty.");
     }
@@ -143,7 +145,6 @@ public class TrainerFormViewController implements Initializable {
 
   private void initializeNodes() {
 
-    Constraints.setTextFieldInteger(textFieldRegisterId);
     Constraints.setTextFieldMaxLength(textFieldName, 30);
     Constraints.setTextFieldMaxLength(textFieldBirthCity, 30);
     Constraints.setTextFieldMaxLength(textFieldGender, 6);

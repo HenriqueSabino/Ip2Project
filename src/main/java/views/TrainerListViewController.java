@@ -1,5 +1,6 @@
 package main.java.views;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -35,6 +33,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   @FXML private TableView<Trainer> tableViewTrainer;
   @FXML private TableColumn<Trainer, String> tableColumnRegisterId;
   @FXML private TableColumn<Trainer, String> tableColumnName;
+  @FXML private TableColumn<Trainer, Trainer> tableColumnEDIT;
   @FXML private TableColumn<Trainer, String> tableColumnBirthCity;
   @FXML private TableColumn<Trainer, String> tableColumnGender;
   @FXML private TableColumn<Trainer, String> tableColumnUsername;
@@ -78,6 +77,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
     trainerObservableList = FXCollections.observableArrayList(trainerList);
     tableViewTrainer.setItems(trainerObservableList);
+    initEditButtons();
   }
 
   @FXML
@@ -131,5 +131,30 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   @Override
   public void onDataChanged() {
     updateTableView();
+  }
+
+  private void initEditButtons() {
+    tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+    tableColumnEDIT.setCellFactory(
+        param ->
+            new TableCell<Trainer, Trainer>() {
+              private final Button button = new Button("edit");
+
+              @Override
+              protected void updateItem(Trainer obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                  setGraphic(null);
+                  return;
+                }
+                setGraphic(button);
+                button.setOnAction(
+                    event ->
+                        createDialogForm(
+                            obj,
+                            "/main/java/views/TrainerFormView.fxml",
+                            Utils.getCurrentStage(event)));
+              }
+            });
   }
 }

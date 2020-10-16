@@ -197,6 +197,8 @@ public class UserDaoFiles implements UserDao {
       throw new UserNotFoundException("User of Id " + user.getRegisterId() + " was not found.");
     }
 
+    users.remove(users.get(index));
+    users.add(user);
     saveFile();
 
     return user;
