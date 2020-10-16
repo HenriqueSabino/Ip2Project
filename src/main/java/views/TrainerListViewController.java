@@ -82,7 +82,8 @@ public class TrainerListViewController implements Initializable {
   @FXML
   public void onButtonNewTrainerAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
-    createDialogForm("/main/java/views/TrainerFormView.fxml", parentStage);
+    Trainer trainer = new Trainer();
+    createDialogForm(trainer, "/main/java/views/TrainerFormView.fxml", parentStage);
   }
 
   @FXML
@@ -100,11 +101,15 @@ public class TrainerListViewController implements Initializable {
     System.out.println("onButtonBack");
   }
 
-  private void createDialogForm(String absoluteName, Stage parentStage) {
+  private void createDialogForm(Trainer trainer, String absoluteName, Stage parentStage) {
     try {
 
       FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
       Pane pane = loader.load();
+
+      TrainerFormViewController controller = loader.getController();
+      controller.setTrainer(trainer);
+      controller.updateFormData();
 
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Enter Trainer Data");

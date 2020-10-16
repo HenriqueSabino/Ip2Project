@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import main.java.models.Trainer;
 import main.java.views.util.Constraints;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TrainerFormViewController implements Initializable {
+
+  private Trainer entity;
 
   @FXML private TextField textFieldRegisterId;
   @FXML private TextField textFieldName;
@@ -21,6 +24,10 @@ public class TrainerFormViewController implements Initializable {
 
   @FXML private Button buttonSave;
   @FXML private Button buttonCancel;
+
+  public void setTrainer(Trainer entity) {
+    this.entity = entity;
+  }
 
   @FXML
   public void onButtonSaveAction() {
@@ -37,7 +44,8 @@ public class TrainerFormViewController implements Initializable {
     initializeNodes();
   }
 
-  private void initializeNodes() {
+   private void initializeNodes() {
+
     Constraints.setTextFieldInteger(textFieldRegisterId);
     Constraints.setTextFieldMaxLength(textFieldName, 30);
     Constraints.setTextFieldMaxLength(textFieldBirthCity, 30);
@@ -45,5 +53,20 @@ public class TrainerFormViewController implements Initializable {
     Constraints.setTextFieldMaxLength(textFieldEmail, 30);
     Constraints.setTextFieldMaxLength(textFieldUsername, 20);
     Constraints.setTextFieldMaxLength(textFieldPassword, 10);
+  }
+
+  public void updateFormData() {
+
+    if (entity == null) {
+      throw new IllegalStateException("Entity was null.");
+    }
+
+    textFieldRegisterId.setText(String.valueOf(entity.getRegisterId()));
+    textFieldName.setText(entity.getName());
+    textFieldBirthCity.setText(entity.getBirthCity());
+    textFieldGender.setText(entity.getGender());
+    textFieldUsername.setText(entity.getUsername());
+    textFieldPassword.setText(entity.getPassword());
+    textFieldEmail.setText(entity.getEmail());
   }
 }
