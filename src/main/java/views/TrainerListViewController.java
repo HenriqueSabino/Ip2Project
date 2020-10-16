@@ -109,6 +109,7 @@ public class TrainerListViewController implements Initializable {
 
       TrainerFormViewController controller = loader.getController();
       controller.setTrainer(trainer);
+      controller.setUserController(UserController.getInstance());
       controller.updateFormData();
 
       Stage dialogStage = new Stage();

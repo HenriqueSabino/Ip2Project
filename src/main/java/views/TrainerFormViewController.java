@@ -1,11 +1,17 @@
 package main.java.views;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import main.java.controllers.UserController;
 import main.java.models.Trainer;
+import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
+import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
+import main.java.views.util.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +19,8 @@ import java.util.ResourceBundle;
 public class TrainerFormViewController implements Initializable {
 
   private Trainer entity;
+
+  private UserController userController;
 
   @FXML private TextField textFieldRegisterId;
   @FXML private TextField textFieldName;
@@ -29,14 +37,47 @@ public class TrainerFormViewController implements Initializable {
     this.entity = entity;
   }
 
-  @FXML
-  public void onButtonSaveAction() {
-    System.out.println("save");
+  public void setUserController(UserController userController) {
+    this.userController = userController;
   }
 
   @FXML
-  public void onButtonCancelAction() {
-    System.out.println("cancel");
+  public void onButtonSaveAction(ActionEvent event) {
+
+    if (entity == null) {
+      throw new IllegalStateException("Entity was null.");
+    }
+
+    if (userController == null) {
+      throw new IllegalStateException("userController was null.");
+    }
+    try {
+      entity = getFormData();
+      userController.saveOrUpdate(entity);
+      Utils.getCurrentStage(event).close();
+    } catch (UsernameOrEmailInUseException e) {
+      Alerts.showAlert(
+          "UsernameOrEmailInUseException", null, e.getMessage(), Alert.AlertType.ERROR);
+    }
+  }
+
+  private Trainer getFormData() {
+
+    Trainer trainer = new Trainer();
+
+    trainer.setName(textFieldName.getText());
+    trainer.setBirthCity(textFieldBirthCity.getText());
+    trainer.setGender(textFieldGender.getText());
+    trainer.setUsername(textFieldUsername.getText());
+    trainer.setPassword(textFieldPassword.getText());
+    trainer.setEmail(textFieldEmail.getText());
+
+    return trainer;
+  }
+
+  @FXML
+  public void onButtonCancelAction(ActionEvent event) {
+    Utils.getCurrentStage(event).close();
   }
 
   @Override
@@ -44,7 +85,7 @@ public class TrainerFormViewController implements Initializable {
     initializeNodes();
   }
 
-   private void initializeNodes() {
+  private void initializeNodes() {
 
     Constraints.setTextFieldInteger(textFieldRegisterId);
     Constraints.setTextFieldMaxLength(textFieldName, 30);
