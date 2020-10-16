@@ -205,6 +205,8 @@ public class OrderDaoFiles implements OrderDao {
       throw new OrderNotFoundException("Order of Id " + order.getId() + " wasn't found.");
     }
 
+    orders.remove(orders.get(index));
+    orders.add(order);
     saveFile();
 
     return order;

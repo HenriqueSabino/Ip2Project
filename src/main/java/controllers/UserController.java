@@ -132,15 +132,6 @@ public class UserController {
     return allTrainers;
   }
 
-  public void insertTrainer(Trainer trainer) {
-
-    if (trainer == null) {
-      throw new IllegalStateException("The passed in argument is null.");
-    }
-
-    userDao.insert(trainer);
-  }
-
   public void removeTrainer(Trainer trainer) {
 
     if (trainer == null) {

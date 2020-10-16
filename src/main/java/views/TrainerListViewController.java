@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Trainer;
+import main.java.models.dao.impl.exception.UserNotFoundException;
 import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Utils;
@@ -22,6 +23,7 @@ import main.java.views.util.Utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TrainerListViewController implements Initializable, DataChangeListener {
@@ -34,6 +36,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   @FXML private TableColumn<Trainer, String> tableColumnRegisterId;
   @FXML private TableColumn<Trainer, String> tableColumnName;
   @FXML private TableColumn<Trainer, Trainer> tableColumnEDIT;
+  @FXML private TableColumn<Trainer, Trainer> tableColumnREMOVE;
   @FXML private TableColumn<Trainer, String> tableColumnBirthCity;
   @FXML private TableColumn<Trainer, String> tableColumnGender;
   @FXML private TableColumn<Trainer, String> tableColumnUsername;
@@ -78,6 +81,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
     trainerObservableList = FXCollections.observableArrayList(trainerList);
     tableViewTrainer.setItems(trainerObservableList);
     initEditButtons();
+    initRemoveButtons();
   }
 
   @FXML
@@ -134,6 +138,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   }
 
   private void initEditButtons() {
+
     tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
     tableColumnEDIT.setCellFactory(
         param ->
@@ -156,5 +161,40 @@ public class TrainerListViewController implements Initializable, DataChangeListe
                             Utils.getCurrentStage(event)));
               }
             });
+  }
+
+  private void initRemoveButtons() {
+    tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+    tableColumnREMOVE.setCellFactory(param -> new TableCell<>() {
+      private final Button button = new Button("remove");
+
+      @Override
+      protected void updateItem(Trainer obj, boolean empty) {
+        super.updateItem(obj, empty);
+        if (obj == null) {
+          setGraphic(null);
+          return;
+        }
+        setGraphic(button);
+        button.setOnAction(
+                event -> removeEntity(obj));
+      }
+    });
+  }
+
+  private void removeEntity(Trainer obj) {
+    Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+
+    if (result.get() == ButtonType.OK) {
+      if (userController == null) {
+        throw new IllegalStateException("Controller was null");
+      }
+      try {
+        userController.removeTrainer(obj);
+        updateTableView();
+      } catch (UserNotFoundException e) {
+        Alerts.showAlert("Error removing object", null, e.getMessage(), Alert.AlertType.ERROR);
+      }
+    }
   }
 }
