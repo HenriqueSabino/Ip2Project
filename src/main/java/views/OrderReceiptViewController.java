@@ -7,13 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import main.java.models.CartItem;
-import main.java.models.Order;
-import main.java.models.Product;
-import main.java.models.ShoppingCart;
-import main.java.models.Trainer;
+import main.java.services.SalesService;
+import main.java.services.exception.OrderWasNullException;
+import main.java.views.util.Alerts;
 
 public class OrderReceiptViewController implements Initializable {
 
@@ -23,22 +22,10 @@ public class OrderReceiptViewController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    // Mocking code
-    ShoppingCart cart = new ShoppingCart();
-
-    cart.addItem(new CartItem(new Product(0, "Potion", "A potion that heals 20HP", 100), 1, cart));
-    cart.addItem(
-        new CartItem(new Product(0, "Super Potion", "A potion that heals 50HP", 100), 2, cart));
-    cart.addItem(new CartItem(new Product(0, "Potion", "A potion that heals 200HP", 100), 4, cart));
-
-    Trainer trainer = new Trainer("Ash", "Pallet", "Male", "ash", "123", "ash@pallet.com");
-
-    Order order = new Order(0, cart, trainer);
-
-    if (order != null) {
-      receiptTxtArea.setText(order.generateReceipt());
-    } else {
-      System.out.println("Error! order was null.");
+    try {
+      receiptTxtArea.setText(SalesService.getInstance().generateReceipt());
+    } catch (OrderWasNullException e) {
+      Alerts.showAlert("Error!", null, e.getMessage(), AlertType.ERROR);
     }
   }
 

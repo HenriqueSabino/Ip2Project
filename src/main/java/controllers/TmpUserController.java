@@ -1,11 +1,30 @@
 package main.java.controllers;
 
 import main.java.models.Trainer;
+import main.java.models.dao.DaoFactory;
+import main.java.models.dao.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TmpUserController {
+
+  private static TmpUserController instance;
+
+  private UserDao userDao;
+
+  private TmpUserController() {
+    userDao = DaoFactory.createUserDao();
+  }
+
+  public static TmpUserController getInstance() {
+
+    if (instance == null) {
+      instance = new TmpUserController();
+    }
+
+    return instance;
+  }
 
   public List<Trainer> findAllTrainers() {
 

@@ -42,7 +42,7 @@ public class TrainerListViewController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
     initializeNodes();
-    setUserController(new TmpUserController());
+    setUserController(TmpUserController.getInstance());
     updateTableView();
   }
 

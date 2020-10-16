@@ -17,24 +17,24 @@
         <Button fx:id="backBt" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
         <HBox spacing="50.0">
           <children>
-            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo {name} de {city}">
+            <Hyperlink fx:id="editOwnRegisterHl" onAction="#onEditOwnRegisterHlAction" text="Edit account" underline="true" />
+            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name} from {city}">
               <font>
                 <Font size="18.0" />
               </font>
             </Text>
-            <Hyperlink fx:id="editOwnRegisterHl" onAction="#onEditOwnRegisterHl" text="Editar cadastro" underline="true" />
           </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+          <opaqueInsets>
+            <Insets />
+          </opaqueInsets>
         </HBox>
         <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
           <children>
-            <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Selecione um treinador" />
-            <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" text="Iniciar Compras" />
-            <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" text="Histórico de compras" />
-            <Hyperlink fx:id="managerTrainersHl" onAction="#onManagerTrainersHl" text="Gerenciar treinadores" underline="true" />
-            <Hyperlink fx:id="manageProductsHl" onAction="#onManageProductsHl" text="Gerenciar produtos" underline="true" />
+            <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" text="Start shopping" />
+            <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" text="Shopping history" />
+            <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Choose trainer" />
+            <Hyperlink fx:id="managerTrainersHl" onAction="#onManagerTrainersHlAction" text="Manage trainers" underline="true" />
+            <Hyperlink fx:id="manageProductsHl" onAction="#onManageProductsHlAction" text="Manage products" underline="true" />
           </children>
         </VBox>
       </children>
