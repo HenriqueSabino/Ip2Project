@@ -1,11 +1,11 @@
 package main.java.models;
 
-import main.java.models.dao.CureDao;
-import main.java.models.dao.DaoFactory;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import main.java.models.dao.CureDao;
+import main.java.models.dao.DaoFactory;
 
 public class CureReport {
 
@@ -14,85 +14,32 @@ public class CureReport {
   private Trainer client;
   private User employee;
 
-  public CureReport() {
-  }
+  public CureReport() {}
 
   public static void main(String[] args) {
 
     LocalDateTime dateC1 = LocalDateTime.now();
     LocalDateTime dateC2 = LocalDateTime.now().plusDays(4);
 
-    User joy = new Nurse(
-            "Joy",
-            "Palete",
-            "Female",
-            "joyzinha",
-            "12345",
-            "emaildajoyzinha");
+    User joy = new Nurse("Joy", "Palete", "Female", "joyzinha", "12345", "emaildajoyzinha");
 
-    User anotherJoy = new Nurse(
-            "Joy2",
-            "Palete",
-            "Female",
-            "joyzinha2",
-            "1234",
-            "emaildajoyzinha2");
+    User anotherJoy =
+        new Nurse("Joy2", "Palete", "Female", "joyzinha2", "1234", "emaildajoyzinha2");
 
-    Trainer ash = new Trainer(
-            "Ash",
-            "Palete",
-            "Male",
-            "ashinho",
-            "1234",
-            "email");
+    Trainer ash = new Trainer("Ash", "Palete", "Male", "ashinho", "1234", "email");
 
-    Pokemon eevee = new Pokemon(
-            "Eevee",
-            15,
-            100,
-            PokemonType.NORMAL,
-            PokemonStatus.BURNT,
-            ash);
+    Pokemon eevee = new Pokemon("Eevee", 15, 100, PokemonType.NORMAL, PokemonStatus.BURNT, ash);
 
-    Pokemon pikachu = new Pokemon(
-            "pikachu",
-            1,
-            140,
-            PokemonType.ELECTRIC,
-            PokemonStatus.PARALYZED,
-            ash);
+    Pokemon pikachu =
+        new Pokemon("pikachu", 1, 140, PokemonType.ELECTRIC, PokemonStatus.PARALYZED, ash);
 
-    Cure cure1 = new Cure(
-            dateC1,
-            eevee,
-            eevee.getLife(),
-            eevee.getStatus(),
-            joy,
-            ash);
+    Cure cure1 = new Cure(dateC1, eevee, eevee.getLife(), eevee.getStatus(), joy, ash);
 
-    Cure cure2 = new Cure(
-            dateC2,
-            pikachu,
-            pikachu.getLife(),
-            pikachu.getStatus(),
-            joy,
-            ash);
+    Cure cure2 = new Cure(dateC2, pikachu, pikachu.getLife(), pikachu.getStatus(), joy, ash);
 
-    Cure cure3 = new Cure(
-            dateC1,
-            eevee,
-            eevee.getLife(),
-            eevee.getStatus(),
-            anotherJoy,
-            ash);
+    Cure cure3 = new Cure(dateC1, eevee, eevee.getLife(), eevee.getStatus(), anotherJoy, ash);
 
-    Cure cure4 = new Cure(
-            dateC2,
-            pikachu,
-            pikachu.getLife(),
-            pikachu.getStatus(),
-            anotherJoy,
-            ash);
+    Cure cure4 = new Cure(dateC2, pikachu, pikachu.getLife(), pikachu.getStatus(), anotherJoy, ash);
 
     CureDao cureDao = DaoFactory.createCureDao();
     cureDao.insert(cure1);
@@ -106,10 +53,15 @@ public class CureReport {
     cureReport1.setClient(ash);
     cureReport1.setEmployee(joy);
     System.out.println(
-            "Testing 'start date: " + cureReport1.startDate +
-                    ", end date: " + cureReport1.endDate +
-                    ", trainer: " + cureReport1.client +
-                    ", employee: " + cureReport1.employee + "' filter...");
+        "Testing 'start date: "
+            + cureReport1.startDate
+            + ", end date: "
+            + cureReport1.endDate
+            + ", trainer: "
+            + cureReport1.client
+            + ", employee: "
+            + cureReport1.employee
+            + "' filter...");
     System.out.println("------------------------");
     System.out.println(cureReport1.getReport());
 
@@ -118,9 +70,13 @@ public class CureReport {
     cureReport2.setEndDate(dateC1.plusDays(10));
     cureReport2.setClient(ash);
     System.out.println(
-            "Testing 'start date: " + cureReport2.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
-                    ", end date: " + cureReport2.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
-                    ", trainer: " + cureReport2.client.getName() + "' filter...");
+        "Testing 'start date: "
+            + cureReport2.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + ", end date: "
+            + cureReport2.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + ", trainer: "
+            + cureReport2.client.getName()
+            + "' filter...");
     System.out.println("------------------------");
     System.out.println(cureReport2.getReport());
 
@@ -129,9 +85,13 @@ public class CureReport {
     cureReport3.setEndDate(dateC1.plusDays(10));
     cureReport3.setEmployee(joy);
     System.out.println(
-            "Testing 'start date: " + cureReport3.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
-                    ", end date: " + cureReport3.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
-                    ", employee: " + cureReport3.employee.getName() + "' filter...");
+        "Testing 'start date: "
+            + cureReport3.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + ", end date: "
+            + cureReport3.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + ", employee: "
+            + cureReport3.employee.getName()
+            + "' filter...");
     System.out.println("------------------------");
     System.out.println(cureReport3.getReport());
 
@@ -139,15 +99,20 @@ public class CureReport {
     cureReport4.setStartDate(dateC1);
     cureReport4.setEndDate(dateC1.plusDays(10));
     System.out.println(
-            "Testing 'start date: " + cureReport4.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) +
-                    ", end date: " + cureReport4.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) + "' filter...");
+        "Testing 'start date: "
+            + cureReport4.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + ", end date: "
+            + cureReport4.endDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + "' filter...");
     System.out.println("------------------------");
     System.out.println(cureReport4.getReport());
 
     CureReport cureReport5 = new CureReport();
     cureReport5.setStartDate(dateC1);
     System.out.println(
-            "Testing 'start date: " + cureReport5.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")) + "' filter...");
+        "Testing 'start date: "
+            + cureReport5.startDate.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))
+            + "' filter...");
     System.out.println("------------------------");
     System.out.println(cureReport5.getReport());
   }
@@ -229,17 +194,22 @@ public class CureReport {
   }
 
   public String generateReport(List<Cure> cures) {
-    
+
     StringBuilder report = new StringBuilder();
 
     report.append("Trainer's cure history:").append("\n\n");
 
-    for (Cure cure : cures)
-    {
+    for (Cure cure : cures) {
       report.append("Cure id: ").append(cure.getId()).append("\n");
-      report.append("Responsible employee's name: ").append(cure.getEmployee().getName()).append("\n");
+      report
+          .append("Responsible employee's name: ")
+          .append(cure.getEmployee().getName())
+          .append("\n");
       report.append("Client's name: ").append(cure.getClient().getName()).append("\n");
-      report.append("Cure date: ").append(cure.getCureDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append("\n\n");
+      report
+          .append("Cure date: ")
+          .append(cure.getCureDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+          .append("\n\n");
 
       report.append("Pokemon data:").append("\n");
       report.append("Pokemon species: ").append(cure.getPokemon().getSpecies()).append("\n");

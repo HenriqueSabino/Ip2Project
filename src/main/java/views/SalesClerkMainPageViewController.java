@@ -1,7 +1,6 @@
 package main.java.views;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -11,14 +10,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import main.java.models.SalesClerk;
+import main.java.controllers.UserController;
 import main.java.models.Trainer;
+import main.java.models.User;
+import main.java.services.SalesService;
+import main.java.views.util.Alerts;
 
 public class SalesClerkMainPageViewController implements Initializable {
 
@@ -31,34 +34,16 @@ public class SalesClerkMainPageViewController implements Initializable {
   @FXML private Hyperlink manageProductsHl;
   @FXML private Text welcomeTxt;
 
-  private SalesClerk salesClerk;
+  private User employee;
   private Trainer selectedTrainer;
   private ObservableList<Trainer> trainersObsList;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    // MOCKING CODE
-    salesClerk =
-        new SalesClerk(
-            "May", "Pallet", "Female", "maypallet", "123456", "maypallet@pokecenter.com");
+    employee = UserController.getInstance().getLoggedUser();
 
-    List<Trainer> trainers = new ArrayList<>();
-
-    trainers.add(
-        new Trainer("Ash", "Pallet", "Male", "ashpallet", "123456", "ashtrainner@pokemail.com"));
-
-    trainers.add(
-        new Trainer(
-            "Misty",
-            "Cerulean",
-            "Female",
-            "mistycerulean",
-            "123456",
-            "mistycerulean@pokemail.com"));
-
-    trainers.add(
-        new Trainer("Brock", "Kanto", "Male", "brockkanto", "123456", "brockkanto@pokemail.com"));
+    List<Trainer> trainers = UserController.getInstance().getAllTrainers();
 
     initializeWelcomeTxt();
     initializeTrainersListCb(trainers);
@@ -71,7 +56,7 @@ public class SalesClerkMainPageViewController implements Initializable {
 
   public void onBackBtAction(ActionEvent event) {
 
-    System.out.println("Logging out");
+    UserController.getInstance().Logout();
 
     try {
 
@@ -85,9 +70,10 @@ public class SalesClerkMainPageViewController implements Initializable {
   public void onStartShoppingBtAction(ActionEvent event) {
 
     if (selectedTrainer == null) {
-      System.out.println("Error, trainer is null");
+      Alerts.showAlert(
+          "Error", null, "A trainer must be selected to begin shopping!", AlertType.ERROR);
     } else {
-      System.out.println("Start shopping with " + selectedTrainer.getName());
+      SalesService.getInstance().startOrder(employee, selectedTrainer);
     }
   }
 
@@ -112,15 +98,15 @@ public class SalesClerkMainPageViewController implements Initializable {
     }
   }
 
-  public void onEditOwnRegisterHl(ActionEvent event) {
+  public void onEditOwnRegisterHlAction(ActionEvent event) {
     System.out.println("Editing own register");
   }
 
-  public void onManagerTrainersHl(ActionEvent event) {
+  public void onManagerTrainersHlAction(ActionEvent event) {
     System.out.println("Going to Trainers CRUD");
   }
 
-  public void onManageProductsHl(ActionEvent event) {
+  public void onManageProductsHlAction(ActionEvent event) {
     System.out.println("Going to Products CRUD");
   }
 
@@ -130,8 +116,8 @@ public class SalesClerkMainPageViewController implements Initializable {
 
     String newText = welcomeTxt.getText();
 
-    newText = newText.replace("{name}", salesClerk.getName());
-    newText = newText.replace("{city}", salesClerk.getBirthCity());
+    newText = newText.replace("{name}", employee.getName());
+    newText = newText.replace("{city}", employee.getBirthCity());
 
     welcomeTxt.setText(newText);
   }
@@ -157,7 +143,7 @@ public class SalesClerkMainPageViewController implements Initializable {
         if (empty) {
           setText("");
         } else {
-          setText(trainer.getName() + " de " + trainer.getBirthCity());
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
         }
       }
     };

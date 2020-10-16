@@ -18,9 +18,9 @@
             <Font size="24.0" />
           </font>
         </Text>
-        <TextField fx:id="usernameField" promptText="Nome de usuário" />
-        <PasswordField fx:id="passwordField" promptText="Senha" />
-        <Button fx:id="loginBt" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginBtAction" text="Entrar" />
+        <TextField fx:id="usernameField" promptText="Username" />
+        <PasswordField fx:id="passwordField" promptText="Password" />
+        <Button fx:id="loginBt" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginBtAction" text="Login" />
       </children>
       <opaqueInsets>
         <Insets />
