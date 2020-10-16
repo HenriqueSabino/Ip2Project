@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Trainer;
+import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Utils;
 
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TrainerListViewController implements Initializable {
+public class TrainerListViewController implements Initializable, DataChangeListener {
 
   @FXML private Button buttonNewTrainer;
   @FXML private Button buttonUpdate;
@@ -111,6 +112,7 @@ public class TrainerListViewController implements Initializable {
       controller.setTrainer(trainer);
       controller.setUserController(UserController.getInstance());
       controller.updateFormData();
+      controller.subscribeDataChangeListener(this);
 
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Enter Trainer Data");
@@ -124,5 +126,10 @@ public class TrainerListViewController implements Initializable {
       Alerts.showAlert(
           "IO Exception", "Error loding view", ioException.getMessage(), Alert.AlertType.ERROR);
     }
+  }
+
+  @Override
+  public void onDataChanged() {
+    updateTableView();
   }
 }

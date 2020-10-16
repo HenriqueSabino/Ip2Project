@@ -9,11 +9,14 @@ import javafx.scene.control.TextField;
 import main.java.controllers.UserController;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
+import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
 import main.java.views.util.Utils;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TrainerFormViewController implements Initializable {
@@ -21,6 +24,8 @@ public class TrainerFormViewController implements Initializable {
   private Trainer entity;
 
   private UserController userController;
+
+  private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
   @FXML private TextField textFieldRegisterId;
   @FXML private TextField textFieldName;
@@ -41,6 +46,10 @@ public class TrainerFormViewController implements Initializable {
     this.userController = userController;
   }
 
+  public void subscribeDataChangeListener(DataChangeListener listener) {
+    dataChangeListeners.add(listener);
+  }
+
   @FXML
   public void onButtonSaveAction(ActionEvent event) {
 
@@ -53,11 +62,19 @@ public class TrainerFormViewController implements Initializable {
     }
     try {
       entity = getFormData();
+
       userController.saveOrUpdate(entity);
+      notifyDataChangeListeners();
       Utils.getCurrentStage(event).close();
     } catch (UsernameOrEmailInUseException e) {
       Alerts.showAlert(
           "UsernameOrEmailInUseException", null, e.getMessage(), Alert.AlertType.ERROR);
+    }
+  }
+
+  private void notifyDataChangeListeners() {
+    for (DataChangeListener listener : dataChangeListeners) {
+      listener.onDataChanged();
     }
   }
 
