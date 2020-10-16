@@ -34,7 +34,6 @@
                <TableColumn fx:id="tableColumnBirthCity" prefWidth="75.0" text="Birth city" />
                <TableColumn fx:id="tableColumnGender" prefWidth="75.0" text="Gender" />
                <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username" />
-               <TableColumn fx:id="tableColumnPassword" prefWidth="75.0" text="Password" />
                <TableColumn fx:id="tableColumnEmail" prefWidth="72.0" text="Email" />
            </columns>
            <columnResizePolicy>

@@ -17,7 +17,7 @@ public class TrainerViewTest extends Application {
   @Override
   public void start(Stage primaryStage) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("/main/java/views/TrainerListView.fxml"));
-    primaryStage.setTitle("TrainerView");
+    primaryStage.setTitle("TrainerListView");
     primaryStage.setScene(new Scene(root, 800, 600));
     primaryStage.show();
   }
