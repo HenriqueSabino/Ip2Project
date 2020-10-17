@@ -45,7 +45,7 @@ public class LoginViewController implements Initializable {
         User loggedUser = UserController.getInstance().getLoggedUser();
 
         if (loggedUser instanceof Administrator) {
-          goToSalesClerkMainPage();
+          goToAdministratorMainPage();
         } else if (loggedUser instanceof SalesClerk) {
           goToSalesClerkMainPage();
         } else if (loggedUser instanceof Nurse) {
@@ -65,6 +65,17 @@ public class LoginViewController implements Initializable {
 
       Parent newPage =
           FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
+      passwordField.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
+  }
+
+  private void goToAdministratorMainPage() {
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/AdministratorMainPage.fxml"));
       passwordField.getScene().setRoot(newPage);
     } catch (Exception e) {
       System.out.println("Error");

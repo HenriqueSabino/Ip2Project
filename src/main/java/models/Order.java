@@ -1,7 +1,5 @@
 package main.java.models;
 
-import javafx.beans.binding.StringBinding;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -53,7 +51,9 @@ public class Order implements Serializable {
 
     // Generating receipt header
     receipt.append("Order number: ").append(id).append("\n\n");
-    receipt.append("Responsible sales clerk name: ").append(employee.getName()).append("\n");
+    if (employee != null) {
+      receipt.append("Responsible sales clerk name: ").append(employee.getName()).append("\n");
+    }
     receipt.append("Client's name: ").append(client.getName()).append("\n");
     receipt
         .append("Data: ")
@@ -112,12 +112,22 @@ public class Order implements Serializable {
   @Override
   public String toString() {
 
-    return "Order {" +
-            "\n id: " + id + "\n" +
-            " orderDate: " + orderDate + "\n" +
-            " shoppingCart: " + shoppingCart + "\n" +
-            " employee: " + employee.getName() + "\n" +
-            " client: " + client.getName() + "\n" +
-            "}\n";
+    return "Order {"
+        + "\n id: "
+        + id
+        + "\n"
+        + " orderDate: "
+        + orderDate
+        + "\n"
+        + " shoppingCart: "
+        + shoppingCart
+        + "\n"
+        + " employee: "
+        + employee.getName()
+        + "\n"
+        + " client: "
+        + client.getName()
+        + "\n"
+        + "}\n";
   }
 }

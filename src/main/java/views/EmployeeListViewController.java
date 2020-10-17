@@ -130,8 +130,9 @@ public class EmployeeListViewController implements Initializable {
 
     try {
 
-      Parent newPage = FXMLLoader.load(getClass().getResource("/main/java/views/Login.fxml"));
-      buttonBack.getScene().setRoot(newPage);
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/AdministratorMainPage.fxml"));
+      tableViewEmployee.getScene().setRoot(newPage);
     } catch (Exception e) {
       System.out.println("Error");
     }
