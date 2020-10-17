@@ -14,6 +14,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
+import main.java.models.PokemonStatus;
+import main.java.models.PokemonType;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.models.exceptions.ValidationException;
@@ -158,6 +160,7 @@ public class TrainerFormViewController implements Initializable {
   public void onButtonNewPokemonAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
     Pokemon pokemon = new Pokemon();
+    // pokemon.setStatus(PokemonStatus.BURNT);
     createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
   }
 
@@ -170,6 +173,7 @@ public class TrainerFormViewController implements Initializable {
       PokemonFormViewController controller = loader.getController();
       controller.setPokemon(pokemon);
       controller.setUserController(UserController.getInstance());
+      controller.updateFormData();
       /*
       controller.setTrainer(trainer);
       controller.setUserController(UserController.getInstance());

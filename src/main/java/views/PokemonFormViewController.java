@@ -1,5 +1,6 @@
 package main.java.views;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -10,6 +11,7 @@ import main.java.models.Pokemon;
 import main.java.models.PokemonStatus;
 import main.java.models.PokemonType;
 import main.java.views.util.Constraints;
+import main.java.views.util.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,8 +48,8 @@ public class PokemonFormViewController implements Initializable {
   }
 
   @FXML
-  public void onButtonCancelAction() {
-    System.out.println("onButtonCancelAction");
+  public void onButtonCancelAction(ActionEvent event) {
+    Utils.getCurrentStage(event).close();
   }
 
   @Override
@@ -64,5 +66,18 @@ public class PokemonFormViewController implements Initializable {
     Constraints.setTextFieldInteger(textFieldLife);
     Constraints.setTextFieldInteger(textFieldMaxLife);
     Constraints.setTextFieldMaxLength(textFieldSpecies, 20);
+  }
+
+  public void updateFormData() {
+
+    if (entity == null) {
+      throw new IllegalStateException("Entity was null.");
+    }
+
+    textFieldSpecies.setText(entity.getSpecies());
+    textFieldLife.setText(String.valueOf(entity.getLife()));
+    textFieldMaxLife.setText(String.valueOf(entity.getMaxLife()));
+    comboBoxPokemonType.setValue(entity.getType());
+    comboBoxPokemonStatus.setValue(entity.getStatus());
   }
 }
