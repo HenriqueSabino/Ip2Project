@@ -4,9 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
 import main.java.models.Trainer;
@@ -17,6 +22,7 @@ import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
 import main.java.views.util.Utils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -149,8 +155,40 @@ public class TrainerFormViewController implements Initializable {
   }
 
   @FXML
-  public void onButtonNewPokemonAction() {
-    System.out.println("onButtonNewPokemonAction");
+  public void onButtonNewPokemonAction(ActionEvent event) {
+    Stage parentStage = Utils.getCurrentStage(event);
+    Pokemon pokemon = new Pokemon();
+    createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
+  }
+
+  private void createDialogForm(Pokemon pokemon, String absoluteName, Stage parentStage) {
+    try {
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+      Pane pane = loader.load();
+
+      PokemonFormViewController controller = loader.getController();
+      controller.setPokemon(pokemon);
+      controller.setUserController(UserController.getInstance());
+      /*
+      controller.setTrainer(trainer);
+      controller.setUserController(UserController.getInstance());
+      controller.updateFormData();
+      controller.subscribeDataChangeListener(this);
+       */
+
+      Stage dialogStage = new Stage();
+      dialogStage.setTitle("Enter Pokemon Data");
+      dialogStage.setScene(new Scene(pane));
+      dialogStage.setResizable(false);
+      dialogStage.initOwner(parentStage);
+      dialogStage.initModality(Modality.WINDOW_MODAL);
+      dialogStage.showAndWait();
+    } catch (IOException ioException) {
+
+      Alerts.showAlert(
+              "IO Exception", "Error loding view", ioException.getMessage(), Alert.AlertType.ERROR);
+    }
   }
 
   @Override
