@@ -1,19 +1,16 @@
 package main.java.models.dao.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import main.java.models.Product;
 import main.java.models.dao.DaoFactory;
 import main.java.models.dao.ProductDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
 import main.java.models.dao.impl.exception.NameOrDescriptionInUseException;
 import main.java.models.dao.impl.exception.ProductNotFoundException;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDaoFiles implements ProductDao {
 
@@ -155,8 +152,7 @@ public class ProductDaoFiles implements ProductDao {
       throw new ProductNotFoundException("Product of Id " + product.getId() + " was not found.");
     }
 
-    products.remove(products.get(index));
-    products.add(product);
+    products.set(index, product);
     saveFile();
 
     return product;

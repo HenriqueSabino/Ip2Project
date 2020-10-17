@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Trainer extends User {
 
-  private List<Pokemon> pokemons = new ArrayList<>();
+  private List<Pokemon> pokemons;
 
-  public Trainer() {}
+  public Trainer() {
+    this.pokemons = new ArrayList<>();
+  }
 
   public Trainer(
       int registerId,
