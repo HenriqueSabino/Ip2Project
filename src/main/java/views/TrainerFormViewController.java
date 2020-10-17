@@ -55,10 +55,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   // pokemon viewtable properties
   @FXML private TableView<Pokemon> tableViewPokemon;
   @FXML private TableColumn<Pokemon, String> tableColumnSpecies;
-  @FXML private TableColumn<Pokemon, String> tableColumnLife;
   @FXML private TableColumn<Pokemon, String> tableColumnMaxLife;
   @FXML private TableColumn<Pokemon, String> tableColumnType;
-  @FXML private TableColumn<Pokemon, String> tableColumnStatus;
   // end
 
   public void setTrainer(Trainer entity) {
@@ -217,10 +215,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
     // pokemon tableview nodes
     tableColumnSpecies.setCellValueFactory(new PropertyValueFactory<>("species"));
-    tableColumnLife.setCellValueFactory(new PropertyValueFactory<>("life"));
     tableColumnMaxLife.setCellValueFactory(new PropertyValueFactory<>("maxLife"));
     tableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
-    tableColumnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     // end nodes
   }
 

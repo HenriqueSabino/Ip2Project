@@ -30,17 +30,13 @@ public class PokemonFormViewController implements Initializable {
   private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
   @FXML private Label labelErrorSpecies;
-  @FXML private Label labelErrorLife;
   @FXML private Label labelErrorMaxLife;
   @FXML private Label labelErrorType;
-  @FXML private Label labelErrorStatus;
 
   @FXML private TextField textFieldSpecies;
-  @FXML private TextField textFieldLife;
   @FXML private TextField textFieldMaxLife;
 
   @FXML private ComboBox<PokemonType> comboBoxPokemonType;
-  @FXML private ComboBox<PokemonStatus> comboBoxPokemonStatus;
 
   public void setPokemon(Pokemon entity) {
     this.entity = entity;
@@ -69,7 +65,7 @@ public class PokemonFormViewController implements Initializable {
     }
     try {
 
-      entity = getFormData();
+      getFormData();
       owner.addPokemon(entity);
       notifyDataChangeListeners();
       Utils.getCurrentStage(event).close();
@@ -88,32 +84,33 @@ public class PokemonFormViewController implements Initializable {
     }
   }
 
-  private Pokemon getFormData() {
-
-    Pokemon pokemon = new Pokemon();
+  private void getFormData() {
 
     ValidationException exception = new ValidationException("Validation error");
 
     if (textFieldSpecies.getText() == null || textFieldSpecies.getText().trim().equals("")) {
       exception.addError("species", "Field can't be empty.");
+    } else {
+      entity.setSpecies(textFieldSpecies.getText());
     }
-    pokemon.setSpecies(textFieldSpecies.getText());
 
     if (Utils.tryParseToInt(textFieldMaxLife.getText()) == 0) {
       exception.addError("maxLife", "Field can't be zero.");
+    } else {
+      entity.setMaxLife(Utils.tryParseToInt(textFieldMaxLife.getText()));
+      entity.setLife(entity.getMaxLife());
     }
-    pokemon.setMaxLife(Utils.tryParseToInt(textFieldMaxLife.getText()));
 
     if (comboBoxPokemonType.getValue() == null) {
       exception.addError("type", "Field can't be empty.");
+    } else {
+      entity.setType(comboBoxPokemonType.getValue());
+      entity.setStatus(PokemonStatus.NONE);
     }
-    pokemon.setType(comboBoxPokemonType.getValue());
 
     if (exception.getErrors().size() > 0) {
       throw exception;
     }
-
-    return pokemon;
   }
 
   @FXML
@@ -130,9 +127,7 @@ public class PokemonFormViewController implements Initializable {
   private void initializeNodes() {
 
     comboBoxPokemonType.getItems().setAll(PokemonType.values());
-    comboBoxPokemonStatus.getItems().setAll(PokemonStatus.values());
 
-    Constraints.setTextFieldInteger(textFieldLife);
     Constraints.setTextFieldInteger(textFieldMaxLife);
     Constraints.setTextFieldMaxLength(textFieldSpecies, 20);
   }
@@ -144,10 +139,8 @@ public class PokemonFormViewController implements Initializable {
     }
 
     textFieldSpecies.setText(entity.getSpecies());
-    textFieldLife.setText(String.valueOf(entity.getLife()));
     textFieldMaxLife.setText(String.valueOf(entity.getMaxLife()));
     comboBoxPokemonType.setValue(entity.getType());
-    comboBoxPokemonStatus.setValue(entity.getStatus());
   }
 
   private void setErrorMessages(Map<String, String> errors) {
@@ -156,14 +149,20 @@ public class PokemonFormViewController implements Initializable {
 
     if (fields.contains("species")) {
       labelErrorSpecies.setText(errors.get("species"));
+    } else {
+      labelErrorSpecies.setText("");
     }
 
     if (fields.contains("maxLife")) {
       labelErrorMaxLife.setText(errors.get("maxLife"));
+    } else {
+      labelErrorMaxLife.setText("");
     }
 
     if (fields.contains("type")) {
       labelErrorType.setText(errors.get("type"));
+    } else {
+      labelErrorType.setText("");
     }
   }
 }
