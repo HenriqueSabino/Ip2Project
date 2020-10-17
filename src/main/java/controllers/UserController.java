@@ -146,7 +146,7 @@ public class UserController {
     userDao.insert(employee);
   }
 
-  public boolean getUpdate() {
+  public boolean isUpdate() {
     return update;
   }
 

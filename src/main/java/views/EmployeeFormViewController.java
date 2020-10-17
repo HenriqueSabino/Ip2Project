@@ -39,7 +39,7 @@ public class EmployeeFormViewController implements Initializable {
   @FXML
   public void onConfirmBtAction(ActionEvent event) {
 
-    if (!UserController.getInstance().getUpdate()) {
+    if (!UserController.getInstance().isUpdate()) {
 
       try {
 
