@@ -5,10 +5,9 @@ import java.util.List;
 
 public class Trainer extends User {
 
-  private List<Pokemon> pokemons;
+  private List<Pokemon> pokemons = new ArrayList<>();
 
-  public Trainer() {
-  }
+  public Trainer() {}
 
   public Trainer(
       int registerId,
@@ -37,5 +36,15 @@ public class Trainer extends User {
 
   public List<Pokemon> getPokemons() {
     return pokemons;
+  }
+
+  public void addPokemon(Pokemon pokemon) {
+    if (pokemons.size() < 6) {
+      pokemons.add(pokemon);
+    }
+  }
+
+  public void removePokemon(Pokemon pokemon) {
+    pokemons.remove(pokemon);
   }
 }

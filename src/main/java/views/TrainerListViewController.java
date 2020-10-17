@@ -153,25 +153,27 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
   private void initRemoveButtons() {
     tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-    tableColumnREMOVE.setCellFactory(param -> new TableCell<>() {
-      private final Button button = new Button("remove");
+    tableColumnREMOVE.setCellFactory(
+        param ->
+            new TableCell<>() {
+              private final Button button = new Button("remove");
 
-      @Override
-      protected void updateItem(Trainer obj, boolean empty) {
-        super.updateItem(obj, empty);
-        if (obj == null) {
-          setGraphic(null);
-          return;
-        }
-        setGraphic(button);
-        button.setOnAction(
-                event -> removeEntity(obj));
-      }
-    });
+              @Override
+              protected void updateItem(Trainer obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                  setGraphic(null);
+                  return;
+                }
+                setGraphic(button);
+                button.setOnAction(event -> removeEntity(obj));
+              }
+            });
   }
 
   private void removeEntity(Trainer obj) {
-    Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+    Optional<ButtonType> result =
+        Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 
     if (result.get() == ButtonType.OK) {
       if (userController == null) {

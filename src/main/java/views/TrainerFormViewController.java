@@ -14,8 +14,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
-import main.java.models.PokemonStatus;
-import main.java.models.PokemonType;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.models.exceptions.ValidationException;
@@ -28,7 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class TrainerFormViewController implements Initializable {
+public class TrainerFormViewController implements Initializable, DataChangeListener {
 
   private Trainer entity;
 
@@ -172,13 +170,14 @@ public class TrainerFormViewController implements Initializable {
 
       PokemonFormViewController controller = loader.getController();
       controller.setPokemon(pokemon);
+      controller.setOwner(entity);
       controller.setUserController(UserController.getInstance());
       controller.updateFormData();
+      controller.subscribeDataChangeListener(this);
       /*
       controller.setTrainer(trainer);
       controller.setUserController(UserController.getInstance());
       controller.updateFormData();
-      controller.subscribeDataChangeListener(this);
        */
 
       Stage dialogStage = new Stage();
@@ -191,7 +190,7 @@ public class TrainerFormViewController implements Initializable {
     } catch (IOException ioException) {
 
       Alerts.showAlert(
-              "IO Exception", "Error loding view", ioException.getMessage(), Alert.AlertType.ERROR);
+          "IO Exception", "Error loding view", ioException.getMessage(), Alert.AlertType.ERROR);
     }
   }
 
@@ -223,12 +222,8 @@ public class TrainerFormViewController implements Initializable {
 
   private void updatePokemonTableView() {
 
-    // work to continue...
-    Pokemon p = new Pokemon();
-    List<Pokemon> pokemonList = new ArrayList<>();
-    pokemonList.add(p);
-    System.out.println("test");
-    ObservableList<Pokemon> pokemonObservableList= FXCollections.observableArrayList(pokemonList);
+    ObservableList<Pokemon> pokemonObservableList =
+        FXCollections.observableArrayList(entity.getPokemons());
     tableViewPokemon.setItems(pokemonObservableList);
   }
 
@@ -274,5 +269,10 @@ public class TrainerFormViewController implements Initializable {
     if (fields.contains("email")) {
       labelErrorEmail.setText(errors.get("email"));
     }
+  }
+
+  @Override
+  public void onDataChanged() {
+    updatePokemonTableView();
   }
 }

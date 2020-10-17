@@ -33,8 +33,16 @@ public class Pokemon implements Serializable {
     return species;
   }
 
+  public void setSpecies(String species) {
+    this.species = species;
+  }
+
   public PokemonType getType() {
     return type;
+  }
+
+  public void setType(PokemonType type) {
+    this.type = type;
   }
 
   public PokemonStatus getStatus() {
@@ -55,6 +63,10 @@ public class Pokemon implements Serializable {
 
   public int getMaxLife() {
     return maxLife;
+  }
+
+  public void setMaxLife(int maxLife) {
+    this.maxLife = maxLife;
   }
 
   public Trainer getTrainer() {
