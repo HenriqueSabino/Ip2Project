@@ -22,8 +22,6 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainerAction" text="New Trainer" />
-            <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onButtonUpdateAction" text="Update" />
-            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteAction" text="Delete" />
             <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="Go back" />
         </items>
       </ToolBar>

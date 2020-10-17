@@ -1,13 +1,14 @@
 package main.java.views;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import main.java.controllers.UserController;
+import main.java.models.Pokemon;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.models.exceptions.ValidationException;
@@ -44,6 +45,15 @@ public class TrainerFormViewController implements Initializable {
 
   @FXML private Button buttonSave;
   @FXML private Button buttonCancel;
+
+  // pokemon viewtable properties
+  @FXML private TableView<Pokemon> tableViewPokemon;
+  @FXML private TableColumn<Pokemon, String> tableColumnSpecies;
+  @FXML private TableColumn<Pokemon, String> tableColumnLife;
+  @FXML private TableColumn<Pokemon, String> tableColumnMaxLife;
+  @FXML private TableColumn<Pokemon, String> tableColumnType;
+  @FXML private TableColumn<Pokemon, String> tableColumnStatus;
+  // end
 
   public void setTrainer(Trainer entity) {
     this.entity = entity;
@@ -138,9 +148,17 @@ public class TrainerFormViewController implements Initializable {
     Utils.getCurrentStage(event).close();
   }
 
+  @FXML
+  public void onButtonNewPokemonAction() {
+    System.out.println("onButtonNewPokemonAction");
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     initializeNodes();
+    if (entity != null) {
+      updatePokemonTableView();
+    }
   }
 
   private void initializeNodes() {
@@ -151,6 +169,25 @@ public class TrainerFormViewController implements Initializable {
     Constraints.setTextFieldMaxLength(textFieldEmail, 30);
     Constraints.setTextFieldMaxLength(textFieldUsername, 20);
     Constraints.setTextFieldMaxLength(textFieldPassword, 10);
+
+    // pokemon tableview nodes
+    tableColumnSpecies.setCellValueFactory(new PropertyValueFactory<>("species"));
+    tableColumnLife.setCellValueFactory(new PropertyValueFactory<>("life"));
+    tableColumnMaxLife.setCellValueFactory(new PropertyValueFactory<>("maxLife"));
+    tableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+    tableColumnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+    // end nodes
+  }
+
+  private void updatePokemonTableView() {
+
+    // work to continue...
+    Pokemon p = new Pokemon();
+    List<Pokemon> pokemonList = new ArrayList<>();
+    pokemonList.add(p);
+    System.out.println("test");
+    ObservableList<Pokemon> pokemonObservableList= FXCollections.observableArrayList(pokemonList);
+    tableViewPokemon.setItems(pokemonObservableList);
   }
 
   public void updateFormData() {

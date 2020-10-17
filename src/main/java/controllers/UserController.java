@@ -118,17 +118,6 @@ public class UserController {
       }
     }
 
-    if (allTrainers.size() < 1) {
-
-      List<Trainer> trainers = new ArrayList<>();
-
-      trainers.add(new Trainer(1, "Hyan", "Nova Morada", "Male", "hyanbatista42", "12345", "hyan@gmail.com"));
-      trainers.add(new Trainer(2, "Nelsu", "Detran", "Male", "nelsucc", "12345", "nelsu@gmail.com"));
-      trainers.add(new Trainer(3, "Silas", "Ribeirão", "Male", "silascmm", "12345", "silas@gmail.com"));
-      trainers.add(new Trainer(4, "Henrico", "Iputinga", "Male", "henricomg", "12345", "henrico@gmail.com"));
-      allTrainers = trainers;
-    }
-
     return allTrainers;
   }
 

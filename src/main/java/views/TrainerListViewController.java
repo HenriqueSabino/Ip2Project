@@ -29,8 +29,6 @@ import java.util.ResourceBundle;
 public class TrainerListViewController implements Initializable, DataChangeListener {
 
   @FXML private Button buttonNewTrainer;
-  @FXML private Button buttonUpdate;
-  @FXML private Button buttonDelete;
   @FXML private Button buttonBack;
   @FXML private TableView<Trainer> tableViewTrainer;
   @FXML private TableColumn<Trainer, String> tableColumnRegisterId;
@@ -89,16 +87,6 @@ public class TrainerListViewController implements Initializable, DataChangeListe
     Stage parentStage = Utils.getCurrentStage(event);
     Trainer trainer = new Trainer();
     createDialogForm(trainer, "/main/java/views/TrainerFormView.fxml", parentStage);
-  }
-
-  @FXML
-  public void onButtonUpdateAction() {
-    System.out.println("onButtonUpdate");
-  }
-
-  @FXML
-  public void onButtonDeleteAction() {
-    System.out.println("onButtonDelete");
   }
 
   @FXML
