@@ -11,6 +11,11 @@
 
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.TrainerListViewController">
    <children>
+      <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="←">
+         <VBox.margin>
+            <Insets left="5.0" top="5.0" />
+         </VBox.margin>
+      </Button>
       <Label contentDisplay="CENTER" text="Trainer listing">
          <font>
             <Font name="System Bold" size="22.0" />
@@ -22,7 +27,6 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainerAction" text="New Trainer" />
-            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="Go back" />
         </items>
       </ToolBar>
        <TableView fx:id="tableViewTrainer" prefHeight="600.0" prefWidth="806.0">

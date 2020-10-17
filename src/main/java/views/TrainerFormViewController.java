@@ -51,6 +51,7 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   @FXML private Button buttonSave;
   @FXML private Button buttonCancel;
+  @FXML private Button buttonDeletePokemon;
 
   // pokemon viewtable properties
   @FXML private TableView<Pokemon> tableViewPokemon;
@@ -153,6 +154,32 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
     if (exception.getErrors().size() > 0) {
       throw exception;
+    }
+  }
+
+  @FXML
+  public void onButtonDeleteAction() {
+
+    Pokemon pokemon = tableViewPokemon.getSelectionModel().getSelectedItem();
+
+    if (entity.getPokemons().size() == 1) {
+      Alerts.showAlert(
+          "Deletion Alert",
+          null,
+          "The trainer only has one pokemon. So you can't delete it.",
+          Alert.AlertType.WARNING);
+    } else {
+      if (pokemon != null) {
+
+        Optional<ButtonType> result =
+            Alerts.showConfirmation(
+                "Delete confirmation screen", "Are you sure you want to delete?");
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+          entity.getPokemons().remove(pokemon);
+          updatePokemonTableView();
+        }
+      }
     }
   }
 

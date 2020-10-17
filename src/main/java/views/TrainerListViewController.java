@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,7 +15,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.java.controllers.UserController;
+import main.java.models.Nurse;
+import main.java.models.SalesClerk;
 import main.java.models.Trainer;
+import main.java.models.User;
 import main.java.models.dao.impl.exception.UserNotFoundException;
 import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
@@ -91,7 +95,40 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
   @FXML
   public void onButtonBackAction() {
-    System.out.println("onButtonBack");
+
+    User lu = userController.getLoggedUser();
+
+    if (lu instanceof SalesClerk) {
+
+      try {
+
+        Parent newPage =
+            FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
+        buttonBack.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
+    } else if (lu instanceof Nurse) {
+
+      try {
+
+        Parent newPage =
+            FXMLLoader.load(getClass().getResource("/main/java/views/NurseMainPage.fxml"));
+        buttonBack.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
+    } else {
+
+      try {
+
+        Parent newPage =
+            FXMLLoader.load(getClass().getResource("/main/java/views/AdministratorMainPage.fxml"));
+        buttonBack.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
+    }
   }
 
   private void createDialogForm(Trainer trainer, String absoluteName, Stage parentStage) {
