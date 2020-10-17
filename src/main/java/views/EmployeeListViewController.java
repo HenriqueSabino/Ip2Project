@@ -73,9 +73,6 @@ public class EmployeeListViewController implements Initializable {
 
   @FXML
   public void onButtonNewEmployeeAction(ActionEvent event) {
-
-    UserController.getInstance().setUpdate(false);
-
     try {
 
       Parent newPage =
@@ -93,14 +90,19 @@ public class EmployeeListViewController implements Initializable {
 
       if (!tableViewEmployee.getSelectionModel().isEmpty()) {
 
-        UserController.getInstance()
-            .setIdForUpdate(
-                tableViewEmployee.getSelectionModel().getSelectedItem().getRegisterId());
-        UserController.getInstance().setUpdate(true);
+        //        UserController.getInstance()
+        //            .setIdForUpdate(
+        //                tableViewEmployee.getSelectionModel().getSelectedItem().getRegisterId());
+        //        UserController.getInstance().setUpdate(true);
         try {
 
-          Parent newPage =
-              FXMLLoader.load(getClass().getResource("/main/java/views/EmployeeFormView.fxml"));
+          FXMLLoader loader =
+              new FXMLLoader(getClass().getResource("/main/java/views/EmployeeFormView.fxml"));
+          Parent newPage = loader.load();
+          EmployeeFormViewController controller = loader.getController();
+          controller.setProduct(tableViewEmployee.getSelectionModel().getSelectedItem());
+          controller.fillFields();
+
           buttonNewEmployee.getScene().setRoot(newPage);
         } catch (Exception e) {
           System.out.println("Error");

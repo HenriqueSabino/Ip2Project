@@ -16,6 +16,7 @@ import javafx.scene.control.ToggleGroup;
 import main.java.controllers.UserController;
 import main.java.models.Nurse;
 import main.java.models.SalesClerk;
+import main.java.models.User;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.views.util.Alerts;
 
@@ -32,6 +33,7 @@ public class EmployeeFormViewController implements Initializable {
   @FXML private RadioButton nurseBt;
   @FXML private RadioButton salesBt;
   @FXML private ToggleGroup toggleGroup;
+  private User employee;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {}
@@ -39,16 +41,16 @@ public class EmployeeFormViewController implements Initializable {
   @FXML
   public void onConfirmBtAction(ActionEvent event) {
 
-    if (!UserController.getInstance().isUpdate()) {
+    if (employee == null) {
 
       try {
 
-        if (nameField.getText().isEmpty()
-            || birthCityField.getText().isEmpty()
-            || genderField.getText().isEmpty()
-            || usernameField.getText().isEmpty()
-            || emailField.getText().isEmpty()
-            || passwordField.getText().isEmpty()) {
+        if (nameField.getText().trim().isEmpty()
+            || birthCityField.getText().trim().isEmpty()
+            || genderField.getText().trim().isEmpty()
+            || usernameField.getText().trim().isEmpty()
+            || emailField.getText().trim().isEmpty()
+            || passwordField.getText().trim().isEmpty()) {
           Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
         } else {
 
@@ -85,39 +87,35 @@ public class EmployeeFormViewController implements Initializable {
 
       try {
 
-        if (nameField.getText().isEmpty()
-            || birthCityField.getText().isEmpty()
-            || genderField.getText().isEmpty()
-            || usernameField.getText().isEmpty()
-            || emailField.getText().isEmpty()
-            || passwordField.getText().isEmpty()) {
+        if (nameField.getText().trim().isEmpty()
+            || birthCityField.getText().trim().isEmpty()
+            || genderField.getText().trim().isEmpty()
+            || usernameField.getText().trim().isEmpty()
+            || emailField.getText().trim().isEmpty()
+            || passwordField.getText().trim().isEmpty()) {
           Alerts.showAlert("Error", null, "The fields must be filled to update", AlertType.ERROR);
         } else {
 
           if (nurseBt.isSelected()) {
 
-            Nurse nurse =
-                new Nurse(
-                    nameField.getText(),
-                    birthCityField.getText(),
-                    genderField.getText(),
-                    usernameField.getText(),
-                    passwordField.getText(),
-                    emailField.getText());
-            nurse.setRegisterId(UserController.getInstance().getIdForUpdate());
-            UserController.getInstance().updateEmployee(nurse);
+            employee.setUsername(usernameField.getText());
+            employee.setBirthCity(birthCityField.getText());
+            employee.setGender(genderField.getText());
+            employee.setUsername(usernameField.getText());
+            employee.setPassword(passwordField.getText());
+            employee.setEmail(emailField.getText());
+
+            UserController.getInstance().updateEmployee(employee);
           } else {
 
-            SalesClerk salesClerk =
-                new SalesClerk(
-                    nameField.getText(),
-                    birthCityField.getText(),
-                    genderField.getText(),
-                    usernameField.getText(),
-                    passwordField.getText(),
-                    emailField.getText());
-            salesClerk.setRegisterId(UserController.getInstance().getIdForUpdate());
-            UserController.getInstance().updateEmployee(salesClerk);
+            employee.setUsername(usernameField.getText());
+            employee.setBirthCity(birthCityField.getText());
+            employee.setGender(genderField.getText());
+            employee.setUsername(usernameField.getText());
+            employee.setPassword(passwordField.getText());
+            employee.setEmail(emailField.getText());
+
+            UserController.getInstance().updateEmployee(employee);
           }
 
           Alerts.showAlert("", null, "Update completed", AlertType.INFORMATION);
@@ -151,5 +149,23 @@ public class EmployeeFormViewController implements Initializable {
     } catch (Exception e) {
       System.out.println("Error");
     }
+  }
+
+  public void fillFields() {
+
+    if (employee == null) {
+      throw new IllegalStateException("Product was null.");
+    }
+
+    nameField.setText(employee.getName());
+    birthCityField.setText(employee.getBirthCity());
+    genderField.setText(employee.getGender());
+    usernameField.setText(employee.getUsername());
+    passwordField.setText(employee.getPassword());
+    emailField.setText(employee.getEmail());
+  }
+
+  public void setProduct(User employee) {
+    this.employee = employee;
   }
 }

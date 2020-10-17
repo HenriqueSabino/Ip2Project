@@ -15,7 +15,7 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) throws Exception {
 
-    Parent root = FXMLLoader.load(getClass().getResource("/main/java/views/EmployeeListView.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("/main/java/views/Login.fxml"));
     stage.setScene(new Scene(root));
     stage.setTitle("PokéCenter");
     stage.setResizable(false);

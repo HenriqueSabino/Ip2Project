@@ -10,8 +10,6 @@ public class ProductController {
   private static ProductController instance;
 
   private ProductDao productDao;
-  private boolean update;
-  private int updateId;
 
   private ProductController() {
     productDao = DaoFactory.createProductDao();
@@ -34,28 +32,12 @@ public class ProductController {
     return productDao.findAll();
   }
 
-  public boolean isUpdate() {
-    return update;
-  }
-
-  public void setUpdate(boolean update) {
-    this.update = update;
-  }
-
   public ProductDao getProductDao() {
     return productDao;
   }
 
   public void deleteProductById(int id) {
     productDao.deleteById(id);
-  }
-
-  public int getUpdateId() {
-    return updateId;
-  }
-
-  public void setIdForUpdate(int updateId) {
-    this.updateId = updateId;
   }
 
   public void updateProduct(Product product) {

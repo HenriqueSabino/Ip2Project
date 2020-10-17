@@ -30,10 +30,9 @@
         </HBox>
         <VBox prefHeight="296.0" prefWidth="575.0" spacing="10.0">
           <children>
+            <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Choose trainer" />
             <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" text="Start shopping" />
             <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" text="Shopping history" />
-            <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Choose trainer" />
-                  <Button fx:id="salesClerkBt" mnemonicParsing="false" onAction="#onSalesClerkBtAction" text="Sales Clerk Page" />
                   <Button fx:id="cureServiceBt" mnemonicParsing="false" onAction="#onCureServiceBtAction" text="Cure Service" />
             <Hyperlink fx:id="managerTrainersHl" onAction="#onManagerTrainersHlAction" text="Manage trainers" underline="true" />
             <Hyperlink fx:id="manageProductsHl" onAction="#onManageProductsHlAction" text="Manage products" underline="true" />

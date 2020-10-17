@@ -53,6 +53,7 @@ public class AdministratorMainPageViewController implements Initializable {
     }
     initializeTrainersListCb(trainers);
 
+    cureServiceBt.setDisable(true);
     startShoppingBt.setDisable(true);
     shoppingHistoryBt.setDisable(true);
   }
@@ -117,6 +118,7 @@ public class AdministratorMainPageViewController implements Initializable {
 
       startShoppingBt.setDisable(false);
       shoppingHistoryBt.setDisable(false);
+      cureServiceBt.setDisable(false);
     }
   }
 

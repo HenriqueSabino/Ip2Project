@@ -23,6 +23,7 @@ public class ProductFormViewController implements Initializable {
   @FXML private TextField nameProductField;
   @FXML private TextField descriptionProductField;
   @FXML private TextField valueUnitProductField;
+  private Product product;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,26 +32,29 @@ public class ProductFormViewController implements Initializable {
 
   public void onConfirmProductBt(ActionEvent event) {
 
-    if (!ProductController.getInstance().isUpdate()) {
+    if (product == null) {
       try {
 
-        if (nameProductField.getText().isEmpty()
-            || descriptionProductField.getText().isEmpty()
-            || valueUnitProductField.getText().isEmpty()) {
+        if (nameProductField.getText().trim().isEmpty()
+            || descriptionProductField.getText().trim().isEmpty()
+            || valueUnitProductField.getText().trim().isEmpty()) {
           Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
         } else {
 
-          ProductController.getInstance()
-              .insertProduct(
-                  new Product(
-                      nameProductField.getText(),
-                      descriptionProductField.getText(),
-                      Integer.parseInt(valueUnitProductField.getText())));
+          if (Integer.parseInt(valueUnitProductField.getText()) > 0) {
+            ProductController.getInstance()
+                .insertProduct(
+                    new Product(
+                        nameProductField.getText(),
+                        descriptionProductField.getText(),
+                        Integer.parseInt(valueUnitProductField.getText())));
 
-          Alerts.showAlert("Sucess", null, "Inserted product", AlertType.INFORMATION);
-          goToProductList();
+            Alerts.showAlert("Sucess", null, "Inserted product", AlertType.INFORMATION);
+            goToProductList();
+          } else {
+            Alerts.showAlert("Error ", null, "Price must be greater than zero", AlertType.ERROR);
+          }
         }
-
       } catch (NameOrDescriptionInUseException e) {
         Alerts.showAlert("", null, e.getMessage(), AlertType.ERROR);
       }
@@ -58,22 +62,24 @@ public class ProductFormViewController implements Initializable {
 
       try {
 
-        if (nameProductField.getText().isEmpty()
-            || descriptionProductField.getText().isEmpty()
-            || valueUnitProductField.getText().isEmpty()) {
+        if (nameProductField.getText().trim().isEmpty()
+            || descriptionProductField.getText().trim().isEmpty()
+            || valueUnitProductField.getText().trim().isEmpty()) {
           Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
         } else {
 
-          Product product =
-              new Product(
-                  nameProductField.getText(),
-                  descriptionProductField.getText(),
-                  Integer.parseInt(valueUnitProductField.getText()));
-          product.setId(ProductController.getInstance().getUpdateId());
-          ProductController.getInstance().updateProduct(product);
+          if (Integer.parseInt(valueUnitProductField.getText()) > 0) {
 
-          Alerts.showAlert("Sucess", null, "Update product", AlertType.INFORMATION);
-          goToProductList();
+            product.setName(nameProductField.getText());
+            product.setDescription(descriptionProductField.getText());
+            product.setPrice(Integer.parseInt(valueUnitProductField.getText()));
+            ProductController.getInstance().updateProduct(product);
+
+            Alerts.showAlert("Sucess", null, "Update product", AlertType.INFORMATION);
+            goToProductList();
+          } else {
+            Alerts.showAlert("Error ", null, "Price must be greater than zero", AlertType.ERROR);
+          }
         }
 
       } catch (NameOrDescriptionInUseException e) {
@@ -96,5 +102,20 @@ public class ProductFormViewController implements Initializable {
     } catch (Exception e) {
       System.out.println("Error");
     }
+  }
+
+  public void fillFields() {
+
+    if (product == null) {
+      throw new IllegalStateException("Product was null.");
+    }
+
+    nameProductField.setText(product.getName());
+    descriptionProductField.setText(product.getDescription());
+    valueUnitProductField.setText(String.valueOf(product.getPrice()));
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
   }
 }

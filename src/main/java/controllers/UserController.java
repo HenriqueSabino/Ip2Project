@@ -17,8 +17,6 @@ public class UserController {
 
   private UserDao userDao;
   private User loggedUser;
-  private boolean update;
-  private int idForUpdate;
 
   private UserController() {
     userDao = DaoFactory.createUserDao();
@@ -146,14 +144,6 @@ public class UserController {
     userDao.insert(employee);
   }
 
-  public boolean isUpdate() {
-    return update;
-  }
-
-  public void setUpdate(boolean verification) {
-    this.update = verification;
-  }
-
   public void updateEmployee(User employee) {
 
     if (employee.getRegisterId() == 0) {
@@ -165,13 +155,5 @@ public class UserController {
 
   public void deleteEmployeeById(int id) {
     userDao.deleteById(id);
-  }
-
-  public int getIdForUpdate() {
-    return idForUpdate;
-  }
-
-  public void setIdForUpdate(int idForUpdate) {
-    this.idForUpdate = idForUpdate;
   }
 }

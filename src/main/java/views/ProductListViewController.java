@@ -70,8 +70,6 @@ public class ProductListViewController implements Initializable {
   @FXML
   public void onButtonNewProductAction(ActionEvent event) {
 
-    ProductController.getInstance().setUpdate(false);
-
     try {
 
       Parent newPage =
@@ -89,13 +87,20 @@ public class ProductListViewController implements Initializable {
 
       if (!tableViewProduct.getSelectionModel().isEmpty()) {
 
-        ProductController.getInstance()
-            .setIdForUpdate(tableViewProduct.getSelectionModel().getSelectedItem().getId());
-        ProductController.getInstance().setUpdate(true);
+        //        ProductController.getInstance()
+        //
+        // .setIdForUpdate(tableViewProduct.getSelectioModel().getSelectedItem().getId());
+        //        ProductController.getInstance().setUpdate(true);
+
         try {
 
-          Parent newPage =
-              FXMLLoader.load(getClass().getResource("/main/java/views/ProductFormView.fxml"));
+          FXMLLoader loader =
+              new FXMLLoader(getClass().getResource("/main/java/views/ProductFormView.fxml"));
+          Parent newPage = loader.load();
+          ProductFormViewController controller = loader.getController();
+          controller.setProduct(tableViewProduct.getSelectionModel().getSelectedItem());
+          controller.fillFields();
+
           buttonNewProduct.getScene().setRoot(newPage);
         } catch (Exception e) {
           System.out.println("Error");
