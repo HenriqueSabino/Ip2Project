@@ -66,7 +66,9 @@ public class PokemonFormViewController implements Initializable {
     try {
 
       getFormData();
-      owner.addPokemon(entity);
+      if (owner.getPokemons().size() < 6) {
+        owner.getPokemons().add(entity);
+      }
       notifyDataChangeListeners();
       Utils.getCurrentStage(event).close();
     } catch (UsernameOrEmailInUseException e) {
