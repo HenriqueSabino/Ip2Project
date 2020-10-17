@@ -1,5 +1,11 @@
 package main.java.views;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,9 +24,6 @@ import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
 import main.java.views.util.Utils;
-
-import java.net.URL;
-import java.util.*;
 
 public class PokemonFormViewController implements Initializable {
 

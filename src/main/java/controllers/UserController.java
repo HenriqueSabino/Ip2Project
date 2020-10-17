@@ -1,11 +1,14 @@
 package main.java.controllers;
 
-import main.java.models.*;
-import main.java.models.dao.DaoFactory;
-import main.java.models.dao.UserDao;
-
 import java.util.ArrayList;
 import java.util.List;
+import main.java.models.Administrator;
+import main.java.models.Nurse;
+import main.java.models.SalesClerk;
+import main.java.models.Trainer;
+import main.java.models.User;
+import main.java.models.dao.DaoFactory;
+import main.java.models.dao.UserDao;
 
 // Singleton
 public class UserController {
@@ -118,21 +121,21 @@ public class UserController {
     return allTrainers;
   }
 
-  public void removeTrainer(User trainer) {
+  public void removeUser(User user) {
 
-    if (trainer == null) {
+    if (user == null) {
       throw new IllegalStateException("The passed in argument is null.");
     }
 
-    userDao.deleteById(trainer.getRegisterId());
+    userDao.deleteById(user.getRegisterId());
   }
 
-  public void saveOrUpdate(User trainer) {
-    if (trainer.getRegisterId() == 0) {
-      userDao.insert(trainer);
+  public void saveOrUpdate(User user) {
+    if (user.getRegisterId() == 0) {
+      userDao.insert(user);
     } else {
-      System.out.println("name: " + trainer.getName());
-      userDao.update(trainer);
+      System.out.println("name: " + user.getName());
+      userDao.update(user);
     }
   }
 }

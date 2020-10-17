@@ -1,15 +1,23 @@
 package main.java.models.dao.impl;
 
-import main.java.models.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import main.java.models.Cure;
+import main.java.models.Nurse;
+import main.java.models.Pokemon;
+import main.java.models.PokemonStatus;
+import main.java.models.PokemonType;
+import main.java.models.Trainer;
 import main.java.models.dao.CureDao;
 import main.java.models.dao.DaoFactory;
 import main.java.models.dao.impl.exception.CureNotFoundException;
 import main.java.models.dao.impl.exception.LocalDBIOException;
-
-import java.io.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CureDaoFiles implements CureDao {
 
