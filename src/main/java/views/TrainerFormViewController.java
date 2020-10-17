@@ -85,7 +85,7 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     }
     try {
 
-      entity = getFormData();
+      // entity = getFormData();
       userController.saveOrUpdate(entity);
       notifyDataChangeListeners();
       Utils.getCurrentStage(event).close();
@@ -174,11 +174,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
       controller.setUserController(UserController.getInstance());
       controller.updateFormData();
       controller.subscribeDataChangeListener(this);
-      /*
-      controller.setTrainer(trainer);
-      controller.setUserController(UserController.getInstance());
-      controller.updateFormData();
-       */
 
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Enter Pokemon Data");
@@ -240,6 +235,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     textFieldUsername.setText(entity.getUsername());
     textFieldPassword.setText(entity.getPassword());
     textFieldEmail.setText(entity.getEmail());
+
+    updatePokemonTableView();
   }
 
   private void setErrorMessages(Map<String, String> errors) {

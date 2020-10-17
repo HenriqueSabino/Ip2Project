@@ -99,7 +99,6 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
       FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
       Pane pane = loader.load();
-
       TrainerFormViewController controller = loader.getController();
       controller.setTrainer(trainer);
       controller.setUserController(UserController.getInstance());
