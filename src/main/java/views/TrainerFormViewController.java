@@ -83,12 +83,21 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     if (userController == null) {
       throw new IllegalStateException("userController was null.");
     }
-    try {
 
-      // entity = getFormData();
-      userController.saveOrUpdate(entity);
-      notifyDataChangeListeners();
-      Utils.getCurrentStage(event).close();
+    try {
+      if (entity.getPokemons().size() > 0) {
+        getFormData();
+        userController.saveOrUpdate(entity);
+        notifyDataChangeListeners();
+        Utils.getCurrentStage(event).close();
+      } else {
+        Alerts.showAlert(
+            "Error: invalid number of pokémons",
+            null,
+            "The trainer needs to have at least one pokémon.",
+            Alert.AlertType.ERROR);
+      }
+
     } catch (UsernameOrEmailInUseException e) {
 
       Alerts.showAlert(
@@ -104,49 +113,49 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     }
   }
 
-  private Trainer getFormData() {
-
-    Trainer trainer = new Trainer();
+  private void getFormData() {
 
     ValidationException exception = new ValidationException("Validation error");
 
-    trainer.setRegisterId(Utils.tryParseToInt(textFieldRegisterId.getText()));
-
     if (textFieldName.getText() == null || textFieldName.getText().trim().equals("")) {
       exception.addError("name", "Field can't be empty.");
+    } else {
+      entity.setName(textFieldName.getText());
     }
-    trainer.setName(textFieldName.getText());
 
     if (textFieldBirthCity.getText() == null || textFieldBirthCity.getText().trim().equals("")) {
       exception.addError("birthCity", "Field can't be empty.");
+    } else {
+      entity.setBirthCity(textFieldBirthCity.getText());
     }
-    trainer.setBirthCity(textFieldBirthCity.getText());
 
     if (textFieldGender.getText() == null || textFieldGender.getText().trim().equals("")) {
       exception.addError("gender", "Field can't be empty.");
+    } else {
+      entity.setGender(textFieldGender.getText());
     }
-    trainer.setGender(textFieldGender.getText());
 
     if (textFieldUsername.getText() == null || textFieldUsername.getText().trim().equals("")) {
       exception.addError("username", "Field can't be empty.");
+    } else {
+      entity.setUsername(textFieldUsername.getText());
     }
-    trainer.setUsername(textFieldUsername.getText());
 
     if (textFieldPassword.getText() == null || textFieldPassword.getText().trim().equals("")) {
       exception.addError("password", "Field can't be empty.");
+    } else {
+      entity.setPassword(textFieldPassword.getText());
     }
-    trainer.setPassword(textFieldPassword.getText());
 
     if (textFieldEmail.getText() == null || textFieldEmail.getText().trim().equals("")) {
       exception.addError("email", "Field can't be empty.");
+    } else {
+      entity.setEmail(textFieldEmail.getText());
     }
-    trainer.setEmail(textFieldEmail.getText());
 
     if (exception.getErrors().size() > 0) {
       throw exception;
     }
-
-    return trainer;
   }
 
   @FXML
@@ -245,26 +254,38 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
     if (fields.contains("name")) {
       labelErrorName.setText(errors.get("name"));
+    } else {
+      labelErrorName.setText("");
     }
 
     if (fields.contains("birthCity")) {
       labelErrorBirthCity.setText(errors.get("birthCity"));
+    } else {
+      labelErrorBirthCity.setText("");
     }
 
     if (fields.contains("gender")) {
       labelErrorGender.setText(errors.get("gender"));
+    } else {
+      labelErrorGender.setText("");
     }
 
     if (fields.contains("username")) {
       labelErrorUsername.setText(errors.get("username"));
+    } else {
+      labelErrorUsername.setText("");
     }
 
     if (fields.contains("password")) {
       labelErrorPassword.setText(errors.get("password"));
+    } else {
+      labelErrorPassword.setText("");
     }
 
     if (fields.contains("email")) {
       labelErrorEmail.setText(errors.get("email"));
+    } else {
+      labelErrorEmail.setText("");
     }
   }
 
