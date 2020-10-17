@@ -64,46 +64,46 @@ public class UserController {
   public List<Administrator> getAllAdministrators() {
 
     List<User> allUsers = userDao.findAll();
-    List<Administrator> allTrainers = new ArrayList<>();
+    List<Administrator> allAdministrators = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof Administrator) {
-        allTrainers.add((Administrator) u);
+        allAdministrators.add((Administrator) u);
       }
     }
 
-    return allTrainers;
+    return allAdministrators;
   }
 
   public List<Nurse> getAllNurses() {
 
     List<User> allUsers = userDao.findAll();
-    List<Nurse> allTrainers = new ArrayList<>();
+    List<Nurse> allNurses = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof Nurse) {
-        allTrainers.add((Nurse) u);
+        allNurses.add((Nurse) u);
       }
     }
 
-    return allTrainers;
+    return allNurses;
   }
 
   public List<SalesClerk> getAllSalesClerks() {
 
     List<User> allUsers = userDao.findAll();
-    List<SalesClerk> allTrainers = new ArrayList<>();
+    List<SalesClerk> allSalesClerks = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof SalesClerk) {
-        allTrainers.add((SalesClerk) u);
+        allSalesClerks.add((SalesClerk) u);
       }
     }
 
-    return allTrainers;
+    return allSalesClerks;
   }
 
   public List<Trainer> getAllTrainers() {
@@ -119,5 +119,23 @@ public class UserController {
     }
 
     return allTrainers;
+  }
+
+  public void removeUser(User user) {
+
+    if (user == null) {
+      throw new IllegalStateException("The passed in argument is null.");
+    }
+
+    userDao.deleteById(user.getRegisterId());
+  }
+
+  public void saveOrUpdate(User user) {
+    if (user.getRegisterId() == 0) {
+      userDao.insert(user);
+    } else {
+      System.out.println("name: " + user.getName());
+      userDao.update(user);
+    }
   }
 }
