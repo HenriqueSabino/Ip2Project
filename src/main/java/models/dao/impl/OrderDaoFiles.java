@@ -1,14 +1,27 @@
 package main.java.models.dao.impl;
 
-import main.java.models.*;
-import main.java.models.dao.DaoFactory;
-import main.java.models.dao.OrderDao;
-import main.java.models.dao.impl.exception.*;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.models.CartItem;
+import main.java.models.Nurse;
+import main.java.models.Order;
+import main.java.models.Pokemon;
+import main.java.models.PokemonStatus;
+import main.java.models.PokemonType;
+import main.java.models.Product;
+import main.java.models.SalesClerk;
+import main.java.models.ShoppingCart;
+import main.java.models.Trainer;
+import main.java.models.dao.DaoFactory;
+import main.java.models.dao.OrderDao;
+import main.java.models.dao.impl.exception.LocalDBIOException;
+import main.java.models.dao.impl.exception.OrderNotFoundException;
 
 public class OrderDaoFiles implements OrderDao {
 
@@ -41,65 +54,40 @@ public class OrderDaoFiles implements OrderDao {
       ash.getPokemons()
           .add(new Pokemon("Pikachu", 60, 60, PokemonType.ELECTRIC, PokemonStatus.NONE, ash));
 
-      SalesClerk joy = new SalesClerk(
-              "Joy",
-              "Ribeirão",
-              "Female",
-              "joyzinha",
-              "1234",
-              "emaildajoyzinha");
+      SalesClerk joy =
+          new SalesClerk("Joy", "Ribeirão", "Female", "joyzinha", "1234", "emaildajoyzinha");
 
       ShoppingCart shoppingCart = new ShoppingCart();
 
       Product pokeball =
-              new Product(
-                      "Pokebola",
-                      "Item used to catch pokemons around the world.",
-                      5
-                      );
+          new Product("Pokebola", "Item used to catch pokemons around the world.", 5);
 
       Product backpack =
-              new Product(
-                      "backpack",
-                      "One can use such an item to carry other items around.",
-                      50
-              );
+          new Product("backpack", "One can use such an item to carry other items around.", 50);
 
       Product toothBrush =
-              new Product(
-                      "toothBrush",
-                      "Don't forget of brushing your teeth. Adventures can get tooth cavity too!",
-                      5
-              );
+          new Product(
+              "toothBrush",
+              "Don't forget of brushing your teeth. Adventures can get tooth cavity too!",
+              5);
 
       Product underwear =
-              new Product(
-                      "Underwear",
-                      "Don't be like Ash and keep always a fresh underwear in your backpack.",
-                      5
-              );
+          new Product(
+              "Underwear",
+              "Don't be like Ash and keep always a fresh underwear in your backpack.",
+              5);
 
-      shoppingCart.addItem(
-              new CartItem(pokeball, 10, shoppingCart));
+      shoppingCart.addItem(new CartItem(pokeball, 10, shoppingCart));
 
-      shoppingCart.addItem(
-              new CartItem(backpack, 1, shoppingCart));
+      shoppingCart.addItem(new CartItem(backpack, 1, shoppingCart));
 
-      shoppingCart.addItem(
-              new CartItem(toothBrush, 1, shoppingCart));
+      shoppingCart.addItem(new CartItem(toothBrush, 1, shoppingCart));
 
-      shoppingCart.addItem(
-              new CartItem(underwear, 7, shoppingCart));
+      shoppingCart.addItem(new CartItem(underwear, 7, shoppingCart));
 
-      Order order = new Order(
-              shoppingCart,
-              joy,
-              ash);
+      Order order = new Order(shoppingCart, joy, ash);
 
-      Order order2 = new Order(
-              shoppingCart,
-              joy,
-              ash);
+      Order order2 = new Order(shoppingCart, joy, ash);
 
       System.out.println("Testing inserts...");
 
@@ -140,13 +128,8 @@ public class OrderDaoFiles implements OrderDao {
 
       Order anOrder = dao.findById(order.getId());
 
-      Nurse anotherJoy = new Nurse(
-              "Megumin",
-              "Camelote",
-              "Female",
-              "meguiminha",
-              "12345",
-              "emaildameguminha");
+      Nurse anotherJoy =
+          new Nurse("Megumin", "Camelote", "Female", "meguiminha", "12345", "emaildameguminha");
 
       System.out.println("Before update:");
       System.out.println(anOrder.toString());
@@ -205,6 +188,7 @@ public class OrderDaoFiles implements OrderDao {
       throw new OrderNotFoundException("Order of Id " + order.getId() + " wasn't found.");
     }
 
+    orders.set(index, order);
     saveFile();
 
     return order;
@@ -226,7 +210,7 @@ public class OrderDaoFiles implements OrderDao {
 
     if (index < 0) {
       throw new OrderNotFoundException(
-              "Order of Id " + id + " was not found. Delete action could not be completed");
+          "Order of Id " + id + " was not found. Delete action could not be completed");
     }
 
     orders.remove(index);
@@ -243,7 +227,7 @@ public class OrderDaoFiles implements OrderDao {
     }
 
     throw new OrderNotFoundException(
-            "Order of Id " + id + " was not found. Find action could not be completed");
+        "Order of Id " + id + " was not found. Find action could not be completed");
   }
 
   @Override

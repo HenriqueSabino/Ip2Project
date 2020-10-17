@@ -17,6 +17,8 @@ public class UserController {
 
   private UserDao userDao;
   private User loggedUser;
+  private boolean update;
+  private int idForUpdate;
 
   private UserController() {
     userDao = DaoFactory.createUserDao();
@@ -64,46 +66,60 @@ public class UserController {
   public List<Administrator> getAllAdministrators() {
 
     List<User> allUsers = userDao.findAll();
-    List<Administrator> allTrainers = new ArrayList<>();
+    List<Administrator> allAdministrators = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof Administrator) {
-        allTrainers.add((Administrator) u);
+        allAdministrators.add((Administrator) u);
       }
     }
 
-    return allTrainers;
+    return allAdministrators;
   }
 
   public List<Nurse> getAllNurses() {
 
     List<User> allUsers = userDao.findAll();
-    List<Nurse> allTrainers = new ArrayList<>();
+    List<Nurse> allNurses = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof Nurse) {
-        allTrainers.add((Nurse) u);
+        allNurses.add((Nurse) u);
       }
     }
 
-    return allTrainers;
+    return allNurses;
   }
 
   public List<SalesClerk> getAllSalesClerks() {
 
     List<User> allUsers = userDao.findAll();
-    List<SalesClerk> allTrainers = new ArrayList<>();
+    List<SalesClerk> allSalesClerks = new ArrayList<>();
 
     for (User u : allUsers) {
 
       if (u instanceof SalesClerk) {
-        allTrainers.add((SalesClerk) u);
+        allSalesClerks.add((SalesClerk) u);
       }
     }
 
-    return allTrainers;
+    return allSalesClerks;
+  }
+
+  public List<User> getAllEmployees() {
+
+    List<User> allUsers = userDao.findAll();
+    List<User> allEmployees = new ArrayList<>();
+
+    for (User u : allUsers) {
+
+      if (u instanceof Nurse || u instanceof SalesClerk) {
+        allEmployees.add(u);
+      }
+    }
+    return allEmployees;
   }
 
   public List<Trainer> getAllTrainers() {
@@ -119,5 +135,43 @@ public class UserController {
     }
 
     return allTrainers;
+  }
+
+  public void insertEmployee(User employee) {
+
+    if (employee == null) {
+      throw new IllegalStateException("The passed in argument is null.");
+    }
+
+    userDao.insert(employee);
+  }
+
+  public boolean getUpdate() {
+    return update;
+  }
+
+  public void setUpdate(boolean verification) {
+    this.update = verification;
+  }
+
+  public void updateEmployee(User employee) {
+
+    if (employee.getRegisterId() == 0) {
+      userDao.insert(employee);
+    } else {
+      userDao.update(employee);
+    }
+  }
+
+  public void deleteEmployeeById(int id) {
+    userDao.deleteById(id);
+  }
+
+  public int getIdForUpdate() {
+    return idForUpdate;
+  }
+
+  public void setIdForUpdate(int idForUpdate) {
+    this.idForUpdate = idForUpdate;
   }
 }

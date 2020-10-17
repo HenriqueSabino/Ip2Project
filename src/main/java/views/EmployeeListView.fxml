@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.EmployeeListViewController">
+  <children>
+    <Label contentDisplay="CENTER" text="Employee listing">
+      <VBox.margin>
+        <Insets left="5.0" top="5.0" />
+      </VBox.margin>
+      <font>
+        <Font name="System Bold" size="22.0" />
+      </font>
+    </Label>
+    <TableView fx:id="tableViewEmployee" prefHeight="600.0" prefWidth="806.0">
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+      <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+      <columns>
+        <TableColumn fx:id="tableColumnName" prefWidth="72.0" text="Name" />
+        <TableColumn fx:id="tableColumnBirthCity" prefWidth="75.0" text="Birth city" />
+        <TableColumn fx:id="tableColumnGender" prefWidth="75.0" text="Gender" />
+        <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username" />
+        <TableColumn fx:id="tableColumnEmail" prefWidth="72.0" text="Email" />
+      </columns>
+    </TableView>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <items>
+        <Button fx:id="buttonNewEmployee" mnemonicParsing="false" onAction="#onButtonNewEmployeeAction" text="New Employee" />
+        <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onButtonUpdateAction" text="Update" />
+        <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteAction" text="Delete" />
+        <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="Go back" />
+      </items>
+    </ToolBar>
+  </children>
+</VBox>
