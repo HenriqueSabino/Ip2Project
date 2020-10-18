@@ -97,7 +97,7 @@ public class CureServiceViewController implements Initializable {
       try {
 
         Parent newPage =
-            FXMLLoader.load(getClass().getResource("/main/java/views/NurseMainPage.fxml"));
+            FXMLLoader.load(getClass().getResource("/main/java/views/AdministratorMainPage.fxml"));
         backBt.getScene().setRoot(newPage);
       } catch (Exception e) {
         System.out.println("Error");

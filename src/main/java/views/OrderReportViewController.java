@@ -17,13 +17,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import main.java.controllers.UserController;
 import main.java.models.Administrator;
-import main.java.models.CureReport;
-import main.java.models.Nurse;
+import main.java.models.OrderReport;
+import main.java.models.SalesClerk;
 import main.java.models.Trainer;
 import main.java.models.User;
-import main.java.services.CureService;
+import main.java.services.SalesService;
+import main.java.services.exception.OrderWasNullException;
 
-public class CureReportViewController implements Initializable {
+public class OrderReportViewController implements Initializable {
 
   @FXML private Button backBt;
   @FXML private DatePicker startDateDp;
@@ -31,16 +32,16 @@ public class CureReportViewController implements Initializable {
   @FXML private ComboBox<Trainer> selectTrainerCb;
   @FXML private ComboBox<User> selectEmployeeCb;
   @FXML private Button generateReportBt;
-  @FXML private TextArea cureReportTxt;
+  @FXML private TextArea orderReportTxt;
 
   private ObservableList<Trainer> trainersObsList;
   private ObservableList<User> employeeObsList;
-  private CureReport cureReport;
+  private OrderReport orderReport;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    cureReport = new CureReport();
+    orderReport = new OrderReport();
 
     initializeTrainerListCb();
     initializeEmployeeListCb();
@@ -53,19 +54,20 @@ public class CureReportViewController implements Initializable {
       selectTrainerCb.setValue((Trainer) UserController.getInstance().getLoggedUser());
       selectTrainerCb.setDisable(true);
     }
-
-    if (CureService.getInstance().getCures().size() > 0) {
-      cureReportTxt.setText(cureReport.generateReport(CureService.getInstance().getCures()));
+    try {
+      orderReportTxt.setText(SalesService.getInstance().generateReceipt());
+    } catch (OrderWasNullException e) {
+      orderReportTxt.setText("");
     }
   }
 
   public void onBackBtAction(ActionEvent event) {
 
-    if (UserController.getInstance().getLoggedUser() instanceof Nurse) {
+    if (UserController.getInstance().getLoggedUser() instanceof SalesClerk) {
       try {
 
         Parent newPage =
-            FXMLLoader.load(getClass().getResource("/main/java/views/NurseMainPage.fxml"));
+            FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
         backBt.getScene().setRoot(newPage);
       } catch (Exception e) {
         System.out.println("Error");
@@ -96,23 +98,23 @@ public class CureReportViewController implements Initializable {
   }
 
   public void onStartDateDpAction(ActionEvent event) {
-    cureReport.setStartDate(startDateDp.getValue());
+    orderReport.setStartDate(startDateDp.getValue());
   }
 
   public void onEndDateDpAction(ActionEvent event) {
-    cureReport.setEndDate(endDateDp.getValue());
+    orderReport.setEndDate(endDateDp.getValue());
   }
 
   public void onSelectedTrainerCbAction(ActionEvent event) {
-    cureReport.setClient(selectTrainerCb.getValue());
+    orderReport.setClient(selectTrainerCb.getValue());
   }
 
   public void onSelectedEmployeeCbAction(ActionEvent event) {
-    cureReport.setEmployee(selectEmployeeCb.getValue());
+    orderReport.setEmployee(selectEmployeeCb.getValue());
   }
 
   public void onGenerateReportBtAction(ActionEvent event) {
-    cureReportTxt.setText(CureService.getInstance().getReport(cureReport));
+    orderReportTxt.setText(SalesService.getInstance().getReport(orderReport));
   }
 
   private void initializeTrainerListCb() {
@@ -128,7 +130,7 @@ public class CureReportViewController implements Initializable {
   private void initializeEmployeeListCb() {
 
     employeeObsList =
-        FXCollections.observableArrayList(UserController.getInstance().getAllNurses());
+        FXCollections.observableArrayList(UserController.getInstance().getAllSalesClerks());
     employeeObsList.addAll(UserController.getInstance().getAllAdministrators());
     selectEmployeeCb.setItems(employeeObsList);
 
@@ -173,10 +175,10 @@ public class CureReportViewController implements Initializable {
   }
 
   public void updateTrainerCb() {
-    selectTrainerCb.setValue(cureReport.getClient());
+    selectTrainerCb.setValue(orderReport.getClient());
   }
 
-  public CureReport getCureReport() {
-    return cureReport;
+  public OrderReport getCureReport() {
+    return orderReport;
   }
 }

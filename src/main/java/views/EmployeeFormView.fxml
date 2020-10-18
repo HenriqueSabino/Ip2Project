@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.EmployeeFormViewController">
+  <children>
+    <Button fx:id="ConfirmBt" layoutX="266.0" layoutY="334.0" mnemonicParsing="false" onAction="#onConfirmBtAction" text="Confirm" />
+    <Button fx:id="backBt" layoutX="28.0" layoutY="29.0" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
+    <VBox layoutX="108.0" layoutY="54.0" prefHeight="264.0" prefWidth="385.0" spacing="10.0">
+      <children>
+        <Label prefHeight="27.0" prefWidth="383.0" text="Employee Registration Update">
+          <font>
+            <Font size="16.0" />
+          </font>
+        </Label>
+        <TextField fx:id="nameField" prefHeight="25.0" prefWidth="184.0" promptText="Name" />
+        <TextField fx:id="birthCityField" prefHeight="25.0" prefWidth="184.0" promptText="Birth City" />
+        <TextField fx:id="genderField" prefHeight="25.0" prefWidth="402.0" promptText="Gender" />
+        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="184.0" promptText="Username" />
+        <PasswordField fx:id="passwordField" prefHeight="25.0" prefWidth="184.0" promptText="Password" />
+        <TextField fx:id="emailField" prefHeight="25.0" prefWidth="184.0" promptText="E-mail" />
+        <HBox prefHeight="25.0" prefWidth="279.0" spacing="20.0">
+          <children>
+            <RadioButton fx:id="nurseBt" mnemonicParsing="false" selected="true" text="Nurse">
+              <toggleGroup>
+                <ToggleGroup fx:id="Toggl" />
+              </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="salesBt" mnemonicParsing="false" text="Sales Clerk" toggleGroup="$Toggl" />
+          </children>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>

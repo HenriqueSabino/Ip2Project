@@ -121,6 +121,20 @@ public class UserController {
     return allTrainers;
   }
 
+  public List<User> getAllEmployees() {
+
+    List<User> allUsers = userDao.findAll();
+    List<User> allEmployees = new ArrayList<>();
+
+    for (User u : allUsers) {
+
+      if (u instanceof Nurse || u instanceof SalesClerk) {
+        allEmployees.add(u);
+      }
+    }
+    return allEmployees;
+  }
+
   public void removeUser(User user) {
 
     if (user == null) {
