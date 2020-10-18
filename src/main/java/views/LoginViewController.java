@@ -49,9 +49,9 @@ public class LoginViewController implements Initializable {
         } else if (loggedUser instanceof SalesClerk) {
           goToSalesClerkMainPage();
         } else if (loggedUser instanceof Nurse) {
-          System.out.println("nur");
+          goToNurseMainPage();
         } else if (loggedUser instanceof Trainer) {
-          goToSalesClerkMainPage();
+          goToTrainerMainPage();
         }
       } else {
         Alerts.showAlert(
@@ -65,6 +65,28 @@ public class LoginViewController implements Initializable {
 
       Parent newPage =
           FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
+      passwordField.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
+  }
+
+  private void goToNurseMainPage() {
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/NurseMainPage.fxml"));
+      passwordField.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
+  }
+
+  private void goToTrainerMainPage() {
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/TrainerMainPage.fxml"));
       passwordField.getScene().setRoot(newPage);
     } catch (Exception e) {
       System.out.println("Error");

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+  xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.views.TrainerMainPageViewController">
+  <children>
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      layoutY="87.0" prefHeight="200.0" prefWidth="100.0"
+      spacing="25.0">
+      <children>
+        <Button mnemonicParsing="false" onAction="#onBackBtAction" text="←" fx:id="backBt"/>
+        <HBox spacing="50.0">
+          <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name} from {city}"
+              fx:id="welcomeTxt">
+              <font>
+                <Font size="18.0"/>
+              </font>
+            </Text>
+          </children>
+          <opaqueInsets>
+            <Insets/>
+          </opaqueInsets>
+        </HBox>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#onStartShoppingBtAction"
+              text="Start shopping" fx:id="startShoppingBt"/>
+            <Button mnemonicParsing="false" onAction="#onShoppingHistoryBtAction"
+              text="Shopping history" fx:id="shoppingHistoryBt"/>
+            <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#onCureHistoryBtAction"
+              text="Cure history" fx:id="cureHistoryBt1"/>
+          </children>
+        </VBox>
+      </children>
+      <padding>
+        <Insets left="25.0" top="25.0"/>
+      </padding>
+    </VBox>
+  </children>
+</AnchorPane>

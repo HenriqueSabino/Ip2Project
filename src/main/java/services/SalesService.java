@@ -33,6 +33,12 @@ public class SalesService {
     order = new Order(shoppingCart, employee, client);
   }
 
+  public void startOrder(Trainer client) {
+
+    shoppingCart = new ShoppingCart();
+    order = new Order(shoppingCart, client);
+  }
+
   public void cancelOrder() {
 
     shoppingCart = null;
