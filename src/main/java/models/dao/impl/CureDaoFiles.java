@@ -146,6 +146,7 @@ public class CureDaoFiles implements CureDao {
       throw new CureNotFoundException("Cure of Id " + cure.getId() + " was not found.");
     }
 
+    cures.set(index, cure);
     saveFile();
 
     return cure;

@@ -155,6 +155,7 @@ public class ProductDaoFiles implements ProductDao {
       throw new ProductNotFoundException("Product of Id " + product.getId() + " was not found.");
     }
 
+    products.set(index, product);
     saveFile();
 
     return product;
