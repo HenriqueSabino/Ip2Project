@@ -36,10 +36,10 @@
     </TableView>
     <ToolBar prefHeight="40.0" prefWidth="200.0">
       <items>
+        <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="←" />
         <Button fx:id="buttonNewEmployee" mnemonicParsing="false" onAction="#onButtonNewEmployeeAction" text="New Employee" />
         <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onButtonUpdateAction" text="Update" />
         <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteAction" text="Delete" />
-        <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="Go back" />
       </items>
     </ToolBar>
   </children>

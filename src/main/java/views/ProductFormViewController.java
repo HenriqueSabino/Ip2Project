@@ -89,7 +89,15 @@ public class ProductFormViewController implements Initializable {
   }
 
   public void onBackBtAction(ActionEvent action) {
-    System.out.println("Going to SalesClerk Main Page");
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/ProductListView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   public void goToProductList() {
