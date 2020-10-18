@@ -106,20 +106,6 @@ public class UserController {
     return allSalesClerks;
   }
 
-  public List<User> getAllEmployees() {
-
-    List<User> allUsers = userDao.findAll();
-    List<User> allEmployees = new ArrayList<>();
-
-    for (User u : allUsers) {
-
-      if (u instanceof Nurse || u instanceof SalesClerk) {
-        allEmployees.add(u);
-      }
-    }
-    return allEmployees;
-  }
-
   public List<Trainer> getAllTrainers() {
 
     List<User> allUsers = userDao.findAll();
@@ -135,25 +121,35 @@ public class UserController {
     return allTrainers;
   }
 
-  public void insertEmployee(User employee) {
+  public List<User> getAllEmployees() {
 
-    if (employee == null) {
+    List<User> allUsers = userDao.findAll();
+    List<User> allEmployees = new ArrayList<>();
+
+    for (User u : allUsers) {
+
+      if (u instanceof Nurse || u instanceof SalesClerk) {
+        allEmployees.add(u);
+      }
+    }
+    return allEmployees;
+  }
+
+  public void removeUser(User user) {
+
+    if (user == null) {
       throw new IllegalStateException("The passed in argument is null.");
     }
 
-    userDao.insert(employee);
+    userDao.deleteById(user.getRegisterId());
   }
 
-  public void updateEmployee(User employee) {
-
-    if (employee.getRegisterId() == 0) {
-      userDao.insert(employee);
+  public void saveOrUpdate(User user) {
+    if (user.getRegisterId() == 0) {
+      userDao.insert(user);
     } else {
-      userDao.update(employee);
+      System.out.println("name: " + user.getName());
+      userDao.update(user);
     }
-  }
-
-  public void deleteEmployeeById(int id) {
-    userDao.deleteById(id);
   }
 }

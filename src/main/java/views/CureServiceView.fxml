@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+  xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.views.CureServiceViewController">
+  <children>
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      layoutY="87.0" prefHeight="200.0" prefWidth="100.0"
+      spacing="25.0">
+      <children>
+        <Button mnemonicParsing="false" onAction="#onBackBtAction" text="←" fx:id="backBt"/>
+        <ComboBox onAction="#onPokemonCbAction" prefWidth="150.0" promptText="Select pokemon"
+          fx:id="pokemonCb"/>
+        <HBox spacing="50.0">
+          <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cure Register" fx:id="welcomeTxt">
+              <font>
+                <Font size="18.0"/>
+              </font>
+            </Text>
+          </children>
+          <opaqueInsets>
+            <Insets/>
+          </opaqueInsets>
+        </HBox>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trainer: {name} of {city}"
+          fx:id="trainerTxt"/>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+          <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Button layoutX="406.0" layoutY="50.0" mnemonicParsing="false"
+                  onAction="#onGenerateRegisterBtAction" text="Generate Register"
+                  fx:id="generateRegister"/>
+                <ComboBox layoutX="203.0" layoutY="50.0" onAction="#onPokemonStatusCbAction"
+                  prefWidth="150.0" promptText="Set status" fx:id="pokemonStatusCb"/>
+                <TextField editable="false" layoutX="406.0" fx:id="maxLifeField"/>
+                <TextField layoutY="50.0" promptText="Type life" fx:id="lifeField"/>
+                <TextField editable="false" fx:id="specieField"/>
+                <TextField editable="false" layoutX="203.0" fx:id="typeField"/>
+              </children>
+            </AnchorPane>
+          </children>
+        </VBox>
+      </children>
+      <padding>
+        <Insets left="25.0" top="25.0"/>
+      </padding>
+    </VBox>
+  </children>
+</AnchorPane>

@@ -1,10 +1,15 @@
 package main.java.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import main.java.models.CartItem;
 import main.java.models.Order;
+import main.java.models.OrderReport;
 import main.java.models.ShoppingCart;
 import main.java.models.Trainer;
 import main.java.models.User;
+import main.java.models.dao.DaoFactory;
+import main.java.models.dao.OrderDao;
 import main.java.services.exception.CartItemNotFoundException;
 import main.java.services.exception.OrderWasNullException;
 
@@ -14,9 +19,12 @@ public class SalesService {
   private static SalesService instance;
 
   private Order order;
+  private OrderDao orderDao;
   private ShoppingCart shoppingCart;
 
-  private SalesService() {}
+  private SalesService() {
+    orderDao = DaoFactory.createOrderDao();
+  }
 
   public static SalesService getInstance() {
 
@@ -31,6 +39,12 @@ public class SalesService {
 
     shoppingCart = new ShoppingCart();
     order = new Order(shoppingCart, employee, client);
+  }
+
+  public void startOrder(Trainer client) {
+
+    shoppingCart = new ShoppingCart();
+    order = new Order(shoppingCart, client);
   }
 
   public void cancelOrder() {
@@ -84,5 +98,65 @@ public class SalesService {
     }
 
     return receipt;
+  }
+
+  public Order getOrder() {
+    return order;
+  }
+
+  public List<Order> getAllOrders() {
+    return orderDao.findAll();
+  }
+
+  public String getReport(OrderReport orderReport) {
+
+    List<Order> allOrders = getAllOrders();
+    List<Order> orders = new ArrayList<>();
+
+    if (orderReport.getEmployee() != null) {
+
+      for (Order o : allOrders) {
+
+        if (!orderReport.getEmployee().getUsername().equals(o.getEmployee().getUsername())) {
+          orders.add(o);
+        }
+      }
+    }
+
+    if (orderReport.getClient() != null) {
+
+      for (Order o : allOrders) {
+
+        if (!orderReport.getClient().getUsername().equals(o.getClient().getUsername())) {
+          orders.add(o);
+        }
+      }
+    }
+
+    if (orderReport.getStartDate() != null) {
+
+      for (Order o : allOrders) {
+
+        if (!o.getOrderDate().isAfter(orderReport.getStartDate().atTime(0, 0, 0))
+            && !o.getOrderDate().isEqual(orderReport.getStartDate().atTime(0, 0, 0))) {
+          orders.add(o);
+        }
+      }
+    }
+
+    if (orderReport.getEndDate() != null) {
+
+      for (Order o : allOrders) {
+
+        if (!o.getOrderDate().isBefore(orderReport.getEndDate().atTime(0, 0, 0))
+            && !o.getOrderDate().isEqual(orderReport.getEndDate().atTime(0, 0, 0))) {
+          orders.add(o);
+        }
+      }
+    }
+
+    allOrders.removeAll(orders);
+
+    return orderReport.generateReport(allOrders);
   }
 }

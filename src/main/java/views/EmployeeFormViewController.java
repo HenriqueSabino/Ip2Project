@@ -57,7 +57,7 @@ public class EmployeeFormViewController implements Initializable {
           if (nurseBt.isSelected()) {
 
             UserController.getInstance()
-                .insertEmployee(
+                .saveOrUpdate(
                     new Nurse(
                         nameField.getText(),
                         birthCityField.getText(),
@@ -68,7 +68,7 @@ public class EmployeeFormViewController implements Initializable {
           } else {
 
             UserController.getInstance()
-                .insertEmployee(
+                .saveOrUpdate(
                     new SalesClerk(
                         nameField.getText(),
                         birthCityField.getText(),
@@ -105,7 +105,7 @@ public class EmployeeFormViewController implements Initializable {
             employee.setPassword(passwordField.getText());
             employee.setEmail(emailField.getText());
 
-            UserController.getInstance().updateEmployee(employee);
+            UserController.getInstance().saveOrUpdate(employee);
           } else {
 
             employee.setUsername(usernameField.getText());
@@ -115,7 +115,7 @@ public class EmployeeFormViewController implements Initializable {
             employee.setPassword(passwordField.getText());
             employee.setEmail(emailField.getText());
 
-            UserController.getInstance().updateEmployee(employee);
+            UserController.getInstance().saveOrUpdate(employee);
           }
 
           Alerts.showAlert("", null, "Update completed", AlertType.INFORMATION);

@@ -128,8 +128,7 @@ public class EmployeeListViewController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
 
           UserController.getInstance()
-              .deleteEmployeeById(
-                  tableViewEmployee.getSelectionModel().getSelectedItem().getRegisterId());
+              .removeUser(tableViewEmployee.getSelectionModel().getSelectedItem());
           updateTableView();
         }
       }

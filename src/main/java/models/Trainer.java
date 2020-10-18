@@ -7,6 +7,10 @@ public class Trainer extends User {
 
   private List<Pokemon> pokemons;
 
+  public Trainer() {
+    this.pokemons = new ArrayList<>();
+  }
+
   public Trainer(
       int registerId,
       String name,

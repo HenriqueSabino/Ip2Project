@@ -20,42 +20,34 @@ import javafx.scene.text.Text;
 import main.java.controllers.UserController;
 import main.java.models.Trainer;
 import main.java.models.User;
-import main.java.services.SalesService;
 import main.java.views.util.Alerts;
 
-public class AdministratorMainPageViewController implements Initializable {
+public class NurseMainPageViewController implements Initializable {
 
   @FXML private Button backBt;
-  @FXML private Button startShoppingBt;
-  @FXML private Button shoppingHistoryBt;
-  @FXML private Button salesClerkBt;
-  @FXML private Button cureServiceBt;
+  @FXML private Button registerCuresBt;
+  @FXML private Button cureHistoryBt;
   @FXML private ComboBox<Trainer> trainersCb;
   @FXML private Hyperlink editOwnRegisterHl;
   @FXML private Hyperlink managerTrainersHl;
-  @FXML private Hyperlink manageProductsHl;
-  @FXML private Hyperlink manageEmployeeHl;
   @FXML private Text welcomeTxt;
 
-  private User administrator;
+  private User employee;
   private Trainer selectedTrainer;
   private ObservableList<Trainer> trainersObsList;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    administrator = UserController.getInstance().getLoggedUser();
+    employee = UserController.getInstance().getLoggedUser();
 
     List<Trainer> trainers = UserController.getInstance().getAllTrainers();
 
-    if (administrator != null) {
-      initializeWelcomeTxt();
-    }
+    initializeWelcomeTxt();
     initializeTrainersListCb(trainers);
 
-    cureServiceBt.setDisable(true);
-    startShoppingBt.setDisable(true);
-    shoppingHistoryBt.setDisable(true);
+    registerCuresBt.setDisable(true);
+    cureHistoryBt.setDisable(true);
   }
 
   // UI events
@@ -73,22 +65,9 @@ public class AdministratorMainPageViewController implements Initializable {
     }
   }
 
-  public void onSalesClerkBtAction(ActionEvent event) {
-
-    try {
-
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
-      backBt.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
-    }
-  }
-
-  public void onCureServiceBtAction(ActionEvent event) {
+  public void onRegisterCuresBtAction(ActionEvent event) {
 
     if (selectedTrainer == null) {
-
       Alerts.showAlert(
           "Error", null, "A trainer must be selected to begin a register!", AlertType.ERROR);
     } else {
@@ -107,27 +86,16 @@ public class AdministratorMainPageViewController implements Initializable {
     }
   }
 
-  public void onStartShoppingBtAction(ActionEvent event) {
-
-    if (selectedTrainer == null) {
-      Alerts.showAlert(
-          "Error", null, "A trainer must be selected to begin shopping!", AlertType.ERROR);
-    } else {
-      SalesService.getInstance().startOrder(administrator, selectedTrainer);
-    }
-  }
-
-  public void onShoppingHistoryBtAction(ActionEvent event) {
+  public void onCureHistoryBtAction(ActionEvent event) {
     if (selectedTrainer == null) {
       System.out.println("Error, trainer is null");
     } else {
-
       try {
 
         FXMLLoader loader =
-            new FXMLLoader(getClass().getResource("/main/java/views/OrderReportView.fxml"));
+            new FXMLLoader(getClass().getResource("/main/java/views/CureReportView.fxml"));
         Parent newPage = loader.load();
-        OrderReportViewController controller = loader.getController();
+        CureReportViewController controller = loader.getController();
         controller.getCureReport().setClient(selectedTrainer);
         controller.updateTrainerCb();
         backBt.getScene().setRoot(newPage);
@@ -145,9 +113,8 @@ public class AdministratorMainPageViewController implements Initializable {
 
       System.out.println("Selected " + selectedTrainer.getName());
 
-      startShoppingBt.setDisable(false);
-      shoppingHistoryBt.setDisable(false);
-      cureServiceBt.setDisable(false);
+      registerCuresBt.setDisable(false);
+      cureHistoryBt.setDisable(false);
     }
   }
 
@@ -156,39 +123,7 @@ public class AdministratorMainPageViewController implements Initializable {
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {
-
-    try {
-
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/TrainerListView.fxml"));
-      manageProductsHl.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
-    }
-  }
-
-  public void onManageProductsHlAction(ActionEvent event) {
-
-    try {
-
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/ProductListView.fxml"));
-      manageProductsHl.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
-    }
-  }
-
-  public void onManageEmployeesHlAction(ActionEvent event) {
-
-    try {
-
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/EmployeeListView.fxml"));
-      manageEmployeeHl.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
-    }
+    System.out.println("Going to Trainers CRUD");
   }
 
   // Initialization methods
@@ -197,7 +132,8 @@ public class AdministratorMainPageViewController implements Initializable {
 
     String newText = welcomeTxt.getText();
 
-    newText = newText.replace("{name}", administrator.getName());
+    newText = newText.replace("{name}", employee.getName());
+    newText = newText.replace("{city}", employee.getBirthCity());
 
     welcomeTxt.setText(newText);
   }
