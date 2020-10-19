@@ -52,7 +52,7 @@ public class SalesService {
     if (order != null) {
       order = orderDao.insert(order);
     } else {
-      // throw exception
+      // TODO: throw exception
     }
   }
 
@@ -147,7 +147,10 @@ public class SalesService {
 
       for (Order o : allOrders) {
 
-        if (!orderReport.getEmployee().getUsername().equals(o.getEmployee().getUsername())) {
+        // Since the trainer can buy thing by themselves we must check if the order employee is null
+        if (o.getEmployee() == null
+            || !orderReport.getEmployee().getUsername().equals(o.getEmployee().getUsername())) {
+
           orders.add(o);
         }
       }

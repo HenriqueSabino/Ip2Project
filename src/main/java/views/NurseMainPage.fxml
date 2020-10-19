@@ -15,9 +15,8 @@
     <VBox layoutY="87.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <Button fx:id="backBt" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
-        <HBox spacing="50.0">
+        <HBox alignment="CENTER" spacing="50.0">
           <children>
-            <Hyperlink fx:id="editOwnRegisterHl" onAction="#onEditOwnRegisterHlAction" text="Edit account" underline="true" />
             <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name} from {city}">
               <font>
                 <Font size="18.0" />

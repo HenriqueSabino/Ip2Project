@@ -12,6 +12,19 @@ public class OrderReport {
 
   public OrderReport() {}
 
+  public String generateReport(List<Order> orders) {
+
+    StringBuilder report = new StringBuilder();
+
+    report.append("Trainer's shopping history:").append("\n\n");
+
+    for (Order order : orders) {
+      report.append(order.generateReceipt()).append("\n\n");
+    }
+
+    return report.toString();
+  }
+
   public LocalDate getStartDate() {
     return startDate;
   }
@@ -42,18 +55,5 @@ public class OrderReport {
 
   public void setEmployee(User employee) {
     this.employee = employee;
-  }
-
-  public String generateReport(List<Order> orders) {
-
-    StringBuilder report = new StringBuilder();
-
-    report.append("Trainer's shopping history:").append("\n\n");
-
-    for (Order order : orders) {
-      report.append(order.generateReceipt()).append("\n\n");
-    }
-
-    return report.toString();
   }
 }
