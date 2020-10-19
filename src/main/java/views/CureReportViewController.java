@@ -56,6 +56,7 @@ public class CureReportViewController implements Initializable {
 
     if (CureService.getInstance().getCures().size() > 0) {
       cureReportTxt.setText(cureReport.generateReport(CureService.getInstance().getCures()));
+      CureService.getInstance().finishCures();
     }
   }
 

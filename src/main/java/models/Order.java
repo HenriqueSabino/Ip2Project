@@ -16,12 +16,14 @@ public class Order implements Serializable {
 
   public Order(ShoppingCart shoppingCart, Trainer client) {
 
+    this.orderDate = LocalDateTime.now(ZoneId.of("America/Recife"));
     this.shoppingCart = shoppingCart;
     this.client = client;
   }
 
   public Order(ShoppingCart shoppingCart, User employee, Trainer client) {
 
+    this.orderDate = LocalDateTime.now(ZoneId.of("America/Recife"));
     this.shoppingCart = shoppingCart;
     this.employee = employee;
     this.client = client;

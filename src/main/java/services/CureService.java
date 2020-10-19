@@ -9,8 +9,8 @@ import main.java.models.Pokemon;
 import main.java.models.PokemonStatus;
 import main.java.models.Trainer;
 import main.java.models.User;
-import main.java.models.dao.CureDao;
 import main.java.models.dao.DaoFactory;
+import main.java.models.dao.ICureDao;
 
 // Singleton
 public class CureService {
@@ -18,7 +18,7 @@ public class CureService {
   private static CureService instance;
 
   private List<Cure> cures;
-  private CureDao cureDao;
+  private ICureDao cureDao;
 
   private CureService() {
     cures = new ArrayList<>();
@@ -47,6 +47,10 @@ public class CureService {
       cureDao.insert(cure);
     }
     return cures;
+  }
+
+  public void finishCures() {
+    cures.clear();
   }
 
   public List<Cure> getCures() {
@@ -108,8 +112,6 @@ public class CureService {
   }
 
   public List<Cure> getAllCures() {
-
-    CureDao cureDao = DaoFactory.createCureDao();
-    return cureDao.findAll();
+    return new ArrayList<>(cureDao.findAll());
   }
 }

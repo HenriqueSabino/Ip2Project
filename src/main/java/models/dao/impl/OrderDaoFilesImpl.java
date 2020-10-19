@@ -19,17 +19,17 @@ import main.java.models.SalesClerk;
 import main.java.models.ShoppingCart;
 import main.java.models.Trainer;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.OrderDao;
+import main.java.models.dao.IOrderDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
 import main.java.models.dao.impl.exception.OrderNotFoundException;
 
-public class OrderDaoFiles implements OrderDao {
+public class OrderDaoFilesImpl implements IOrderDao {
 
   private final String path = "./localStorage/orders.ser";
   private ArrayList<Order> orders;
   private ArrayList<Order> backup;
 
-  public OrderDaoFiles() {
+  public OrderDaoFilesImpl() {
 
     File file = new File(path);
 
@@ -45,7 +45,7 @@ public class OrderDaoFiles implements OrderDao {
 
   public static void main(String[] args) {
 
-    OrderDao dao = DaoFactory.createOrderDao();
+    IOrderDao dao = DaoFactory.createOrderDao();
 
     if (dao.findAll().size() == 0) {
 
@@ -77,13 +77,13 @@ public class OrderDaoFiles implements OrderDao {
               "Don't be like Ash and keep always a fresh underwear in your backpack.",
               5);
 
-      shoppingCart.addItem(new CartItem(pokeball, 10, shoppingCart));
+      shoppingCart.addItem(new CartItem(pokeball, 10));
 
-      shoppingCart.addItem(new CartItem(backpack, 1, shoppingCart));
+      shoppingCart.addItem(new CartItem(backpack, 1));
 
-      shoppingCart.addItem(new CartItem(toothBrush, 1, shoppingCart));
+      shoppingCart.addItem(new CartItem(toothBrush, 1));
 
-      shoppingCart.addItem(new CartItem(underwear, 7, shoppingCart));
+      shoppingCart.addItem(new CartItem(underwear, 7));
 
       Order order = new Order(shoppingCart, joy, ash);
 

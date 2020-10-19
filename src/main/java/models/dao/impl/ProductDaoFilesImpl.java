@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import main.java.models.Product;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.ProductDao;
+import main.java.models.dao.IProductDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
 import main.java.models.dao.impl.exception.NameOrDescriptionInUseException;
 import main.java.models.dao.impl.exception.ProductNotFoundException;
 
-public class ProductDaoFiles implements ProductDao {
+public class ProductDaoFilesImpl implements IProductDao {
 
   private final String path = "./localStorage/products.ser";
   private ArrayList<Product> products;
   private ArrayList<Product> backup;
 
-  public ProductDaoFiles() {
+  public ProductDaoFilesImpl() {
 
     File file = new File(path);
 
@@ -41,7 +41,7 @@ public class ProductDaoFiles implements ProductDao {
   public static void main(String[] args) {
 
     // Please, backup and delete localStorage\\products.ser before testing
-    ProductDao dao = DaoFactory.createProductDao();
+    IProductDao dao = DaoFactory.createProductDao();
 
     if (dao.findAll().size() == 2) {
 

@@ -15,25 +15,22 @@
     <VBox layoutY="87.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <Button fx:id="backBt" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
-        <HBox spacing="50.0">
-          <children>
-            <Hyperlink fx:id="editOwnRegisterHl" onAction="#onEditOwnRegisterHlAction" text="Edit account" underline="true" />
-            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="             Welcome {name}">
+            <HBox alignment="CENTER">
+               <children>
+            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name}">
               <font>
                 <Font size="18.0" />
               </font>
             </Text>
-          </children>
-          <opaqueInsets>
-            <Insets />
-          </opaqueInsets>
-        </HBox>
+               </children>
+            </HBox>
         <VBox prefHeight="296.0" prefWidth="575.0" spacing="10.0">
           <children>
             <ComboBox fx:id="trainersCb" onAction="#onTrainersCbAction" prefHeight="25.0" prefWidth="170.0" promptText="Choose trainer" />
             <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" text="Start shopping" />
             <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" text="Shopping history" />
                   <Button fx:id="cureServiceBt" mnemonicParsing="false" onAction="#onCureServiceBtAction" text="Cure Service" />
+                  <Button fx:id="cureHistoryBt" layoutX="10.0" layoutY="115.0" mnemonicParsing="false" onAction="#cureHistoryBtAction" text="Cure history" />
             <Hyperlink fx:id="managerTrainersHl" onAction="#onManagerTrainersHlAction" text="Manage trainers" underline="true" />
             <Hyperlink fx:id="manageProductsHl" onAction="#onManageProductsHlAction" text="Manage products" underline="true" />
                   <Hyperlink fx:id="manageEmployeeHl" layoutX="10.0" layoutY="160.0" onAction="#onManageEmployeesHlAction" text="Manage employees" underline="true" />

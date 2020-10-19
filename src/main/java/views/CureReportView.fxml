@@ -39,7 +39,7 @@
                 <Button fx:id="generateReportBt" mnemonicParsing="false" onAction="#onGenerateReportBtAction" text="Generate Report" />
                 </children>
               </VBox>
-                  <TextArea fx:id="cureReportTxt">
+                  <TextArea fx:id="cureReportTxt" editable="false">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

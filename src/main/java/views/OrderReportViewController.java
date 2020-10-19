@@ -49,13 +49,16 @@ public class OrderReportViewController implements Initializable {
     if (!(UserController.getInstance().getLoggedUser() instanceof Trainer)) {
 
       selectEmployeeCb.setValue(UserController.getInstance().getLoggedUser());
+      orderReport.setEmployee(UserController.getInstance().getLoggedUser());
     } else {
 
       selectTrainerCb.setValue((Trainer) UserController.getInstance().getLoggedUser());
+      orderReport.setClient((Trainer) UserController.getInstance().getLoggedUser());
       selectTrainerCb.setDisable(true);
     }
     try {
       orderReportTxt.setText(SalesService.getInstance().generateReceipt());
+      SalesService.getInstance().finishOrder();
     } catch (OrderWasNullException e) {
       orderReportTxt.setText("");
     }
@@ -178,7 +181,7 @@ public class OrderReportViewController implements Initializable {
     selectTrainerCb.setValue(orderReport.getClient());
   }
 
-  public OrderReport getCureReport() {
+  public OrderReport getOrderReport() {
     return orderReport;
   }
 }

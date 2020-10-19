@@ -9,7 +9,7 @@ import main.java.models.ShoppingCart;
 import main.java.models.Trainer;
 import main.java.models.User;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.OrderDao;
+import main.java.models.dao.IOrderDao;
 import main.java.services.exception.CartItemNotFoundException;
 import main.java.services.exception.OrderWasNullException;
 
@@ -19,7 +19,7 @@ public class SalesService {
   private static SalesService instance;
 
   private Order order;
-  private OrderDao orderDao;
+  private IOrderDao orderDao;
   private ShoppingCart shoppingCart;
 
   private SalesService() {
@@ -47,6 +47,20 @@ public class SalesService {
     order = new Order(shoppingCart, client);
   }
 
+  public void placeOrder() {
+
+    if (order != null) {
+      order = orderDao.insert(order);
+    } else {
+      // throw exception
+    }
+  }
+
+  public void finishOrder() {
+    order = null;
+    shoppingCart = null;
+  }
+
   public void cancelOrder() {
 
     shoppingCart = null;
@@ -55,16 +69,21 @@ public class SalesService {
 
   public void addToCart(CartItem item) {
 
+    boolean itemInCart = false;
+
+    item.setQuantity(item.getQuantity() + 1);
+
     for (CartItem i : shoppingCart.getItems()) {
 
       if (i.getProduct().equals(item.getProduct())) {
-
-        shoppingCart.removeItem(i);
+        itemInCart = true;
         break;
       }
     }
 
-    shoppingCart.addItem(item);
+    if (!itemInCart) {
+      shoppingCart.addItem(item);
+    }
   }
 
   public void removeFromCart(CartItem item) throws CartItemNotFoundException {
@@ -75,9 +94,20 @@ public class SalesService {
 
       if (i.equals(item)) {
 
-        shoppingCart.removeItem(i);
-        success = true;
-        break;
+        if (i.getQuantity() > 1) {
+
+          i.setQuantity(i.getQuantity() - 1);
+
+          success = true;
+          break;
+        } else {
+
+          i.setQuantity(0);
+          shoppingCart.removeItem(i);
+
+          success = true;
+          break;
+        }
       }
     }
 
@@ -105,7 +135,7 @@ public class SalesService {
   }
 
   public List<Order> getAllOrders() {
-    return orderDao.findAll();
+    return new ArrayList<>(orderDao.findAll());
   }
 
   public String getReport(OrderReport orderReport) {
@@ -158,5 +188,9 @@ public class SalesService {
     allOrders.removeAll(orders);
 
     return orderReport.generateReport(allOrders);
+  }
+
+  public ShoppingCart getShoppingCart() {
+    return shoppingCart;
   }
 }

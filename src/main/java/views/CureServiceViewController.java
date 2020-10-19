@@ -106,19 +106,61 @@ public class CureServiceViewController implements Initializable {
   }
 
   public void onGenerateRegisterBtAction(ActionEvent event) {
-    CureService.getInstance().startCures(selectedTrainer, employee);
 
-    try {
+    if (selectedPokemon != null) {
+      if (!lifeField.getText().isEmpty()
+          && Integer.parseInt(lifeField.getText()) <= selectedPokemon.getMaxLife()) {
 
-      FXMLLoader loader =
-          new FXMLLoader(getClass().getResource("/main/java/views/CureReportView.fxml"));
-      Parent newPage = loader.load();
-      CureReportViewController controller = loader.getController();
-      controller.getCureReport().setClient(selectedTrainer);
-      controller.updateTrainerCb();
-      backBt.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
+        int pokemonLife = Integer.parseInt(lifeField.getText());
+
+        if (selectedPokemon.getLife() != pokemonLife
+            || selectedPokemon.getStatus() != selectedPokemonStatus) {
+
+          selectedPokemon.setLife(pokemonLife);
+
+          selectedPokemon.setStatus(selectedPokemonStatus);
+
+          CureService.getInstance().startCures(selectedTrainer, employee);
+
+          try {
+
+            FXMLLoader loader =
+                new FXMLLoader(getClass().getResource("/main/java/views/CureReportView.fxml"));
+            Parent newPage = loader.load();
+            CureReportViewController controller = loader.getController();
+            controller.getCureReport().setClient(selectedTrainer);
+            controller.updateTrainerCb();
+            backBt.getScene().setRoot(newPage);
+          } catch (Exception e) {
+            System.out.println("Error");
+          }
+        }
+
+        selectedPokemon = pokemonCb.getValue();
+
+        initializeMaxLifeTxt();
+        initializeSpecieTxt();
+        initializeTypeTxt();
+        initializeLifeTxt();
+        initializeStatus();
+
+        System.out.println("Selected " + selectedPokemon.getSpecies());
+      } else {
+
+        if (lifeField.getText().isEmpty()) {
+          Alerts.showAlert("Error", null, "Life field can't be empty", AlertType.WARNING);
+        } else {
+
+          Alerts.showAlert(
+              "Error",
+              null,
+              "Pokemon's life must be lower than pokemon's max. life.",
+              AlertType.WARNING);
+        }
+
+        lifeField.setText(String.valueOf(selectedPokemon.getLife()));
+        pokemonCb.setValue(selectedPokemon);
+      }
     }
   }
 

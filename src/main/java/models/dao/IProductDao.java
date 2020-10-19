@@ -3,7 +3,7 @@ package main.java.models.dao;
 import java.util.List;
 import main.java.models.Product;
 
-public interface ProductDao {
+public interface IProductDao {
 
   Product insert(Product product);
 

@@ -28,10 +28,9 @@ public class AdministratorMainPageViewController implements Initializable {
   @FXML private Button backBt;
   @FXML private Button startShoppingBt;
   @FXML private Button shoppingHistoryBt;
-  @FXML private Button salesClerkBt;
+  @FXML private Button cureHistoryBt;
   @FXML private Button cureServiceBt;
   @FXML private ComboBox<Trainer> trainersCb;
-  @FXML private Hyperlink editOwnRegisterHl;
   @FXML private Hyperlink managerTrainersHl;
   @FXML private Hyperlink manageProductsHl;
   @FXML private Hyperlink manageEmployeeHl;
@@ -56,6 +55,7 @@ public class AdministratorMainPageViewController implements Initializable {
     cureServiceBt.setDisable(true);
     startShoppingBt.setDisable(true);
     shoppingHistoryBt.setDisable(true);
+    cureHistoryBt.setDisable(true);
   }
 
   // UI events
@@ -67,18 +67,6 @@ public class AdministratorMainPageViewController implements Initializable {
     try {
 
       Parent newPage = FXMLLoader.load(getClass().getResource("/main/java/views/Login.fxml"));
-      backBt.getScene().setRoot(newPage);
-    } catch (Exception e) {
-      System.out.println("Error");
-    }
-  }
-
-  public void onSalesClerkBtAction(ActionEvent event) {
-
-    try {
-
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/SalesClerkMainPage.fxml"));
       backBt.getScene().setRoot(newPage);
     } catch (Exception e) {
       System.out.println("Error");
@@ -107,6 +95,26 @@ public class AdministratorMainPageViewController implements Initializable {
     }
   }
 
+  public void cureHistoryBtAction(ActionEvent event) {
+
+    if (selectedTrainer == null) {
+      System.out.println("Error, trainer is null");
+    } else {
+      try {
+
+        FXMLLoader loader =
+            new FXMLLoader(getClass().getResource("/main/java/views/CureReportView.fxml"));
+        Parent newPage = loader.load();
+        CureReportViewController controller = loader.getController();
+        controller.getCureReport().setClient(selectedTrainer);
+        controller.updateTrainerCb();
+        backBt.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
+    }
+  }
+
   public void onStartShoppingBtAction(ActionEvent event) {
 
     if (selectedTrainer == null) {
@@ -114,6 +122,15 @@ public class AdministratorMainPageViewController implements Initializable {
           "Error", null, "A trainer must be selected to begin shopping!", AlertType.ERROR);
     } else {
       SalesService.getInstance().startOrder(administrator, selectedTrainer);
+
+      try {
+
+        Parent newPage =
+            FXMLLoader.load(getClass().getResource("/main/java/views/ShoppingCartView.fxml"));
+        managerTrainersHl.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
     }
   }
 
@@ -128,7 +145,7 @@ public class AdministratorMainPageViewController implements Initializable {
             new FXMLLoader(getClass().getResource("/main/java/views/OrderReportView.fxml"));
         Parent newPage = loader.load();
         OrderReportViewController controller = loader.getController();
-        controller.getCureReport().setClient(selectedTrainer);
+        controller.getOrderReport().setClient(selectedTrainer);
         controller.updateTrainerCb();
         backBt.getScene().setRoot(newPage);
       } catch (Exception e) {
@@ -148,11 +165,8 @@ public class AdministratorMainPageViewController implements Initializable {
       startShoppingBt.setDisable(false);
       shoppingHistoryBt.setDisable(false);
       cureServiceBt.setDisable(false);
+      cureHistoryBt.setDisable(false);
     }
-  }
-
-  public void onEditOwnRegisterHlAction(ActionEvent event) {
-    System.out.println("Editing own register");
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {

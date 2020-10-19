@@ -1,15 +1,16 @@
 package main.java.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import main.java.models.Product;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.ProductDao;
+import main.java.models.dao.IProductDao;
 
 public class ProductController {
 
   private static ProductController instance;
 
-  private ProductDao productDao;
+  private IProductDao productDao;
 
   private ProductController() {
     productDao = DaoFactory.createProductDao();
@@ -29,10 +30,10 @@ public class ProductController {
   }
 
   public List<Product> getAllProducts() {
-    return productDao.findAll();
+    return new ArrayList<>(productDao.findAll());
   }
 
-  public ProductDao getProductDao() {
+  public IProductDao getProductDao() {
     return productDao;
   }
 

@@ -3,7 +3,7 @@ package main.java.models.dao;
 import java.util.List;
 import main.java.models.Cure;
 
-public interface CureDao {
+public interface ICureDao {
 
   Cure insert(Cure cure);
 
