@@ -28,7 +28,6 @@ public class NurseMainPageViewController implements Initializable {
   @FXML private Button registerCuresBt;
   @FXML private Button cureHistoryBt;
   @FXML private ComboBox<Trainer> trainersCb;
-  @FXML private Hyperlink editOwnRegisterHl;
   @FXML private Hyperlink managerTrainersHl;
   @FXML private Text welcomeTxt;
 
@@ -116,10 +115,6 @@ public class NurseMainPageViewController implements Initializable {
       registerCuresBt.setDisable(false);
       cureHistoryBt.setDisable(false);
     }
-  }
-
-  public void onEditOwnRegisterHlAction(ActionEvent event) {
-    System.out.println("Editing own register");
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {

@@ -29,7 +29,6 @@ public class SalesClerkMainPageViewController implements Initializable {
   @FXML private Button startShoppingBt;
   @FXML private Button shoppingHistoryBt;
   @FXML private ComboBox<Trainer> trainersCb;
-  @FXML private Hyperlink editOwnRegisterHl;
   @FXML private Hyperlink managerTrainersHl;
   @FXML private Hyperlink manageProductsHl;
   @FXML private Text welcomeTxt;
@@ -122,10 +121,6 @@ public class SalesClerkMainPageViewController implements Initializable {
       startShoppingBt.setDisable(true);
       shoppingHistoryBt.setDisable(true);
     }
-  }
-
-  public void onEditOwnRegisterHlAction(ActionEvent event) {
-    System.out.println("Editing own register");
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {
