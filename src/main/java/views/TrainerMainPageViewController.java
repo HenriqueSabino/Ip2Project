@@ -48,11 +48,29 @@ public class TrainerMainPageViewController implements Initializable {
   }
 
   public void onStartShoppingBtAction(ActionEvent event) {
+
     SalesService.getInstance().startOrder((Trainer) trainer);
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/ShoppingCartView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   public void onShoppingHistoryBtAction(ActionEvent event) {
-    System.out.println(trainer.getName() + " shopping history");
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/OrderReportView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   public void onCureHistoryBtAction(ActionEvent event) {

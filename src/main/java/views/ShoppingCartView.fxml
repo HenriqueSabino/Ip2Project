@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.ShoppingCartViewController">
+  <children>
+    <Button fx:id="backBt" mnemonicParsing="false" onAction="#backBtAction" text="←" />
+    <Label contentDisplay="CENTER" text="Shopping page">
+      <VBox.margin>
+        <Insets left="5.0" top="5.0" />
+      </VBox.margin>
+      <font>
+        <Font name="System Bold" size="22.0" />
+      </font>
+    </Label>
+    <TableView fx:id="productsTV" prefHeight="600.0" prefWidth="806.0">
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+      <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+      <columns>
+        <TableColumn fx:id="productNamesTC" prefWidth="72.0" text="Name" />
+        <TableColumn fx:id="productDescriptionsTC" prefWidth="75.0" text="Description" />
+        <TableColumn fx:id="unitPricesTC" prefWidth="72.0" text="Unit price" />
+        <TableColumn fx:id="quantityTC" prefWidth="72.0" text="Quantity" />
+        <TableColumn fx:id="subtotalTC" prefWidth="72.0" text="SubTotal" />
+      </columns>
+    </TableView>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <items>
+        <Button fx:id="addItemBt" mnemonicParsing="false" onAction="#addItemBtAction" text="+" />
+        <Button fx:id="removeItemBt" mnemonicParsing="false" onAction="#removeItemBtAction" text="-" />
+        <Button fx:id="clearCartBt" mnemonicParsing="false" onAction="#clearCartBtAction" text="Clear cart" />
+        <TextField fx:id="totalCostTxt" editable="false" text="Total cost: {price}" />
+            <Button fx:id="placeOrderBt" layoutX="39.0" layoutY="13.0" mnemonicParsing="false" onAction="#placeOrderBtAction" text="Place order" />
+      </items>
+    </ToolBar>
+  </children>
+  <padding>
+    <Insets left="10.0" right="10.0" top="10.0" />
+  </padding>
+</VBox>

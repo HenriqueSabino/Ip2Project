@@ -14,18 +14,18 @@ import main.java.models.Pokemon;
 import main.java.models.PokemonStatus;
 import main.java.models.PokemonType;
 import main.java.models.Trainer;
-import main.java.models.dao.CureDao;
 import main.java.models.dao.DaoFactory;
+import main.java.models.dao.ICureDao;
 import main.java.models.dao.impl.exception.CureNotFoundException;
 import main.java.models.dao.impl.exception.LocalDBIOException;
 
-public class CureDaoFiles implements CureDao {
+public class CureDaoFilesImpl implements ICureDao {
 
   private final String path = "./localStorage/cures.ser";
   private ArrayList<Cure> cures;
   private ArrayList<Cure> backup;
 
-  public CureDaoFiles() {
+  public CureDaoFilesImpl() {
 
     File file = new File(path);
 
@@ -42,7 +42,7 @@ public class CureDaoFiles implements CureDao {
   public static void main(String[] args) {
 
     // Please, backup and delete localStorage\\cures.ser before testing
-    CureDao dao = DaoFactory.createCureDao();
+    ICureDao dao = DaoFactory.createCureDao();
 
     if (dao.findAll().size() == 0) {
 

@@ -8,14 +8,14 @@ import main.java.models.SalesClerk;
 import main.java.models.Trainer;
 import main.java.models.User;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.UserDao;
+import main.java.models.dao.IUserDao;
 
 // Singleton
 public class UserController {
 
   private static UserController instance;
 
-  private UserDao userDao;
+  private IUserDao userDao;
   private User loggedUser;
 
   private UserController() {

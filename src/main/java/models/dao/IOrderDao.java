@@ -1,10 +1,9 @@
 package main.java.models.dao;
 
+import java.util.List;
 import main.java.models.Order;
 
-import java.util.List;
-
-public interface OrderDao {
+public interface IOrderDao {
 
   Order insert(Order order);
 

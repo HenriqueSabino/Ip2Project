@@ -17,18 +17,18 @@ import main.java.models.SalesClerk;
 import main.java.models.Trainer;
 import main.java.models.User;
 import main.java.models.dao.DaoFactory;
-import main.java.models.dao.UserDao;
+import main.java.models.dao.IUserDao;
 import main.java.models.dao.impl.exception.LocalDBIOException;
 import main.java.models.dao.impl.exception.UserNotFoundException;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 
-public class UserDaoFiles implements UserDao {
+public class UserDaoFilesImpl implements IUserDao {
 
   private final String path = "./localStorage/users.ser";
   private ArrayList<User> users;
   private ArrayList<User> backup;
 
-  public UserDaoFiles() {
+  public UserDaoFilesImpl() {
 
     File file = new File(path);
 
@@ -54,7 +54,7 @@ public class UserDaoFiles implements UserDao {
   public static void main(String[] args) {
 
     // Please, backup and delete localStorage\\users.ser before testing
-    UserDao dao = DaoFactory.createUserDao();
+    IUserDao dao = DaoFactory.createUserDao();
 
     if (dao.findAll().size() == 1) {
 

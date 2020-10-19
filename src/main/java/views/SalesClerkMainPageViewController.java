@@ -62,8 +62,7 @@ public class SalesClerkMainPageViewController implements Initializable {
 
     try {
 
-      Parent newPage =
-          FXMLLoader.load(getClass().getResource("/main/java/views/AdministratorMainPage.fxml"));
+      Parent newPage = FXMLLoader.load(getClass().getResource("/main/java/views/Login.fxml"));
       managerTrainersHl.getScene().setRoot(newPage);
     } catch (Exception e) {
       System.out.println("Error");
@@ -77,6 +76,15 @@ public class SalesClerkMainPageViewController implements Initializable {
           "Error", null, "A trainer must be selected to begin shopping!", AlertType.ERROR);
     } else {
       SalesService.getInstance().startOrder(employee, selectedTrainer);
+
+      try {
+
+        Parent newPage =
+            FXMLLoader.load(getClass().getResource("/main/java/views/ShoppingCartView.fxml"));
+        managerTrainersHl.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
     }
   }
 
@@ -84,7 +92,18 @@ public class SalesClerkMainPageViewController implements Initializable {
     if (selectedTrainer == null) {
       System.out.println("Error, trainer is null");
     } else {
-      System.out.println(selectedTrainer.getName() + " shopping history");
+      try {
+
+        FXMLLoader loader =
+            new FXMLLoader(getClass().getResource("/main/java/views/OrderReportView.fxml"));
+        Parent newPage = loader.load();
+        OrderReportViewController controller = loader.getController();
+        controller.getOrderReport().setClient(selectedTrainer);
+        controller.updateTrainerCb();
+        backBt.getScene().setRoot(newPage);
+      } catch (Exception e) {
+        System.out.println("Error");
+      }
     }
   }
 
@@ -98,6 +117,10 @@ public class SalesClerkMainPageViewController implements Initializable {
 
       startShoppingBt.setDisable(false);
       shoppingHistoryBt.setDisable(false);
+    } else {
+      trainersCb.getSelectionModel().clearSelection();
+      startShoppingBt.setDisable(true);
+      shoppingHistoryBt.setDisable(true);
     }
   }
 
@@ -106,7 +129,15 @@ public class SalesClerkMainPageViewController implements Initializable {
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {
-    System.out.println("Going to Trainers CRUD");
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/TrainerListView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   public void onManageProductsHlAction(ActionEvent event) {
@@ -128,13 +159,14 @@ public class SalesClerkMainPageViewController implements Initializable {
   private void initializeTrainersListCb(List<Trainer> trainers) {
 
     trainersObsList = FXCollections.observableArrayList(trainers);
+    trainersObsList.add(0, null);
     trainersCb.setItems(trainersObsList);
 
-    trainersCb.setCellFactory(this::displayTrainer);
-    trainersCb.setButtonCell(trainersCb.getCellFactory().call(null));
+    trainersCb.setCellFactory(this::displayTrainerCell);
+    trainersCb.setButtonCell(displayTrainerSelection());
   }
 
-  private ListCell<Trainer> displayTrainer(ListView<Trainer> view) {
+  private ListCell<Trainer> displayTrainerCell(ListView<Trainer> view) {
 
     return new ListCell<>() {
 
@@ -143,8 +175,26 @@ public class SalesClerkMainPageViewController implements Initializable {
 
         super.updateItem(trainer, empty);
 
-        if (empty) {
+        if (empty || trainer == null) {
           setText("");
+        } else {
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<Trainer> displayTrainerSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(Trainer trainer, boolean empty) {
+
+        super.updateItem(trainer, empty);
+
+        if (empty || trainer == null) {
+          setText(trainersCb.getPromptText());
         } else {
           setText(trainer.getName() + " from " + trainer.getBirthCity());
         }

@@ -3,7 +3,7 @@ package main.java.models.dao;
 import java.util.List;
 import main.java.models.User;
 
-public interface UserDao {
+public interface IUserDao {
 
   User insert(User user);
 
