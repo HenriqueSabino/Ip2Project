@@ -154,7 +154,7 @@ public class EmployeeFormViewController implements Initializable {
   public void fillFields() {
 
     if (employee == null) {
-      throw new IllegalStateException("Product was null.");
+      throw new IllegalStateException("Employee was null.");
     }
 
     nameField.setText(employee.getName());
@@ -165,7 +165,7 @@ public class EmployeeFormViewController implements Initializable {
     emailField.setText(employee.getEmail());
   }
 
-  public void setProduct(User employee) {
+  public void setEmployee(User employee) {
     this.employee = employee;
   }
 }

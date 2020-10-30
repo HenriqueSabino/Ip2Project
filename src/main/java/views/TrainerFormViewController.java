@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
 import main.java.models.Trainer;
+import main.java.models.User;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.models.exceptions.ValidationException;
 import main.java.views.listeners.DataChangeListener;
@@ -38,19 +40,17 @@ import main.java.views.util.Utils;
 
 public class TrainerFormViewController implements Initializable, DataChangeListener {
 
+  // end
+  private User trainer;
   private Trainer entity;
-
   private UserController userController;
-
   private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
-
   @FXML private Label labelErrorName;
   @FXML private Label labelErrorBirthCity;
   @FXML private Label labelErrorGender;
   @FXML private Label labelErrorUsername;
   @FXML private Label labelErrorPassword;
   @FXML private Label labelErrorEmail;
-
   @FXML private TextField textFieldRegisterId;
   @FXML private TextField textFieldName;
   @FXML private TextField textFieldBirthCity;
@@ -58,17 +58,16 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   @FXML private TextField textFieldUsername;
   @FXML private TextField textFieldPassword;
   @FXML private TextField textFieldEmail;
-
   @FXML private Button buttonSave;
   @FXML private Button buttonCancel;
   @FXML private Button buttonDeletePokemon;
+  private TrainerListViewController trainerListViewController;
 
   // pokemon viewtable properties
   @FXML private TableView<Pokemon> tableViewPokemon;
   @FXML private TableColumn<Pokemon, String> tableColumnSpecies;
   @FXML private TableColumn<Pokemon, String> tableColumnMaxLife;
   @FXML private TableColumn<Pokemon, String> tableColumnType;
-  // end
 
   public void setTrainer(Trainer entity) {
     this.entity = entity;
@@ -76,6 +75,10 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   public void setUserController(UserController userController) {
     this.userController = userController;
+  }
+
+  public void setTrainerListViewController(TrainerListViewController trainerListViewController) {
+    this.trainerListViewController = trainerListViewController;
   }
 
   public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -98,6 +101,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
         getFormData();
         userController.saveOrUpdate(entity);
         notifyDataChangeListeners();
+        // trainerListViewController.updateTableView();
+        goToTrainerListView();
         Utils.getCurrentStage(event).close();
       } else {
         Alerts.showAlert(
@@ -195,6 +200,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   @FXML
   public void onButtonCancelAction(ActionEvent event) {
+
+    goToTrainerListView();
     Utils.getCurrentStage(event).close();
   }
 
@@ -325,5 +332,37 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   @Override
   public void onDataChanged() {
     updatePokemonTableView();
+  }
+
+  public void fillFields() {
+
+    if (entity == null) {
+      throw new IllegalStateException("Trainer was null.");
+    }
+
+    textFieldName.setText(entity.getName());
+    textFieldBirthCity.setText(entity.getBirthCity());
+    textFieldGender.setText(entity.getGender());
+    textFieldUsername.setText(entity.getUsername());
+    textFieldPassword.setText(entity.getPassword());
+    textFieldEmail.setText(entity.getEmail());
+  }
+
+  public void goToTrainerListView() {
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/TrainerListView.fxml"));
+      Stage stage = new Stage();
+
+      stage.setScene(new Scene(newPage, 600, 400));
+      stage.setTitle("PokéCenter");
+      stage.setResizable(false);
+      stage.show();
+
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 }

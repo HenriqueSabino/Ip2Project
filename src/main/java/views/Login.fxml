@@ -8,29 +8,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.LoginViewController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+  prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+  fx:controller="main.java.views.LoginViewController">
   <children>
-    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="291.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      alignment="CENTER" prefHeight="200.0" prefWidth="291.0"
+      spacing="25.0">
       <children>
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onLoginBtAction"
+          text="Login" fx:id="loginBt"/>
+        <PasswordField promptText="Password" fx:id="passwordField"/>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
           <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
           </font>
         </Text>
-        <TextField fx:id="usernameField" promptText="Username" />
-        <PasswordField fx:id="passwordField" promptText="Password" />
-        <Button fx:id="loginBt" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginBtAction" text="Login" />
+        <TextField promptText="Username" fx:id="usernameField"/>
       </children>
       <opaqueInsets>
-        <Insets />
+        <Insets/>
       </opaqueInsets>
       <padding>
-        <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
+        <Insets bottom="100.0" left="200.0" right="200.0" top="100.0"/>
       </padding>
     </VBox>
   </children>
   <opaqueInsets>
-    <Insets />
+    <Insets/>
   </opaqueInsets>
 </AnchorPane>

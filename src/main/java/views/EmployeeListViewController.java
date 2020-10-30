@@ -100,7 +100,7 @@ public class EmployeeListViewController implements Initializable {
               new FXMLLoader(getClass().getResource("/main/java/views/EmployeeFormView.fxml"));
           Parent newPage = loader.load();
           EmployeeFormViewController controller = loader.getController();
-          controller.setProduct(tableViewEmployee.getSelectionModel().getSelectedItem());
+          controller.setEmployee(tableViewEmployee.getSelectionModel().getSelectedItem());
           controller.fillFields();
 
           buttonNewEmployee.getScene().setRoot(newPage);
