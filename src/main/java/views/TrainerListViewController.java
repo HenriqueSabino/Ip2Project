@@ -39,14 +39,10 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   @FXML private Button buttonUpdate;
   @FXML private Button buttonDelete;
   @FXML private TableView<Trainer> tableViewTrainer;
-  @FXML private TableColumn<Trainer, String> tableColumnRegisterId;
   @FXML private TableColumn<Trainer, String> tableColumnName;
-  @FXML private TableColumn<Trainer, Trainer> tableColumnEDIT;
-  @FXML private TableColumn<Trainer, Trainer> tableColumnREMOVE;
   @FXML private TableColumn<Trainer, String> tableColumnBirthCity;
   @FXML private TableColumn<Trainer, String> tableColumnGender;
   @FXML private TableColumn<Trainer, String> tableColumnUsername;
-  // @FXML private TableColumn<Trainer, String> tableColumnPassword;
   @FXML private TableColumn<Trainer, String> tableColumnEmail;
 
   private List<Trainer> trainerList;
@@ -67,12 +63,10 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
   private void initializeNodes() {
 
-    tableColumnRegisterId.setCellValueFactory(new PropertyValueFactory<>("registerId"));
     tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
     tableColumnBirthCity.setCellValueFactory(new PropertyValueFactory<>("birthCity"));
     tableColumnGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
     tableColumnUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
-    // tableColumnPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
     tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
   }
 
@@ -92,6 +86,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
   public void onButtonNewTrainerAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
     Trainer trainer = new Trainer();
+    Utils.getCurrentStage(event).close();
     createDialogForm(trainer, "/main/java/views/TrainerFormView.fxml", parentStage);
   }
 
@@ -206,7 +201,6 @@ public class TrainerListViewController implements Initializable, DataChangeListe
               "/main/java/views/TrainerFormView.fxml",
               parentStage);
 
-          //  buttonUpdate.getScene().setRoot(newPage);
         } catch (Exception e) {
           e.printStackTrace();
         }

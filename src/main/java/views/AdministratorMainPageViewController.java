@@ -166,6 +166,12 @@ public class AdministratorMainPageViewController implements Initializable {
       shoppingHistoryBt.setDisable(false);
       cureServiceBt.setDisable(false);
       cureHistoryBt.setDisable(false);
+    } else {
+
+      startShoppingBt.setDisable(true);
+      shoppingHistoryBt.setDisable(true);
+      cureServiceBt.setDisable(true);
+      cureHistoryBt.setDisable(true);
     }
   }
 
@@ -219,13 +225,14 @@ public class AdministratorMainPageViewController implements Initializable {
   private void initializeTrainersListCb(List<Trainer> trainers) {
 
     trainersObsList = FXCollections.observableArrayList(trainers);
+    trainersObsList.add(0, null);
     trainersCb.setItems(trainersObsList);
 
-    trainersCb.setCellFactory(this::displayTrainer);
-    trainersCb.setButtonCell(trainersCb.getCellFactory().call(null));
+    trainersCb.setCellFactory(this::displayTrainerCell);
+    trainersCb.setButtonCell(displayTrainerSelection());
   }
 
-  private ListCell<Trainer> displayTrainer(ListView<Trainer> view) {
+  private ListCell<Trainer> displayTrainerCell(ListView<Trainer> view) {
 
     return new ListCell<>() {
 
@@ -234,8 +241,26 @@ public class AdministratorMainPageViewController implements Initializable {
 
         super.updateItem(trainer, empty);
 
-        if (empty) {
-          setText("");
+        if (empty || trainer == null) {
+          setText("None");
+        } else {
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<Trainer> displayTrainerSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(Trainer trainer, boolean empty) {
+
+        super.updateItem(trainer, empty);
+
+        if (empty || trainer == null) {
+          setText(trainersCb.getPromptText());
         } else {
           setText(trainer.getName() + " from " + trainer.getBirthCity());
         }

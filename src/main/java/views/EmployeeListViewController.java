@@ -90,10 +90,6 @@ public class EmployeeListViewController implements Initializable {
 
       if (!tableViewEmployee.getSelectionModel().isEmpty()) {
 
-        //        UserController.getInstance()
-        //            .setIdForUpdate(
-        //                tableViewEmployee.getSelectionModel().getSelectedItem().getRegisterId());
-        //        UserController.getInstance().setUpdate(true);
         try {
 
           FXMLLoader loader =

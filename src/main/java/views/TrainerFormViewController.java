@@ -51,7 +51,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   @FXML private Label labelErrorUsername;
   @FXML private Label labelErrorPassword;
   @FXML private Label labelErrorEmail;
-  @FXML private TextField textFieldRegisterId;
   @FXML private TextField textFieldName;
   @FXML private TextField textFieldBirthCity;
   @FXML private TextField textFieldGender;
@@ -101,7 +100,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
         getFormData();
         userController.saveOrUpdate(entity);
         notifyDataChangeListeners();
-        // trainerListViewController.updateTableView();
         goToTrainerListView();
         Utils.getCurrentStage(event).close();
       } else {
@@ -209,7 +207,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   public void onButtonNewPokemonAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
     Pokemon pokemon = new Pokemon();
-    // pokemon.setStatus(PokemonStatus.BURNT);
     createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
   }
 
@@ -277,7 +274,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
       throw new IllegalStateException("Entity was null.");
     }
 
-    textFieldRegisterId.setText(String.valueOf(entity.getRegisterId()));
     textFieldName.setText(entity.getName());
     textFieldBirthCity.setText(entity.getBirthCity());
     textFieldGender.setText(entity.getGender());

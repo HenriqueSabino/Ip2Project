@@ -163,6 +163,16 @@ public class EmployeeFormViewController implements Initializable {
     usernameField.setText(employee.getUsername());
     passwordField.setText(employee.getPassword());
     emailField.setText(employee.getEmail());
+
+    if (employee instanceof Nurse) {
+
+      salesBt.setDisable(true);
+      nurseBt.setSelected(true);
+    } else {
+
+      nurseBt.setDisable(true);
+      salesBt.setSelected(true);
+    }
   }
 
   public void setEmployee(User employee) {
