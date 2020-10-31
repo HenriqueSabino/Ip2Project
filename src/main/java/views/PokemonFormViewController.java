@@ -3,15 +3,13 @@ package main.java.views;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
@@ -32,13 +30,8 @@ public class PokemonFormViewController implements Initializable {
   private UserController controller;
   private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
-  @FXML private Label labelErrorSpecies;
-  @FXML private Label labelErrorMaxLife;
-  @FXML private Label labelErrorType;
-
   @FXML private TextField textFieldSpecies;
   @FXML private TextField textFieldMaxLife;
-
   @FXML private ComboBox<PokemonType> comboBoxPokemonType;
 
   public void setPokemon(Pokemon entity) {
@@ -69,17 +62,18 @@ public class PokemonFormViewController implements Initializable {
     try {
 
       getFormData();
-      if (owner.getPokemons().size() < 6) {
-        owner.getPokemons().add(entity);
+
+      if (getFormData() == true) {
+        if (owner.getPokemons().size() < 6) {
+          owner.getPokemons().add(entity);
+        }
+        notifyDataChangeListeners();
+        Utils.getCurrentStage(event).close();
       }
-      notifyDataChangeListeners();
-      Utils.getCurrentStage(event).close();
     } catch (UsernameOrEmailInUseException e) {
 
       Alerts.showAlert(
           "UsernameOrEmailInUseException", null, e.getMessage(), Alert.AlertType.ERROR);
-    } catch (ValidationException validationException) {
-      setErrorMessages(validationException.getErrors());
     }
   }
 
@@ -89,33 +83,36 @@ public class PokemonFormViewController implements Initializable {
     }
   }
 
-  private void getFormData() {
+  private boolean getFormData() {
 
     ValidationException exception = new ValidationException("Validation error");
 
-    if (textFieldSpecies.getText() == null || textFieldSpecies.getText().trim().equals("")) {
-      exception.addError("species", "Field can't be empty.");
+    if (textFieldSpecies.getText() == null
+        || textFieldSpecies.getText().trim().equals("")
+        || textFieldMaxLife.getText() == null
+        || textFieldMaxLife.getText().trim().equals("")) {
+      Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
+      return false;
     } else {
       entity.setSpecies(textFieldSpecies.getText());
     }
 
     if (Utils.tryParseToInt(textFieldMaxLife.getText()) == 0) {
-      exception.addError("maxLife", "Field can't be zero.");
+      Alerts.showAlert("Error", null, "Max life of Pokemon can't be zero", AlertType.ERROR);
+      return false;
     } else {
       entity.setMaxLife(Utils.tryParseToInt(textFieldMaxLife.getText()));
       entity.setLife(entity.getMaxLife());
     }
 
     if (comboBoxPokemonType.getValue() == null) {
-      exception.addError("type", "Field can't be empty.");
+      Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
+      return false;
     } else {
       entity.setType(comboBoxPokemonType.getValue());
       entity.setStatus(PokemonStatus.NONE);
     }
-
-    if (exception.getErrors().size() > 0) {
-      throw exception;
-    }
+    return true;
   }
 
   @FXML
@@ -146,28 +143,5 @@ public class PokemonFormViewController implements Initializable {
     textFieldSpecies.setText(entity.getSpecies());
     textFieldMaxLife.setText(String.valueOf(entity.getMaxLife()));
     comboBoxPokemonType.setValue(entity.getType());
-  }
-
-  private void setErrorMessages(Map<String, String> errors) {
-
-    Set<String> fields = errors.keySet();
-
-    if (fields.contains("species")) {
-      labelErrorSpecies.setText(errors.get("species"));
-    } else {
-      labelErrorSpecies.setText("");
-    }
-
-    if (fields.contains("maxLife")) {
-      labelErrorMaxLife.setText(errors.get("maxLife"));
-    } else {
-      labelErrorMaxLife.setText("");
-    }
-
-    if (fields.contains("type")) {
-      labelErrorType.setText(errors.get("type"));
-    } else {
-      labelErrorType.setText("");
-    }
   }
 }
