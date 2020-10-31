@@ -131,14 +131,15 @@ public class CureReportViewController implements Initializable {
 
     employeeObsList =
         FXCollections.observableArrayList(UserController.getInstance().getAllNurses());
+    employeeObsList.add(0, null);
     employeeObsList.addAll(UserController.getInstance().getAllAdministrators());
     selectEmployeeCb.setItems(employeeObsList);
 
-    selectEmployeeCb.setCellFactory(this::displayUser);
-    selectEmployeeCb.setButtonCell(selectEmployeeCb.getCellFactory().call(null));
+    selectEmployeeCb.setCellFactory(this::displayUserCell);
+    selectEmployeeCb.setButtonCell(displayUserSelection());
   }
 
-  private ListCell<User> displayUser(ListView<User> view) {
+  private ListCell<User> displayUserCell(ListView<User> view) {
 
     return new ListCell<>() {
 
@@ -147,8 +148,26 @@ public class CureReportViewController implements Initializable {
 
         super.updateItem(user, empty);
 
-        if (empty) {
-          setText("");
+        if (empty || user == null) {
+          setText("None");
+        } else {
+          setText(user.getName() + " from " + user.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<User> displayUserSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(User user, boolean empty) {
+
+        super.updateItem(user, empty);
+
+        if (empty || user == null) {
+          setText(selectEmployeeCb.getPromptText());
         } else {
           setText(user.getName() + " from " + user.getBirthCity());
         }

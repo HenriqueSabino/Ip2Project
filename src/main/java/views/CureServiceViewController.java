@@ -113,7 +113,7 @@ public class CureServiceViewController implements Initializable {
 
         int pokemonLife = Integer.parseInt(lifeField.getText());
 
-        if (selectedPokemon.getLife() != pokemonLife
+        if (selectedPokemon.getMaxLife() != pokemonLife
             || selectedPokemon.getStatus() != selectedPokemonStatus) {
 
           selectedPokemon.setLife(pokemonLife);

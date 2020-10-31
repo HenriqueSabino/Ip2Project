@@ -30,7 +30,6 @@ import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
 import main.java.models.Trainer;
-import main.java.models.User;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
 import main.java.models.exceptions.ValidationException;
 import main.java.views.listeners.DataChangeListener;
@@ -41,7 +40,6 @@ import main.java.views.util.Utils;
 public class TrainerFormViewController implements Initializable, DataChangeListener {
 
   // end
-  private User trainer;
   private Trainer entity;
   private UserController userController;
   private List<DataChangeListener> dataChangeListeners = new ArrayList<>();

@@ -148,7 +148,6 @@ public class UserController {
     if (user.getRegisterId() == 0) {
       userDao.insert(user);
     } else {
-      System.out.println("name: " + user.getName());
       userDao.update(user);
     }
   }
