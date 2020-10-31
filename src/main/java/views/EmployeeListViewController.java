@@ -90,17 +90,13 @@ public class EmployeeListViewController implements Initializable {
 
       if (!tableViewEmployee.getSelectionModel().isEmpty()) {
 
-        //        UserController.getInstance()
-        //            .setIdForUpdate(
-        //                tableViewEmployee.getSelectionModel().getSelectedItem().getRegisterId());
-        //        UserController.getInstance().setUpdate(true);
         try {
 
           FXMLLoader loader =
               new FXMLLoader(getClass().getResource("/main/java/views/EmployeeFormView.fxml"));
           Parent newPage = loader.load();
           EmployeeFormViewController controller = loader.getController();
-          controller.setProduct(tableViewEmployee.getSelectionModel().getSelectedItem());
+          controller.setEmployee(tableViewEmployee.getSelectionModel().getSelectedItem());
           controller.fillFields();
 
           buttonNewEmployee.getScene().setRoot(newPage);

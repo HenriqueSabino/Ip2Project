@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,9 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,7 +28,6 @@ import main.java.models.Nurse;
 import main.java.models.SalesClerk;
 import main.java.models.Trainer;
 import main.java.models.User;
-import main.java.models.dao.impl.exception.UserNotFoundException;
 import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Utils;
@@ -38,15 +36,13 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
   @FXML private Button buttonNewTrainer;
   @FXML private Button buttonBack;
+  @FXML private Button buttonUpdate;
+  @FXML private Button buttonDelete;
   @FXML private TableView<Trainer> tableViewTrainer;
-  @FXML private TableColumn<Trainer, String> tableColumnRegisterId;
   @FXML private TableColumn<Trainer, String> tableColumnName;
-  @FXML private TableColumn<Trainer, Trainer> tableColumnEDIT;
-  @FXML private TableColumn<Trainer, Trainer> tableColumnREMOVE;
   @FXML private TableColumn<Trainer, String> tableColumnBirthCity;
   @FXML private TableColumn<Trainer, String> tableColumnGender;
   @FXML private TableColumn<Trainer, String> tableColumnUsername;
-  // @FXML private TableColumn<Trainer, String> tableColumnPassword;
   @FXML private TableColumn<Trainer, String> tableColumnEmail;
 
   private List<Trainer> trainerList;
@@ -67,16 +63,14 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
   private void initializeNodes() {
 
-    tableColumnRegisterId.setCellValueFactory(new PropertyValueFactory<>("registerId"));
     tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
     tableColumnBirthCity.setCellValueFactory(new PropertyValueFactory<>("birthCity"));
     tableColumnGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
     tableColumnUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
-    // tableColumnPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
     tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
   }
 
-  private void updateTableView() {
+  protected void updateTableView() {
 
     if (userController == null) {
       throw new IllegalStateException("userController was null");
@@ -86,14 +80,13 @@ public class TrainerListViewController implements Initializable, DataChangeListe
 
     trainerObservableList = FXCollections.observableArrayList(trainerList);
     tableViewTrainer.setItems(trainerObservableList);
-    initEditButtons();
-    initRemoveButtons();
   }
 
   @FXML
   public void onButtonNewTrainerAction(ActionEvent event) {
     Stage parentStage = Utils.getCurrentStage(event);
     Trainer trainer = new Trainer();
+    Utils.getCurrentStage(event).close();
     createDialogForm(trainer, "/main/java/views/TrainerFormView.fxml", parentStage);
   }
 
@@ -145,6 +138,7 @@ public class TrainerListViewController implements Initializable, DataChangeListe
       controller.setUserController(UserController.getInstance());
       controller.updateFormData();
       controller.subscribeDataChangeListener(this);
+      controller.setTrainerListViewController(this);
 
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Enter Trainer Data");
@@ -165,66 +159,56 @@ public class TrainerListViewController implements Initializable, DataChangeListe
     updateTableView();
   }
 
-  private void initEditButtons() {
+  public void onButtonDeleteTrainer() {
 
-    tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-    tableColumnEDIT.setCellFactory(
-        param ->
-            new TableCell<Trainer, Trainer>() {
-              private final Button button = new Button("edit");
+    try {
 
-              @Override
-              protected void updateItem(Trainer obj, boolean empty) {
-                super.updateItem(obj, empty);
-                if (obj == null) {
-                  setGraphic(null);
-                  return;
-                }
-                setGraphic(button);
-                button.setOnAction(
-                    event ->
-                        createDialogForm(
-                            obj,
-                            "/main/java/views/TrainerFormView.fxml",
-                            Utils.getCurrentStage(event)));
-              }
-            });
+      if (tableViewTrainer.getSelectionModel().getSelectedItem().getRegisterId() != 0) {
+
+        Optional<ButtonType> result =
+            Alerts.showConfirmation(
+                "Confirmation", "Are you sure you want to delete the selected field ?");
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+          UserController.getInstance()
+              .removeUser(tableViewTrainer.getSelectionModel().getSelectedItem());
+          updateTableView();
+        }
+      }
+    } catch (Exception e) {
+      Alerts.showAlert("Error", null, "Select the field to be deleted", AlertType.ERROR);
+    }
   }
 
-  private void initRemoveButtons() {
-    tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-    tableColumnREMOVE.setCellFactory(
-        param ->
-            new TableCell<>() {
-              private final Button button = new Button("remove");
+  public void onUpdateButton(ActionEvent event) {
 
-              @Override
-              protected void updateItem(Trainer obj, boolean empty) {
-                super.updateItem(obj, empty);
-                if (obj == null) {
-                  setGraphic(null);
-                  return;
-                }
-                setGraphic(button);
-                button.setOnAction(event -> removeEntity(obj));
-              }
-            });
-  }
+    try {
 
-  private void removeEntity(Trainer obj) {
-    Optional<ButtonType> result =
-        Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+      if (!tableViewTrainer.getSelectionModel().isEmpty()) {
 
-    if (result.get() == ButtonType.OK) {
-      if (userController == null) {
-        throw new IllegalStateException("Controller was null");
+        try {
+
+          FXMLLoader loader =
+              new FXMLLoader(getClass().getResource("/main/java/views/TrainerFormView.fxml"));
+          Parent newPage = loader.load();
+          TrainerFormViewController controller = loader.getController();
+          controller.setTrainer(tableViewTrainer.getSelectionModel().getSelectedItem());
+          controller.fillFields();
+          Stage parentStage = Utils.getCurrentStage(event);
+          Utils.getCurrentStage(event).close();
+          createDialogForm(
+              tableViewTrainer.getSelectionModel().getSelectedItem(),
+              "/main/java/views/TrainerFormView.fxml",
+              parentStage);
+
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      } else {
+        throw new IOException("Select the field to be updated");
       }
-      try {
-        userController.removeUser(obj);
-        updateTableView();
-      } catch (UserNotFoundException e) {
-        Alerts.showAlert("Error removing object", null, e.getMessage(), Alert.AlertType.ERROR);
-      }
+    } catch (IOException e) {
+      Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
     }
   }
 }

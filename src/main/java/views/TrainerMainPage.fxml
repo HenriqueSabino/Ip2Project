@@ -7,40 +7,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-  xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.java.views.TrainerMainPageViewController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.TrainerMainPageViewController">
   <children>
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-      layoutY="87.0" prefHeight="200.0" prefWidth="100.0"
-      spacing="25.0">
+    <VBox layoutY="87.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Button mnemonicParsing="false" onAction="#onBackBtAction" text="←" fx:id="backBt"/>
+        <Button fx:id="backBt" mnemonicParsing="false" onAction="#onBackBtAction" text="←" />
         <HBox spacing="50.0">
           <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name} from {city}"
-              fx:id="welcomeTxt">
+            <Text fx:id="welcomeTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome {name} from {city}">
               <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
               </font>
             </Text>
           </children>
           <opaqueInsets>
-            <Insets/>
+            <Insets />
           </opaqueInsets>
         </HBox>
-        <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+        <VBox prefHeight="209.0" prefWidth="575.0" spacing="25.0">
           <children>
-            <Button mnemonicParsing="false" onAction="#onStartShoppingBtAction"
-              text="Start shopping" fx:id="startShoppingBt"/>
-            <Button mnemonicParsing="false" onAction="#onShoppingHistoryBtAction"
-              text="Shopping history" fx:id="shoppingHistoryBt"/>
-            <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#onCureHistoryBtAction"
-              text="Cure history" fx:id="cureHistoryBt1"/>
+            <Button fx:id="startShoppingBt" mnemonicParsing="false" onAction="#onStartShoppingBtAction" prefHeight="25.0" prefWidth="110.0" text="Start shopping" />
+            <Button fx:id="shoppingHistoryBt" mnemonicParsing="false" onAction="#onShoppingHistoryBtAction" prefHeight="25.0" prefWidth="110.0" text="Shopping history" />
+            <Button fx:id="cureHistoryBt1" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#onCureHistoryBtAction" prefHeight="25.0" prefWidth="108.0" text="Cure history" />
           </children>
         </VBox>
       </children>
       <padding>
-        <Insets left="25.0" top="25.0"/>
+        <Insets left="25.0" top="25.0" />
       </padding>
     </VBox>
   </children>

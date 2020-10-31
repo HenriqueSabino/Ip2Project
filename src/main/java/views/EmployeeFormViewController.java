@@ -154,7 +154,7 @@ public class EmployeeFormViewController implements Initializable {
   public void fillFields() {
 
     if (employee == null) {
-      throw new IllegalStateException("Product was null.");
+      throw new IllegalStateException("Employee was null.");
     }
 
     nameField.setText(employee.getName());
@@ -163,9 +163,19 @@ public class EmployeeFormViewController implements Initializable {
     usernameField.setText(employee.getUsername());
     passwordField.setText(employee.getPassword());
     emailField.setText(employee.getEmail());
+
+    if (employee instanceof Nurse) {
+
+      salesBt.setDisable(true);
+      nurseBt.setSelected(true);
+    } else {
+
+      nurseBt.setDisable(true);
+      salesBt.setSelected(true);
+    }
   }
 
-  public void setProduct(User employee) {
+  public void setEmployee(User employee) {
     this.employee = employee;
   }
 }

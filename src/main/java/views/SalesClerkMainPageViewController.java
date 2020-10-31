@@ -136,7 +136,15 @@ public class SalesClerkMainPageViewController implements Initializable {
   }
 
   public void onManageProductsHlAction(ActionEvent event) {
-    System.out.println("Going to Products CRUD");
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/ProductListView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   // Initialization methods
@@ -171,7 +179,7 @@ public class SalesClerkMainPageViewController implements Initializable {
         super.updateItem(trainer, empty);
 
         if (empty || trainer == null) {
-          setText("");
+          setText("None");
         } else {
           setText(trainer.getName() + " from " + trainer.getBirthCity());
         }

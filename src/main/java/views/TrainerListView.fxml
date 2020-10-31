@@ -10,42 +10,37 @@
 <?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.views.TrainerListViewController">
-   <children>
-      <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="←">
-         <VBox.margin>
-            <Insets left="5.0" top="5.0" />
-         </VBox.margin>
-      </Button>
-      <Label contentDisplay="CENTER" text="Trainer listing">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="5.0" top="5.0" />
-         </VBox.margin>
-      </Label>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainerAction" text="New Trainer" />
-        </items>
-      </ToolBar>
-       <TableView fx:id="tableViewTrainer" prefHeight="600.0" prefWidth="806.0">
-           <columns>
-               <TableColumn fx:id="tableColumnRegisterId" prefWidth="136.0" text="Register Id" />
-               <TableColumn fx:id="tableColumnName" prefWidth="72.0" text="Name" />
-               <TableColumn fx:id="tableColumnBirthCity" prefWidth="75.0" text="Birth city" />
-               <TableColumn fx:id="tableColumnGender" prefWidth="75.0" text="Gender" />
-               <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username" />
-               <TableColumn fx:id="tableColumnEmail" prefWidth="72.0" text="Email" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
-           </columns>
-           <columnResizePolicy>
-               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-           </columnResizePolicy>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-       </TableView>
-   </children>
+  <children>
+    <Label contentDisplay="CENTER" text="Trainer listing">
+      <VBox.margin>
+        <Insets left="5.0" top="5.0" />
+      </VBox.margin>
+      <font>
+        <Font name="System Bold" size="22.0" />
+      </font>
+    </Label>
+    <TableView fx:id="tableViewTrainer" prefHeight="600.0" prefWidth="806.0">
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+      <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+      <columns>
+        <TableColumn fx:id="tableColumnName" prefWidth="72.0" text="Name" />
+        <TableColumn fx:id="tableColumnBirthCity" prefWidth="75.0" text="Birth city" />
+        <TableColumn fx:id="tableColumnGender" prefWidth="75.0" text="Gender" />
+        <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username" />
+        <TableColumn fx:id="tableColumnEmail" prefWidth="72.0" text="Email" />
+      </columns>
+    </TableView>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <items>
+        <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonBackAction" text="←" />
+        <Button fx:id="buttonNewTrainer" mnemonicParsing="false" onAction="#onButtonNewTrainerAction" text="New Trainer" />
+        <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#onUpdateButton" text="Update" />
+        <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteTrainer" text="Delete" />
+      </items>
+    </ToolBar>
+  </children>
 </VBox>

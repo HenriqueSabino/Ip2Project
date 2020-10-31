@@ -114,11 +114,23 @@ public class NurseMainPageViewController implements Initializable {
 
       registerCuresBt.setDisable(false);
       cureHistoryBt.setDisable(false);
+    } else {
+
+      registerCuresBt.setDisable(true);
+      cureHistoryBt.setDisable(true);
     }
   }
 
   public void onManagerTrainersHlAction(ActionEvent event) {
-    System.out.println("Going to Trainers CRUD");
+
+    try {
+
+      Parent newPage =
+          FXMLLoader.load(getClass().getResource("/main/java/views/TrainerListView.fxml"));
+      backBt.getScene().setRoot(newPage);
+    } catch (Exception e) {
+      System.out.println("Error");
+    }
   }
 
   // Initialization methods
@@ -136,13 +148,14 @@ public class NurseMainPageViewController implements Initializable {
   private void initializeTrainersListCb(List<Trainer> trainers) {
 
     trainersObsList = FXCollections.observableArrayList(trainers);
+    trainersObsList.add(0, null);
     trainersCb.setItems(trainersObsList);
 
-    trainersCb.setCellFactory(this::displayTrainer);
-    trainersCb.setButtonCell(trainersCb.getCellFactory().call(null));
+    trainersCb.setCellFactory(this::displayTrainerCell);
+    trainersCb.setButtonCell(displayTrainerSelection());
   }
 
-  private ListCell<Trainer> displayTrainer(ListView<Trainer> view) {
+  private ListCell<Trainer> displayTrainerCell(ListView<Trainer> view) {
 
     return new ListCell<>() {
 
@@ -151,8 +164,26 @@ public class NurseMainPageViewController implements Initializable {
 
         super.updateItem(trainer, empty);
 
-        if (empty) {
-          setText("");
+        if (empty || trainer == null) {
+          setText("None");
+        } else {
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<Trainer> displayTrainerSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(Trainer trainer, boolean empty) {
+
+        super.updateItem(trainer, empty);
+
+        if (empty || trainer == null) {
+          setText(trainersCb.getPromptText());
         } else {
           setText(trainer.getName() + " from " + trainer.getBirthCity());
         }
