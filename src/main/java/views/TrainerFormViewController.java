@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,9 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,9 +28,7 @@ import javafx.stage.Stage;
 import main.java.controllers.UserController;
 import main.java.models.Pokemon;
 import main.java.models.Trainer;
-import main.java.models.User;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
-import main.java.models.exceptions.ValidationException;
 import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
@@ -41,16 +37,9 @@ import main.java.views.util.Utils;
 public class TrainerFormViewController implements Initializable, DataChangeListener {
 
   // end
-  private User trainer;
   private Trainer entity;
   private UserController userController;
   private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
-  @FXML private Label labelErrorName;
-  @FXML private Label labelErrorBirthCity;
-  @FXML private Label labelErrorGender;
-  @FXML private Label labelErrorUsername;
-  @FXML private Label labelErrorPassword;
-  @FXML private Label labelErrorEmail;
   @FXML private TextField textFieldName;
   @FXML private TextField textFieldBirthCity;
   @FXML private TextField textFieldGender;
@@ -87,6 +76,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   @FXML
   public void onButtonSaveAction(ActionEvent event) {
 
+    boolean isUpdate;
+
     if (entity == null) {
       throw new IllegalStateException("Entity was null.");
     }
@@ -96,26 +87,48 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     }
 
     try {
-      if (entity.getPokemons().size() > 0) {
-        getFormData();
-        userController.saveOrUpdate(entity);
-        notifyDataChangeListeners();
-        goToTrainerListView();
-        Utils.getCurrentStage(event).close();
+
+      if (entity.getRegisterId() != 0) {
+        isUpdate = true;
       } else {
-        Alerts.showAlert(
-            "Error: invalid number of pokémons",
-            null,
-            "The trainer needs to have at least one pokémon.",
-            Alert.AlertType.ERROR);
+        isUpdate = false;
+      }
+
+      if (!getFormData()) {
+        if (isUpdate) {
+          Alerts.showAlert("Error", null, "The fields must be filled to update", AlertType.ERROR);
+        } else {
+          Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
+        }
+
+      } else {
+        if (entity.getPokemons().size() > 0) {
+          getFormData();
+
+          userController.saveOrUpdate(entity);
+          notifyDataChangeListeners();
+          goToTrainerListView();
+
+          if (isUpdate) {
+            Alerts.showAlert("", null, "Update completed", AlertType.INFORMATION);
+          } else {
+            Alerts.showAlert("", null, "Registration completed", AlertType.INFORMATION);
+          }
+
+          Utils.getCurrentStage(event).close();
+        } else {
+          Alerts.showAlert(
+              "Error: invalid number of pokémons",
+              null,
+              "The trainer needs to have at least one pokémon.",
+              Alert.AlertType.ERROR);
+        }
       }
 
     } catch (UsernameOrEmailInUseException e) {
 
       Alerts.showAlert(
           "UsernameOrEmailInUseException", null, e.getMessage(), Alert.AlertType.ERROR);
-    } catch (ValidationException validationException) {
-      setErrorMessages(validationException.getErrors());
     }
   }
 
@@ -125,49 +138,46 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     }
   }
 
-  private void getFormData() {
+  private boolean getFormData() {
 
-    ValidationException exception = new ValidationException("Validation error");
+    boolean isValid = true;
 
     if (textFieldName.getText() == null || textFieldName.getText().trim().equals("")) {
-      exception.addError("name", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setName(textFieldName.getText());
     }
 
     if (textFieldBirthCity.getText() == null || textFieldBirthCity.getText().trim().equals("")) {
-      exception.addError("birthCity", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setBirthCity(textFieldBirthCity.getText());
     }
 
     if (textFieldGender.getText() == null || textFieldGender.getText().trim().equals("")) {
-      exception.addError("gender", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setGender(textFieldGender.getText());
     }
 
     if (textFieldUsername.getText() == null || textFieldUsername.getText().trim().equals("")) {
-      exception.addError("username", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setUsername(textFieldUsername.getText());
     }
 
     if (textFieldPassword.getText() == null || textFieldPassword.getText().trim().equals("")) {
-      exception.addError("password", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setPassword(textFieldPassword.getText());
     }
 
     if (textFieldEmail.getText() == null || textFieldEmail.getText().trim().equals("")) {
-      exception.addError("email", "Field can't be empty.");
+      isValid = false;
     } else {
       entity.setEmail(textFieldEmail.getText());
     }
-
-    if (exception.getErrors().size() > 0) {
-      throw exception;
-    }
+    return isValid;
   }
 
   @FXML
@@ -205,9 +215,14 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   @FXML
   public void onButtonNewPokemonAction(ActionEvent event) {
-    Stage parentStage = Utils.getCurrentStage(event);
-    Pokemon pokemon = new Pokemon();
-    createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
+    if (entity.getPokemons().size() < 6) {
+      Stage parentStage = Utils.getCurrentStage(event);
+      Pokemon pokemon = new Pokemon();
+      createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
+    } else {
+      Alerts.showAlert(
+          "Alert", null, "The trainer already has 6 pokemons", Alert.AlertType.WARNING);
+    }
   }
 
   private void createDialogForm(Pokemon pokemon, String absoluteName, Stage parentStage) {
@@ -282,47 +297,6 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     textFieldEmail.setText(entity.getEmail());
 
     updatePokemonTableView();
-  }
-
-  private void setErrorMessages(Map<String, String> errors) {
-
-    Set<String> fields = errors.keySet();
-
-    if (fields.contains("name")) {
-      labelErrorName.setText(errors.get("name"));
-    } else {
-      labelErrorName.setText("");
-    }
-
-    if (fields.contains("birthCity")) {
-      labelErrorBirthCity.setText(errors.get("birthCity"));
-    } else {
-      labelErrorBirthCity.setText("");
-    }
-
-    if (fields.contains("gender")) {
-      labelErrorGender.setText(errors.get("gender"));
-    } else {
-      labelErrorGender.setText("");
-    }
-
-    if (fields.contains("username")) {
-      labelErrorUsername.setText(errors.get("username"));
-    } else {
-      labelErrorUsername.setText("");
-    }
-
-    if (fields.contains("password")) {
-      labelErrorPassword.setText(errors.get("password"));
-    } else {
-      labelErrorPassword.setText("");
-    }
-
-    if (fields.contains("email")) {
-      labelErrorEmail.setText(errors.get("email"));
-    } else {
-      labelErrorEmail.setText("");
-    }
   }
 
   @Override

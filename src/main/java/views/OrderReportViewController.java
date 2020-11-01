@@ -124,24 +124,26 @@ public class OrderReportViewController implements Initializable {
 
     trainersObsList =
         FXCollections.observableArrayList(UserController.getInstance().getAllTrainers());
+    trainersObsList.add(0, null);
     selectTrainerCb.setItems(trainersObsList);
 
-    selectTrainerCb.setCellFactory(this::displayTrainer);
-    selectTrainerCb.setButtonCell(selectTrainerCb.getCellFactory().call(null));
+    selectTrainerCb.setCellFactory(this::displayTrainerCell);
+    selectTrainerCb.setButtonCell(displayTrainerSelection());
   }
 
   private void initializeEmployeeListCb() {
 
     employeeObsList =
-        FXCollections.observableArrayList(UserController.getInstance().getAllSalesClerks());
+        FXCollections.observableArrayList(UserController.getInstance().getAllNurses());
+    employeeObsList.add(0, null);
     employeeObsList.addAll(UserController.getInstance().getAllAdministrators());
     selectEmployeeCb.setItems(employeeObsList);
 
-    selectEmployeeCb.setCellFactory(this::displayUser);
-    selectEmployeeCb.setButtonCell(selectEmployeeCb.getCellFactory().call(null));
+    selectEmployeeCb.setCellFactory(this::displayUserCell);
+    selectEmployeeCb.setButtonCell(displayUserSelection());
   }
 
-  private ListCell<User> displayUser(ListView<User> view) {
+  private ListCell<User> displayUserCell(ListView<User> view) {
 
     return new ListCell<>() {
 
@@ -150,8 +152,8 @@ public class OrderReportViewController implements Initializable {
 
         super.updateItem(user, empty);
 
-        if (empty) {
-          setText("");
+        if (empty || user == null) {
+          setText("None");
         } else {
           setText(user.getName() + " from " + user.getBirthCity());
         }
@@ -159,7 +161,25 @@ public class OrderReportViewController implements Initializable {
     };
   }
 
-  private ListCell<Trainer> displayTrainer(ListView<Trainer> view) {
+  private ListCell<User> displayUserSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(User user, boolean empty) {
+
+        super.updateItem(user, empty);
+
+        if (empty || user == null) {
+          setText(selectEmployeeCb.getPromptText());
+        } else {
+          setText(user.getName() + " from " + user.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<Trainer> displayTrainerCell(ListView<Trainer> view) {
 
     return new ListCell<>() {
 
@@ -168,8 +188,26 @@ public class OrderReportViewController implements Initializable {
 
         super.updateItem(trainer, empty);
 
-        if (empty) {
-          setText("");
+        if (empty || trainer == null) {
+          setText("None");
+        } else {
+          setText(trainer.getName() + " from " + trainer.getBirthCity());
+        }
+      }
+    };
+  }
+
+  private ListCell<Trainer> displayTrainerSelection() {
+
+    return new ListCell<>() {
+
+      @Override
+      protected void updateItem(Trainer trainer, boolean empty) {
+
+        super.updateItem(trainer, empty);
+
+        if (empty || trainer == null) {
+          setText(selectTrainerCb.getPromptText());
         } else {
           setText(trainer.getName() + " from " + trainer.getBirthCity());
         }
