@@ -17,7 +17,6 @@ import main.java.models.PokemonStatus;
 import main.java.models.PokemonType;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
-import main.java.models.exceptions.ValidationException;
 import main.java.views.listeners.DataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
@@ -60,13 +59,11 @@ public class PokemonFormViewController implements Initializable {
       throw new IllegalStateException("userController was null.");
     }
     try {
-
-      getFormData();
-
-      if (getFormData() == true) {
+      if (getFormData()) {
         if (owner.getPokemons().size() < 6) {
           owner.getPokemons().add(entity);
         }
+
         notifyDataChangeListeners();
         Utils.getCurrentStage(event).close();
       }
@@ -85,34 +82,32 @@ public class PokemonFormViewController implements Initializable {
 
   private boolean getFormData() {
 
-    ValidationException exception = new ValidationException("Validation error");
+    boolean isValid = true;
 
     if (textFieldSpecies.getText() == null
         || textFieldSpecies.getText().trim().equals("")
         || textFieldMaxLife.getText() == null
-        || textFieldMaxLife.getText().trim().equals("")) {
+        || textFieldMaxLife.getText().trim().equals("")
+        || comboBoxPokemonType.getValue() == null) {
       Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
-      return false;
+      isValid = false;
     } else {
       entity.setSpecies(textFieldSpecies.getText());
-    }
-
-    if (Utils.tryParseToInt(textFieldMaxLife.getText()) == 0) {
-      Alerts.showAlert("Error", null, "Max life of Pokemon can't be zero", AlertType.ERROR);
-      return false;
-    } else {
-      entity.setMaxLife(Utils.tryParseToInt(textFieldMaxLife.getText()));
-      entity.setLife(entity.getMaxLife());
-    }
-
-    if (comboBoxPokemonType.getValue() == null) {
-      Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
-      return false;
-    } else {
       entity.setType(comboBoxPokemonType.getValue());
       entity.setStatus(PokemonStatus.NONE);
     }
-    return true;
+
+    if (!(textFieldMaxLife.getText() == null || textFieldMaxLife.getText().trim().equals(""))) {
+      if (Utils.tryParseToInt(textFieldMaxLife.getText()) == 0) {
+        Alerts.showAlert("Error", null, "Max life of Pokemon can't be zero", AlertType.ERROR);
+        isValid = false;
+      } else {
+        entity.setMaxLife(Utils.tryParseToInt(textFieldMaxLife.getText()));
+        entity.setLife(entity.getMaxLife());
+      }
+    }
+
+    return isValid;
   }
 
   @FXML

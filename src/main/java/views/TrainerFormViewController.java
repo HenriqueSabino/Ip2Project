@@ -76,7 +76,7 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   @FXML
   public void onButtonSaveAction(ActionEvent event) {
 
-    boolean saveOrUpdate;
+    boolean isUpdate;
 
     if (entity == null) {
       throw new IllegalStateException("Entity was null.");
@@ -88,17 +88,17 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
     try {
 
-      if (entity.getRegisterId() == 0) {
-        saveOrUpdate = true;
+      if (entity.getRegisterId() != 0) {
+        isUpdate = true;
       } else {
-        saveOrUpdate = false;
+        isUpdate = false;
       }
 
-      if (getFormData() == false) {
-        if (saveOrUpdate == true) {
-          Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
-        } else {
+      if (!getFormData()) {
+        if (isUpdate) {
           Alerts.showAlert("Error", null, "The fields must be filled to update", AlertType.ERROR);
+        } else {
+          Alerts.showAlert("Error", null, "The fields must be filled", AlertType.ERROR);
         }
 
       } else {
@@ -109,10 +109,10 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
           notifyDataChangeListeners();
           goToTrainerListView();
 
-          if (saveOrUpdate == true) {
-            Alerts.showAlert("", null, "Registration completed", AlertType.INFORMATION);
-          } else {
+          if (isUpdate) {
             Alerts.showAlert("", null, "Update completed", AlertType.INFORMATION);
+          } else {
+            Alerts.showAlert("", null, "Registration completed", AlertType.INFORMATION);
           }
 
           Utils.getCurrentStage(event).close();
@@ -140,42 +140,44 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   private boolean getFormData() {
 
+    boolean isValid = true;
+
     if (textFieldName.getText() == null || textFieldName.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setName(textFieldName.getText());
     }
 
     if (textFieldBirthCity.getText() == null || textFieldBirthCity.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setBirthCity(textFieldBirthCity.getText());
     }
 
     if (textFieldGender.getText() == null || textFieldGender.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setGender(textFieldGender.getText());
     }
 
     if (textFieldUsername.getText() == null || textFieldUsername.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setUsername(textFieldUsername.getText());
     }
 
     if (textFieldPassword.getText() == null || textFieldPassword.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setPassword(textFieldPassword.getText());
     }
 
     if (textFieldEmail.getText() == null || textFieldEmail.getText().trim().equals("")) {
-      return false;
+      isValid = false;
     } else {
       entity.setEmail(textFieldEmail.getText());
     }
-    return true;
+    return isValid;
   }
 
   @FXML
@@ -213,9 +215,14 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
 
   @FXML
   public void onButtonNewPokemonAction(ActionEvent event) {
-    Stage parentStage = Utils.getCurrentStage(event);
-    Pokemon pokemon = new Pokemon();
-    createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
+    if (entity.getPokemons().size() < 6) {
+      Stage parentStage = Utils.getCurrentStage(event);
+      Pokemon pokemon = new Pokemon();
+      createDialogForm(pokemon, "/main/java/views/PokemonFormView.fxml", parentStage);
+    } else {
+      Alerts.showAlert(
+          "Alert", null, "The trainer already has 6 pokemons", Alert.AlertType.WARNING);
+    }
   }
 
   private void createDialogForm(Pokemon pokemon, String absoluteName, Stage parentStage) {
