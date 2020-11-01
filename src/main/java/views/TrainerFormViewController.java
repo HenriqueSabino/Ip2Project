@@ -29,17 +29,17 @@ import main.java.controllers.UserController;
 import main.java.models.Pokemon;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
-import main.java.views.listeners.DataChangeListener;
+import main.java.views.listeners.IDataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
 import main.java.views.util.Utils;
 
-public class TrainerFormViewController implements Initializable, DataChangeListener {
+public class TrainerFormViewController implements Initializable, IDataChangeListener {
 
   // end
   private Trainer entity;
   private UserController userController;
-  private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+  private List<IDataChangeListener> iDataChangeListeners = new ArrayList<>();
   @FXML private TextField textFieldName;
   @FXML private TextField textFieldBirthCity;
   @FXML private TextField textFieldGender;
@@ -69,8 +69,8 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
     this.trainerListViewController = trainerListViewController;
   }
 
-  public void subscribeDataChangeListener(DataChangeListener listener) {
-    dataChangeListeners.add(listener);
+  public void subscribeDataChangeListener(IDataChangeListener listener) {
+    iDataChangeListeners.add(listener);
   }
 
   @FXML
@@ -133,7 +133,7 @@ public class TrainerFormViewController implements Initializable, DataChangeListe
   }
 
   private void notifyDataChangeListeners() {
-    for (DataChangeListener listener : dataChangeListeners) {
+    for (IDataChangeListener listener : iDataChangeListeners) {
       listener.onDataChanged();
     }
   }
