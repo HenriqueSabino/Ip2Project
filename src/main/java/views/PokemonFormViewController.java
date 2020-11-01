@@ -17,7 +17,7 @@ import main.java.models.PokemonStatus;
 import main.java.models.PokemonType;
 import main.java.models.Trainer;
 import main.java.models.dao.impl.exception.UsernameOrEmailInUseException;
-import main.java.views.listeners.DataChangeListener;
+import main.java.views.listeners.IDataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Constraints;
 import main.java.views.util.Utils;
@@ -27,7 +27,7 @@ public class PokemonFormViewController implements Initializable {
   private Pokemon entity;
   private Trainer owner;
   private UserController controller;
-  private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+  private List<IDataChangeListener> iDataChangeListeners = new ArrayList<>();
 
   @FXML private TextField textFieldSpecies;
   @FXML private TextField textFieldMaxLife;
@@ -45,8 +45,8 @@ public class PokemonFormViewController implements Initializable {
     this.controller = controller;
   }
 
-  public void subscribeDataChangeListener(DataChangeListener listener) {
-    dataChangeListeners.add(listener);
+  public void subscribeDataChangeListener(IDataChangeListener listener) {
+    iDataChangeListeners.add(listener);
   }
 
   @FXML
@@ -75,7 +75,7 @@ public class PokemonFormViewController implements Initializable {
   }
 
   private void notifyDataChangeListeners() {
-    for (DataChangeListener listener : dataChangeListeners) {
+    for (IDataChangeListener listener : iDataChangeListeners) {
       listener.onDataChanged();
     }
   }

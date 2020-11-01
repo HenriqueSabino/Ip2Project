@@ -28,11 +28,11 @@ import main.java.models.Nurse;
 import main.java.models.SalesClerk;
 import main.java.models.Trainer;
 import main.java.models.User;
-import main.java.views.listeners.DataChangeListener;
+import main.java.views.listeners.IDataChangeListener;
 import main.java.views.util.Alerts;
 import main.java.views.util.Utils;
 
-public class TrainerListViewController implements Initializable, DataChangeListener {
+public class TrainerListViewController implements Initializable, IDataChangeListener {
 
   @FXML private Button buttonNewTrainer;
   @FXML private Button buttonBack;

@@ -1,6 +1,6 @@
 package main.java.views.listeners;
 
-public interface DataChangeListener {
+public interface IDataChangeListener {
 
   void onDataChanged();
 }
