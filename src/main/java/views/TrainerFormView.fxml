@@ -36,7 +36,7 @@
             <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#onButtonCancelAction" text="Cancel" />
         </HBox>
     </GridPane>
-   <TableView fx:id="tableViewPokemon" layoutX="741.0" layoutY="95.0" prefHeight="400.0" prefWidth="508.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+   <TableView fx:id="tableViewPokemon" layoutX="741.0" layoutY="95.0" minHeight="300.0" prefHeight="300.0" prefWidth="508.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
      <columns>
        <TableColumn fx:id="tableColumnSpecies" prefWidth="75.0" text="Species" />
          <TableColumn fx:id="tableColumnMaxLife" prefWidth="75.0" text="Max. life" />
