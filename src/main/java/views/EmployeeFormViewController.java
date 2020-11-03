@@ -96,27 +96,15 @@ public class EmployeeFormViewController implements Initializable {
           Alerts.showAlert("Error", null, "The fields must be filled to update", AlertType.ERROR);
         } else {
 
-          if (nurseBt.isSelected()) {
+          employee.setName(nameField.getText());
+          employee.setUsername(usernameField.getText());
+          employee.setBirthCity(birthCityField.getText());
+          employee.setGender(genderField.getText());
+          employee.setUsername(usernameField.getText());
+          employee.setPassword(passwordField.getText());
+          employee.setEmail(emailField.getText());
 
-            employee.setUsername(usernameField.getText());
-            employee.setBirthCity(birthCityField.getText());
-            employee.setGender(genderField.getText());
-            employee.setUsername(usernameField.getText());
-            employee.setPassword(passwordField.getText());
-            employee.setEmail(emailField.getText());
-
-            UserController.getInstance().saveOrUpdate(employee);
-          } else {
-
-            employee.setUsername(usernameField.getText());
-            employee.setBirthCity(birthCityField.getText());
-            employee.setGender(genderField.getText());
-            employee.setUsername(usernameField.getText());
-            employee.setPassword(passwordField.getText());
-            employee.setEmail(emailField.getText());
-
-            UserController.getInstance().saveOrUpdate(employee);
-          }
+          UserController.getInstance().saveOrUpdate(employee);
 
           Alerts.showAlert("", null, "Update completed", AlertType.INFORMATION);
           goToEmployeeList();
