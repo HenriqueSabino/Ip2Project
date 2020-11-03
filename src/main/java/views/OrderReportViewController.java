@@ -134,7 +134,7 @@ public class OrderReportViewController implements Initializable {
   private void initializeEmployeeListCb() {
 
     employeeObsList =
-        FXCollections.observableArrayList(UserController.getInstance().getAllNurses());
+        FXCollections.observableArrayList(UserController.getInstance().getAllSalesClerks());
     employeeObsList.add(0, null);
     employeeObsList.addAll(UserController.getInstance().getAllAdministrators());
     selectEmployeeCb.setItems(employeeObsList);
